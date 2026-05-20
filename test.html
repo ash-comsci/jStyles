@@ -11,7 +11,10 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+
 body {
+
+  padding-top: 80px;
  font-family: 'DM Sans', sans-serif;
  background:
  radial-gradient(ellipse 140% 45% at 50% 0%, #b8b8b8 0%, #787878 20%, transparent 50%),
@@ -133,11 +136,11 @@ body::after {
 .card:hover .card-label {
  color: #d72323;
 }
- /* NAVBAR */
-/* NAVBAR BASE */
+/* NAVBAR */
 .navbar {
  position: fixed;
  top: 0;
+ left: 0;
  width: 100%;
  z-index: 1000;
 
@@ -145,18 +148,78 @@ body::after {
  transition: all 0.35s ease;
 }
 
-/* SCROLLED STATE (🔥 MAGIC) */
-.navbar.scrolled {
- background: rgba(20, 20, 20, 0.6);
- backdrop-filter: blur(14px);
+/* FULL WIDTH CONTAINER */
+.nav-container {
+ width: 100%;
+ max-width: 1200px;
+ margin: 0 auto;
 
- box-shadow:
- 0 8px 30px rgba(0,0,0,0.5);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
 
- border-bottom: 1px solid rgba(255,255,255,0.08);
+ padding: 14px 30px;
 }
 
-/* 🔥 GLOW LINE (key effect) */
+/* LOGO */
+.nav-logo img {
+ height: 44px;
+ display: block;
+
+ filter:
+ drop-shadow(0 2px 6px rgba(0,0,0,0.8))
+ drop-shadow(0 0 12px rgba(215,35,35,0.35));
+}
+
+/* MENU */
+.nav-menu {
+ display: flex;
+ gap: 32px;
+}
+
+/* LINKS */
+.nav-menu a {
+ text-decoration: none;
+ color: #ddd;
+
+ font-family: 'Bebas Neue', sans-serif;
+ font-size: 18px;
+ letter-spacing: 1.5px;
+
+ position: relative;
+ transition: 0.3s ease;
+}
+
+/* UNDERLINE */
+.nav-menu a::after {
+ content: "";
+ position: absolute;
+ left: 0;
+ bottom: -6px;
+ width: 0%;
+ height: 2px;
+ background: #d72323;
+ transition: 0.3s;
+}
+
+/* HOVER */
+.nav-menu a:hover {
+ color: #fff;
+}
+
+.nav-menu a:hover::after {
+ width: 100%;
+}
+
+/* SCROLL GLASS EFFECT */
+.navbar.scrolled {
+ background: rgba(20, 20, 20, 0.65);
+ backdrop-filter: blur(14px);
+ border-bottom: 1px solid rgba(255,255,255,0.08);
+ box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+/* GLOW BAR */
 .navbar.scrolled::after {
  content: "";
  position: absolute;
@@ -175,9 +238,8 @@ body::after {
  );
 
  box-shadow: 0 0 12px rgba(215,35,35,0.8);
-
- opacity: 0.9;
 }
+
 
 </style>
 </head>
@@ -187,11 +249,11 @@ body::after {
   <div class="nav-container">
 
     <!-- LOGO -->
-    <div class="nav-logo">
-      <img src="images/jstyles-logo.png" alt="jStyles Logo">
-    </div>
+    <a href="index.html" class="nav-logo">
+      <img src="images/jstyles-logo.png" alt="Logo">
+    </a>
 
-    <!-- NAV LINKS -->
+    <!-- MENU -->
     <nav class="nav-menu">
       <a href="index.html">Home</a>
       <a href="wos_swag.html">WOS Swag</a>
@@ -201,6 +263,7 @@ body::after {
 
   </div>
 </header>
+
 <div class="container">
 
  <!-- HEADER -->
@@ -235,15 +298,11 @@ body::after {
 
 </div>
 <script>
-window.addEventListener("scroll", function() {
-  const navbar = document.querySelector(".navbar");
-
-  if (window.scrollY > 40) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
-  }
+window.addEventListener("scroll", () => {
+  const nav = document.querySelector(".navbar");
+  nav.classList.toggle("scrolled", window.scrollY > 40);
 });
 </script>
+``
 </body>
 </html>
