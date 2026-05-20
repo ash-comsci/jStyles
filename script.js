@@ -22,3 +22,8 @@ cards.forEach(card => {
 
 // Optional future interactive features can go here
 console.log("j-Swag site loaded successfully.");
+
+window.addEventListener("scroll", () => {
+ const nav = document.querySelector(".navbar");
+ nav.classList.toggle("scrolled", window.scrollY > 40);
+});
