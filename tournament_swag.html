@@ -23,23 +23,77 @@ body {
   padding: 60px 20px;
   display: flex;
   justify-content: center;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* GRID */
+/* ✅ subtle grid overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
+  pointer-events: none;
+}
+
+/* ✅ glowing animation behind logo */
+body::after {
+  content: '';
+  position: fixed;
+  top: 140px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 250px;
+  background: radial-gradient(ellipse, rgba(215,35,35,0.2), transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+}
+
+/* CONTAINER */
 .container {
   max-width: 1000px;
   width: 100%;
+  z-index: 1;
 }
 
-/* HEADER */
+/* ✅ LOGO HEADER */
+.logo-wrap {
+  width: min(420px, 80vw);
+  margin: 0 auto 10px;
+  filter:
+    drop-shadow(0 8px 40px rgba(215,35,35,0.45))
+    drop-shadow(0 2px 10px rgba(0,0,0,0.8));
+  animation: logoIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes logoIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.logo-wrap img {
+  width: 100%;
+  display: block;
+}
+
+/* HEADER TEXT */
 .header {
   text-align: center;
   margin-bottom: 40px;
+  animation: fadeIn 1s .3s ease both;
+  opacity: 0;
 }
 
 .header h1 {
   font-family: 'Bebas Neue';
-  font-size: 70px;
+  font-size: clamp(48px, 8vw, 68px);
   letter-spacing: 3px;
 }
 
@@ -47,40 +101,46 @@ body {
   color: #d72323;
 }
 
-/* GRID LAYOUT */
+/* FADE IN */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 22px;
+  animation: fadeIn 1s .6s ease both;
+  opacity: 0;
 }
 
 /* CARD */
 .card {
-  position: relative;
   display: block;
+  position: relative;
   border-radius: 6px;
   overflow: hidden;
   text-decoration: none;
-  border: 1px solid #333;
   background: #111;
+  border: 1px solid #333;
   transition: all 0.3s ease;
 }
 
-/* IMAGE */
 .card img {
   width: 100%;
   height: 260px;
   object-fit: cover;
-  display: block;
 }
 
-/* OVERLAY LABEL */
+/* LABEL */
 .card-label {
   position: absolute;
   bottom: 0;
   width: 100%;
   padding: 14px;
-  background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
   font-family: 'Bebas Neue';
   font-size: 20px;
   letter-spacing: 2px;
@@ -92,24 +152,24 @@ body {
   transform: translateY(-6px);
   border-color: #d72323;
   box-shadow:
-    0 10px 40px rgba(0,0,0,0.6),
-    0 0 30px rgba(215,35,35,0.4);
+    0 16px 50px rgba(0,0,0,0.6),
+    0 0 35px rgba(215,35,35,0.4);
 }
 
 .card:hover .card-label {
   color: #d72323;
 }
 
-/* PLACEHOLDER STYLE */
+/* PLACEHOLDER */
 .placeholder {
+  height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 260px;
   font-family: 'Bebas Neue';
   font-size: 24px;
   letter-spacing: 2px;
-  color: #666;
+  color: #777;
 }
 
 </style>
@@ -119,39 +179,47 @@ body {
 
 <div class="container">
 
+  <!-- ✅ LOGO -->
+  <div class="logo-wrap">
+    <img src="images/jstyles-logo.png" alt="Logo">
+  </div>
+
+  <!-- ✅ HEADER -->
   <div class="header">
     <h1>TOURNAMENT <span>SWAG</span></h1>
   </div>
 
+  <!-- ✅ GRID -->
   <div class="grid">
 
-    <!-- ✅ TOURNAMENT 1 -->
     <a class="card" href="https://your-link-1.com">
-      <img src="images/wesley-cup.png">
+      <img src="images/warrior.png">
       <div class="card-label">Wesley Clover Cup</div>
     </a>
 
-    <!-- ✅ TOURNAMENT 2 -->
     <a class="card" href="https://your-link-2.com">
-      <img src="images/warrior.png">
+      <img src="images/wesley-cup.png">
       <div class="card-label">Warrior Classic</div>
     </a>
 
-    <!-- ✅ PLACEHOLDERS -->
     <a class="card" href="#">
       <div class="placeholder">Tourney 3</div>
+      <div class="card-label">Tourney 3</div>
     </a>
 
     <a class="card" href="#">
       <div class="placeholder">Tourney 4</div>
+      <div class="card-label">Tourney 4</div>
     </a>
 
     <a class="card" href="#">
       <div class="placeholder">Tourney 5</div>
+      <div class="card-label">Tourney 5</div>
     </a>
 
     <a class="card" href="#">
       <div class="placeholder">Tourney 6</div>
+      <div class="card-label">Tourney 6</div>
     </a>
 
   </div>
@@ -160,4 +228,4 @@ body {
 
 </body>
 </html>
-
+``
