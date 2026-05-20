@@ -458,3 +458,13 @@ body::after {
  );
  box-shadow: 0 0 12px rgba(215,35,35,0.8);
 }
+.placeholder {
+ height: 260px;
+ display: flex;
+ align-items: center center; align-items: center;
+ font-family: 'Bebas Neue';
+ font-size: 24px;
+ letter-spacing: 2px;
+ color: #777;
+ background: #111;
+}
