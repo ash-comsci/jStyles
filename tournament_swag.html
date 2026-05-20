@@ -4,228 +4,62 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tournament Swag</title>
- <link rel="icon" type="image/x-icon" href="images/favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 
-<style>
+<link rel="icon" type="image/x -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel CSS -->
+<link rel="stylesheet<body>
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+<!-- ✅ NAVBAR (same as other page for consistency) -->
+<header class="navbar">
+ <div class="nav-container">
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background:
-    radial-gradient(ellipse 140% 45% at 50% 0%, #b8b8b8 0%, #787878 20%, transparent 50%),
-    radial-gradient(ellipse 80% 40% at 15% 50%, rgba(160,160,160,0.22) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 40% at 85% 50%, rgba(160,160,160,0.22) 0%, transparent 55%),
-    radial-gradient(ellipse 110% 45% at 50% 100%, #9b0f0f 0%, #5c0808 30%, transparent 60%),
-    linear-gradient(170deg, #4a4a4a 0%, #252525 30%, #181818 52%, #2c0909 75%, #450c0c 100%);
-  color: #f0ece4;
-  padding: 60px 20px;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  overflow-x: hidden;
-}
+  <a href="l
+    <img src="images/jstyles-logo.png"<nav class="nav-menu">
+    <a href="index</a>
+    <a href="wtmlWOS Swag</a>
+    tournament_swag.htmlTournament Swag</a>
+    #contactContact Us</a>
+  </nav>
 
-/* ✅ subtle grid overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
-  pointer-events: none;
-}
-
-/* ✅ glowing animation behind logo */
-body::after {
-  content: '';
-  position: fixed;
-  top: 140px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 500px;
-  height: 250px;
-  background: radial-gradient(ellipse, rgba(215,35,35,0.2), transparent 70%);
-  animation: pulse 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes pulse {
-  0%,100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
-  50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
-}
-
-/* CONTAINER */
-.container {
-  max-width: 1000px;
-  width: 100%;
-  z-index: 1;
-}
-
-/* ✅ LOGO HEADER */
-.logo-wrap {
-  width: min(420px, 80vw);
-  margin: 0 auto 10px;
-  filter:
-    drop-shadow(0 8px 40px rgba(215,35,35,0.45))
-    drop-shadow(0 2px 10px rgba(0,0,0,0.8));
-  animation: logoIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
-}
-
-@keyframes logoIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-.logo-wrap img {
-  width: 75%;
-  display: block;
-}
-
-/* HEADER TEXT */
-.header {
-  text-align: center;
-  margin-bottom: 40px;
-  animation: fadeIn 1s .3s ease both;
-  opacity: 0;
-}
-
-.header h1 {
-  font-family: 'Bebas Neue';
-  font-size: clamp(48px, 8vw, 68px);
-  letter-spacing: 3px;
-}
-
-.header span {
-  color: #d72323;
-}
-
-/* FADE IN */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 22px;
-  animation: fadeIn 1s .6s ease both;
-  opacity: 0;
-}
-
-/* CARD */
-.card {
-  display: block;
-  position: relative;
-  border-radius: 6px;
-  overflow: hidden;
-  text-decoration: none;
-  background: #111;
-  border: 1px solid #333;
-  transition: all 0.3s ease;
-}
-
-.card img {
-  width: 100%;
-  height: 260px;
-  object-fit: cover;
-}
-
-/* LABEL */
-.card-label {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-  font-family: 'Bebas Neue';
-  font-size: 20px;
-  letter-spacing: 2px;
-  color: #fff;
-}
-
-/* HOVER */
-.card:hover {
-  transform: translateY(-6px);
-  border-color: #d72323;
-  box-shadow:
-    0 16px 50px rgba(0,0,0,0.6),
-    0 0 35px rgba(215,35,35,0.4);
-}
-
-.card:hover .card-label {
-  color: #d72323;
-}
-
-/* PLACEHOLDER */
-.placeholder {
-  height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Bebas Neue';
-  font-size: 24px;
-  letter-spacing: 2px;
-  color: #777;
-}
-
-</style>
-</head>
-
-<body>
+ </div>
+</header>
 
 <div class="container">
 
-  <!-- ✅ LOGO -->
-  <div class="logo-wrap">
-    <img src="images/jstyles-logo.png" alt="Logo">
-  </div>
+ <!-- ✅ HEADER -->
+ <div class="header">
+   <h1>TOURNAMENT <span>SWAG</span></h1>
+ </div>
 
-  <!-- ✅ HEADER -->
-  <div class="header">
-    <h1>TOURNAMENT <span>SWAG</span></h1>
-  </div>
+ <!-- ✅ GRID -->
+ <div class="grid">
 
-  <!-- ✅ GRID -->
-  <div class="grid">
+   <a class="card" href="https://your-link-1.com/warrior.png" alt="Wesrd-label">Wesley Clover Cup</div>
+   </a>
 
-    <a class="card" href="https://your-link-1.com">
-      <img src="images/warrior.png">
-      <div class="card-label">Wesley Clover Cup</div>
-    </a>
+   <a class="card" href="https://your-link-mages/wesley-cup.png"class="card-label">Warrior Classic</div>
+   </a>
 
-    <a class="card" href="https://your-link-2.com">
-      <img src="images/wesley-cup.png">
-      <div class="card-label">Warrior Classic</div>
-    </a>
+   <a class="card" hreflaceholder">Tourney 3</div>
+     <div class="card-label">Tourney 3</div>
+   </a>
 
-    <a class="card" href="#">
-      <div class="placeholder">Tourney 3</div>
-      <div class="card-label">Tourney 3</div>
-    </a>
+   <a class="card"ss="placeholder">Tourney 4</div>
+     <div class="card-label">Tourney 4</div>
+   </a>
 
-    <a class="card" href="#">
-      <div class="placeholder">Tourney 4</div>
-      <div class="card-label">Tourney 4</div>
-    </a>
+   <a class="v class="placeholder">Tourney 5</div>
+     <div class="card-label">Tourney 5</div>
+   </a>
 
-    <a class="card" href="#">
-      <div class="placeholder">Tourney 5</div>
-      <div class="card-label">Tourney 5</div>
-    </a>
+   <a class="card" hreflaceholder">Tourney 6</div>
+     <div class="card-label">Tourney 6</div>
+   </a>
 
-    <a class="card" href="#">
-      <div class="placeholder">Tourney 6</div>
-      <div class="card-label">Tourney 6</div>
-    </a>
-
-  </div>
-
+ </div>
 </div>
 
+<!-- ✅ External JS -->
+<script src="script
 </body>
 </html>
-``
