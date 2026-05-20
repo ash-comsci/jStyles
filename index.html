@@ -1,111 +1,278 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-  <title>jStyle Soccer Apparel</title>
+  <title>jStyles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    html, body {
+      height: 100%;
+      overflow: hidden; /* full-screen, no scroll on landing */
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background:
+        radial-gradient(ellipse 140% 45% at 50% 0%,   #b8b8b8 0%, #787878 20%, transparent 50%),
+        radial-gradient(ellipse 80%  40% at 15%  50%,  rgba(160,160,160,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 80%  40% at 85%  50%,  rgba(160,160,160,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 110% 45% at 50% 100%,  #9b0f0f 0%, #5c0808 30%, transparent 60%),
+        linear-gradient(170deg, #4a4a4a 0%, #252525 30%, #181818 52%, #2c0909 75%, #450c0c 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* subtle grid lines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.022) 39px, rgba(255,255,255,0.022) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.012) 39px, rgba(255,255,255,0.012) 40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* animated red glow pulse behind logo */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 600px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(215,35,35,0.18) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translate(-50%, -60%) scale(1); }
+      50%        { opacity: 1;   transform: translate(-50%, -60%) scale(1.12); }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      padding: 20px;
+      animation: fadeIn 1s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══ LOGO ══ */
+    .logo-wrap {
+      width: min(680px, 90vw);
+      margin-bottom: 10px;
+      filter: drop-shadow(0 8px 40px rgba(215,35,35,0.45)) drop-shadow(0 2px 8px rgba(0,0,0,0.8));
+      transition: filter 0.4s ease, transform 0.4s ease;
+      animation: logoIn 1s cubic-bezier(0.22,1,0.36,1) both;
+    }
+
+    @keyframes logoIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .logo-wrap:hover {
+      filter: drop-shadow(0 10px 50px rgba(215,35,35,0.65)) drop-shadow(0 2px 10px rgba(0,0,0,0.9));
+      transform: scale(1.02);
+    }
+
+    .logo-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ══ TAGLINE ══ */
+    .tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(11px, 2vw, 14px);
+      letter-spacing: 8px;
+      color: rgba(240,236,228,0.45);
+      margin-bottom: 52px;
+      text-align: center;
+      animation: fadeIn 1s 0.4s ease both;
+      opacity: 0;
+    }
+
+    /* ══ BUTTON ROW ══ */
+    .btn-row {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeIn 1s 0.65s ease both;
+      opacity: 0;
+    }
+
+    .portal-btn {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      width: clamp(200px, 28vw, 280px);
+      padding: 28px 24px 26px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(20,20,20,0.82);
+      backdrop-filter: blur(8px);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+    }
+
+    /* top accent bar */
+    .portal-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #8b1515, #d72323, #8b1515);
+      transition: height 0.3s ease;
+    }
+
+    /* shimmer sweep on hover */
+    .portal-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .portal-btn:hover {
+      transform: translateY(-6px);
+      border-color: rgba(215,35,35,0.5);
+      box-shadow:
+        0 16px 50px rgba(0,0,0,0.5),
+        0 0 30px rgba(215,35,35,0.25),
+        inset 0 0 20px rgba(215,35,35,0.06);
+    }
+
+    .portal-btn:hover::before { height: 4px; }
+    .portal-btn:hover::after  { transform: translateX(100%); }
+
+    .portal-btn:active { transform: translateY(-2px) scale(0.98); }
+
+    .btn-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+      transition: transform 0.3s ease;
+      line-height: 1;
+    }
+    .portal-btn:hover .btn-icon { transform: scale(1.15); }
+
+    .btn-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(18px, 3vw, 22px);
+      letter-spacing: 3px;
+      color: #f0ece4;
+      text-align: center;
+      line-height: 1.1;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .portal-btn:hover .btn-label { color: #ffffff; }
+
+    .btn-sub {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: rgba(215,35,35,0.8);
+      text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+    .portal-btn:hover .btn-sub { color: #d72323; }
+
+    /* bottom arrow indicator */
+    .btn-arrow {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      font-size: 16px;
+      color: rgba(215,35,35,0.4);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .portal-btn:hover .btn-arrow {
+      color: #d72323;
+      transform: translateX(3px);
+    }
+
+    /* ══ FOOTER CREDIT ══ */
+    .footer {
+      position: fixed;
+      bottom: 18px;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(255,255,255,0.18);
+      font-family: 'Bebas Neue', sans-serif;
+      z-index: 1;
+    }
+
+    @media (max-width: 520px) {
+      .btn-row { gap: 16px; }
+      .portal-btn { width: 100%; max-width: 320px; }
+      .logo-wrap { margin-bottom: 6px; }
+      .tagline { margin-bottom: 36px; letter-spacing: 5px; }
+    }
+  </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <h1>jStyle</h1>
-      <p>Soccer Apparel Collection</p>
+  <div class="wrapper">
+
+    <!-- LOGO -->
+    <div class="logo-wrap">
+      <img src="images/jstyles-logo.png">  
     </div>
 
-    <nav>
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="mom_gear.html">Mom Gear</a>
-      <a href="order_form.html">Order Form</a>
-    </nav>
-  </header>
+    <!-- TAGLINE -->
+    <p class="tagline">SELECT YOUR STORE</p>
 
-  <section class="hero">
-    <div class="hero-overlay">
-      <h3>Play With Passion</h3>
-       <h2>Cheer With Style</h2>
-      <p>Premium soccer-inspired apparel showcase.</p>
-    </div>
-  </section>
+    <!-- BUTTONS -->
+    <div class="btn-row">
 
-  <section id="products" class="products-section">
-    <h2>Featured Apparel</h2>
+      <a class="portal-btn" href="wos_swag.html">
+        <div class="btn-icon">⚽</div>
+        <div class="btn-label">West Ottawa<br/>Soccer</div>
+        <div class="btn-sub">Club Gear</div>
+        <span class="btn-arrow">→</span>
+      </a>
 
-    <div class="products-grid">
-
-      <!-- Product 1 -->
-      <div class="product-card">
-        <a href="black_hoodie.html" target="_blank">
-          <img src="images/black_hoodie.png" alt="Soccer Hoodie">
-        </a>
-        <div class="product-info">
-          <h3>Elite Hoodie</h3>
-          <p>Modern Streetwear and Sideline Hoodie</p>
-        </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="product-card">
-        <a href="black_tank.html" target="_blank">
-          <img src="images/black_Tank.png" alt="Sideline Tank">
-        </a>
-        <div class="product-info">
-          <h3>Sideline Tank-Top</h3>
-          <p>Lightweight Clothing For Those Hot Summer Days</p>
-        </div>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="product-card">
-        <a href="black_tshirt.html" target="_blank">
-          <img src="images/black_Tshirt.png" alt="Sideline Shirt">
-        </a>
-        <div class="product-info">
-          <h3>Sideline Tee</h3>
-          <p>Comfortable Athletic Fit.</p>
-        </div>
-      </div>
-
-      <!-- Product 4 -->
-      <div class="product-card">
-        <a href="black_hat.html" target="_blank">
-          <img src="images/black_hat.png" alt="Ball Cap">
-        </a>
-        <div class="product-info">
-          <h3>Ball Cap</h3>
-          <p>Bold urban soccer style.</p>
-        </div>
-      </div>
+      <a class="portal-btn" href="tournament_swag.html">
+        <div class="btn-icon">🏆</div>
+        <div class="btn-label">Tournament<br/>Swag</div>
+        <div class="btn-sub">Event Apparel</div>
+        <span class="btn-arrow">→</span>
+      </a>
 
     </div>
-  </section>
+  </div>
 
-  <section id="about" class="about-section">
-    <h2>About jStyle</h2>
-    <p>
-      jStyle blends soccer culture with modern fashion. Our apparel is designed
-      for players, fans, and creators who want to stand out both on and off the field.
-    </p>
-  </section>
+  <div class="footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</div>
 
-  <footer id="contact">
-    <h3>Contact</h3>
-    <p>Email: scottyjamieson29@gmail.com</p>
-    <p>Mobile: 613-298-6301 (Give name and team please)</p>
-    <p>© 2026 jStyle Apparel</p>
-  </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
