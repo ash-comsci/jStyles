@@ -1,111 +1,56 @@
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="icon" type="image/x-icon" href="/images/favicon.png">
-  <title>jStyles WOS Apparel</title>
- <link rel="icon" type="image/x-icon" href="images/favicon.png">
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+/* =============================================
+   TOURNAMENT GEAR — script.js
+   Tab switching logic
+   ============================================= */
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
+document.addEventListener('DOMContentLoaded', function () {
 
-  <header>
-    <div class="logo">
-      <h1>jStyle</h1>
-      <p>Soccer Apparel Collection</p>
-    </div>
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabPanels  = document.querySelectorAll('.tab-panel');
 
-    <nav>
-      <a href="#products">Products</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="mom_gear.html">Mom Gear</a>
-      <a href="order_form.html">Order Form</a>
-    </nav>
-  </header>
+  function activateTab(targetId) {
+    // Deactivate all buttons and panels
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabPanels.forEach(panel => {
+      panel.classList.remove('active');
+      panel.style.display = 'none';
+    });
 
-  <section class="hero">
-    <div class="hero-overlay">
-      <h3>Play With Passion</h3>
-       <h2>Cheer With Style</h2>
-      <p>Premium soccer-inspired apparel showcase.</p>
-    </div>
-  </section>
+    // Activate the clicked button
+    const activeBtn = document.querySelector(`.tab-btn[data-tab="${targetId}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
 
-  <section id="products" class="products-section">
-    <h2>Featured Apparel</h2>
+    // Activate the matching panel
+    const activePanel = document.getElementById(targetId);
+    if (activePanel) {
+      activePanel.style.display = 'block';
+      // Trigger reflow so the animation restarts
+      void activePanel.offsetWidth;
+      activePanel.classList.add('active');
+    }
 
-    <div class="products-grid">
+    // Update URL hash without jumping
+    history.replaceState(null, '', `#${targetId}`);
+  }
 
-      <!-- Product 1 -->
-      <div class="product-card">
-        <a href="black_hoodie.html" target="_blank">
-          <img src="images/black_hoodie.png" alt="Soccer Hoodie">
-        </a>
-        <div class="product-info">
-          <h3>Elite Hoodie</h3>
-          <p>Modern Streetwear and Sideline Hoodie</p>
-        </div>
-      </div>
+  // Attach click listeners
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const targetId = this.getAttribute('data-tab');
+      activateTab(targetId);
+    });
+  });
 
-      <!-- Product 2 -->
-      <div class="product-card">
-        <a href="black_tank.html" target="_blank">
-          <img src="images/black_Tank.png" alt="Sideline Tank">
-        </a>
-        <div class="product-info">
-          <h3>Sideline Tank-Top</h3>
-          <p>Lightweight Clothing For Those Hot Summer Days</p>
-        </div>
-      </div>
+  // On load: check for a hash in the URL, otherwise default to first tab
+  const initialHash = window.location.hash.replace('#', '');
+  const validIds = Array.from(tabPanels).map(p => p.id);
 
-      <!-- Product 3 -->
-      <div class="product-card">
-        <a href="black_tshirt.html" target="_blank">
-          <img src="images/black_Tshirt.png" alt="Sideline Shirt">
-        </a>
-        <div class="product-info">
-          <h3>Sideline Tee</h3>
-          <p>Comfortable Athletic Fit.</p>
-        </div>
-      </div>
+  if (initialHash && validIds.includes(initialHash)) {
+    activateTab(initialHash);
+  } else {
+    // Default: show the first tab
+    const firstId = tabButtons[0]?.getAttribute('data-tab');
+    if (firstId) activateTab(firstId);
+  }
 
-      <!-- Product 4 -->
-      <div class="product-card">
-        <a href="black_hat.html" target="_blank">
-          <img src="images/black_hat.png" alt="Ball Cap">
-        </a>
-        <div class="product-info">
-          <h3>Ball Cap</h3>
-          <p>Bold urban soccer style.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="about" class="about-section">
-    <h2>About jStyles</h2>
-    <p>
-      jStyles blends soccer culture with modern fashion. Our apparel is designed
-      for players, fans, and creators who want to stand out both on and off the field.
-    </p>
-  </section>
-
-  <footer id="contact">
-    <h3>Contact</h3>
-    <p>Email: info@jstyles.pro</p>
-    <p>Mobile: 613-298-6301 (Give name and team please)</p>
-    <p>© 2026 jStyles Apparel</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+});
