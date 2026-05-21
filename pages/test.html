@@ -5,156 +5,177 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sideline Hat | jStyles</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="../css/styles.css">
+<!-- Fonts -->
+https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap
+../css/styles.css
 
 <style>
-/* Page styling */
+
+/* Background (cleaner + matches WOS aesthetic better) */
 body {
     font-family: 'DM Sans', sans-serif;
-    /* Gradient from silver to red, fixed so it doesn't stretch weirdly when scrolling */
-    background: linear-gradient(to bottom, silver, #cc0000); 
-    background-attachment: fixed; 
-    color: #ffffff;
+    background: #0d0d0d;
+    color: white;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
-/* Sticky Navbar - Now completely transparent */
+/* Sticky Navbar (match main pages) */
 .navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: transparent;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(6px);
 }
 
-/* Main container - Rounded card */
+/* Main layout */
 .product-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     text-align: center;
-    
-    /* Container styling */
-    background: #151515; 
-    border-radius: 30px; 
-    margin: 60px auto; 
-    padding: 60px 40px;
-    width: 90%;
-    max-width: 800px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    padding: 80px 20px;
+    max-width: 1100px;
+    margin: auto;
 }
 
-/* Title styling */
+/* Title */
 .product-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 4.5rem;
-    letter-spacing: 4px;
-    margin: 0;
-    text-transform: uppercase;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    font-size: 4rem;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
 }
 
 .product-title span {
     color: orange;
 }
 
-/* Image styling */
-.product-image {
-    position: relative;
-    margin: 30px auto 40px;
-    width: 100%;
-    max-width: 450px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Subheading (NEW – helps UX clarity) */
+.product-subtitle {
+    color: #aaa;
+    margin-bottom: 40px;
 }
 
-/* Subtle glow behind the hat */
+/* IMAGE SECTION */
+.product-image {
+    position: relative;
+    margin: 40px auto;
+}
+
+/* Glow effect */
 .product-image::before {
     content: '';
     position: absolute;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(255,165,0,0.15) 0%, rgba(13,13,13,0) 70%);
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(255,165,0,0.2), transparent 70%);
     border-radius: 50%;
-    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
+/* Image */
 .product-image img {
+    max-width: 360px;
     width: 100%;
-    max-width: 380px; 
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+    transition: all 0.35s ease;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.7));
 }
 
-/* Enhanced Hover effect */
+/* Hover effect */
 .product-image img:hover {
-    transform: scale(1.05) translateY(-8px);
-    filter: drop-shadow(0 20px 30px rgba(255,165,0,0.3));
+    transform: scale(1.08) rotate(-2deg);
+    filter: drop-shadow(0 20px 35px rgba(255,165,0,0.35));
 }
 
-/* Details */
-.product-details {
+/* Info card (NEW – improves readability) */
+.product-card {
+    background: #151515;
+    padding: 30px;
+    border-radius: 15px;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 30px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
 }
 
-.product-details p {
-    font-size: 1.1rem;
-    color: #cccccc;
-    margin: 0;
-}
-
+/* Price */
 .price {
-    margin-bottom: 5px;
-    font-weight: 700;
     color: orange;
     font-size: 1.4rem;
-    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
+
+/* Description */
+.product-card p {
+    color: #ccc;
+    line-height: 1.5;
+}
+
+/* Button (NEW – more storefront feel) */
+.cta-btn {
+    margin-top: 20px;
+    padding: 12px 28px;
+    border: none;
+    background: orange;
+    color: black;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cta-btn:hover {
+    background: #ff8800;
+    transform: translateY(-2px);
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- NAVBAR -->
 <header class="navbar">
   <div class="nav-container">
-    <a href="../index.html" class="nav-logo">
-      <img src="../images/jstyles-logo.png" alt="Logo">
+    ../index.html
+      ../images/jstyles-logo.png
     </a>
     <nav class="nav-menu">
-      <a href="../index.html">Home</a>
-      <a href="wos_swag.html">WOS Swag</a>
-      <a href="tournament_swag.html">Tournament Swag</a>
-      <a href="#contact">Contact Us</a>
+      ../index.html
+      ">WOS Swag</a>
+      _swag.html">Tournament Swag</a>
+      #contactContact Us</a>
     </nav>
   </div>
 </header>
 
+<!-- PRODUCT -->
 <div class="product-container">
 
     <h1 class="product-title">
         SIDELINE <span>HAT</span>
     </h1>
 
+    <p class="product-subtitle">
+        Clean. Bold. Game-ready style.
+    </p>
+
     <div class="product-image">
-        <img src="../images/black_hat.png" alt="Black Hat">
+        ../images/black_hat.png
     </div>
 
-    <div class="product-details">
+    <div class="product-card">
         <div class="price">Txt or Email for Pricing</div>
-        <p>Sideline Hat With Style</p>
+        <p>
+            A sleek sideline essential designed for comfort and style. 
+            Perfect for game days, training, or everyday wear.
+        </p>
+
+        <button class="cta-btn">Showcase Item</button>
     </div>
 
 </div>
 
-<script src="script.js"></script>
+script.jsscript>
 </body>
 </html>
