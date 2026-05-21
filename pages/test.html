@@ -13,7 +13,9 @@
 /* Page styling */
 body {
     font-family: 'DM Sans', sans-serif;
-    background: #0d0d0d;
+    /* Gradient from silver to red, fixed so it doesn't stretch weirdly when scrolling */
+    background: linear-gradient(to bottom, silver, #cc0000); 
+    background-attachment: fixed; 
     color: #ffffff;
     margin: 0;
     display: flex;
@@ -21,17 +23,15 @@ body {
     min-height: 100vh;
 }
 
-/* Sticky Navbar */
+/* Sticky Navbar - Now completely transparent */
 .navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent;
 }
 
-/* Main container - Now a rounded card */
+/* Main container - Rounded card */
 .product-container {
     display: flex;
     flex-direction: column;
@@ -40,14 +40,13 @@ body {
     text-align: center;
     
     /* Container styling */
-    background: #151515; /* Slightly lighter than the background to stand out */
-    border-radius: 30px; /* Beautiful curved corners */
-    margin: 60px auto; /* Centers it with space around */
+    background: #151515; 
+    border-radius: 30px; 
+    margin: 60px auto; 
     padding: 60px 40px;
     width: 90%;
     max-width: 800px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Title styling */
@@ -64,12 +63,12 @@ body {
     color: orange;
 }
 
-/* Image styling - Slightly smaller than before */
+/* Image styling */
 .product-image {
     position: relative;
     margin: 30px auto 40px;
     width: 100%;
-    max-width: 450px; /* Scaled down slightly */
+    max-width: 450px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,7 +87,7 @@ body {
 
 .product-image img {
     width: 100%;
-    max-width: 380px; /* Scaled down slightly */
+    max-width: 380px; 
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
