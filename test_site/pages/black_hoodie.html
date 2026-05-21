@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!--
+  ╔══════════════════════════════════════════════╗
+  ║  PRODUCT PAGE TEMPLATE — HOW TO REUSE        ║
+  ║                                              ║
+  ║  To create a new product page:               ║
+  ║  1. Duplicate this file and rename it        ║
+  ║     (e.g. black_tank.html)                   ║
+  ║  2. Update the <title> tag                   ║
+  ║  3. Fill in the 5 marked EDIT sections below ║
+  ║  That's it — all styling is inherited from   ║
+  ║  ../css/styles.css automatically.            ║
+  ╚══════════════════════════════════════════════╝
+  -->
+
+  <!-- ① EDIT: page title -->
+  <title>Elite Hoodie — jStyles</title>
+
+  <link rel="icon" type="image/x-icon" href="../images/favicon.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/styles.css"/>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══ -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">
+        <img src="../images/jstyles-logo.png" alt="jStyles"/>
+      </a>
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="wos_swag.html">WOS Swag</a></li>
+          <li><a href="tournament_swag.html">Tournament Swag</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══ CONTENT ══ -->
+  <main class="page-wrap">
+
+    <!-- ② EDIT: back link label and href -->
+    <a class="breadcrumb" href="wos_swag.html">BACK TO WOS SWAG</a>
+
+    <div class="product-page">
+
+      <!-- ── LEFT: Product Image ── -->
+      <div class="product-image-panel">
+        <div class="product-image-wrap">
+
+          <!-- ③ EDIT: swap src for your product image -->
+          <img src="../images/black_hoodie.png" alt="Elite Hoodie"/>
+
+          <!-- If no image is ready yet, remove the <img> above and
+               uncomment the placeholder below:
+          <div class="product-img-placeholder">
+            <span style="font-size:64px;">🧥</span>
+            <span>IMAGE COMING SOON</span>
+          </div>
+          -->
+
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Product Info ── -->
+      <div class="product-info-panel">
+
+        <!-- ④ EDIT: category, name, price, description, features -->
+
+        <span class="product-category">WOS SWAG</span>
+
+        <h2>Elite Hoodie</h2>
+
+        <div class="product-rule"></div>
+
+        <div class="product-price">Text or Email for Pricing</div>
+
+        <p class="product-desc">
+          Premium soccer-inspired hoodie featuring a clean athletic design,
+          modern fit, and streetwear styling. Built for the sideline and
+          the streets alike.
+        </p>
+
+        <ul class="product-features">
+          <li>Premium Fleece</li>
+          <li>Athletic Fit</li>
+          <li>Embroidered Logo</li>
+          <li>Kangaroo Pocket</li>
+          <li>Youth &amp; Adult Sizes</li>
+        </ul>
+
+        <!-- ⑤ EDIT: link the order button to your order form -->
+        <div class="product-actions">
+          <a class="btn-primary" href="order_form.html">ORDER NOW →</a>
+          <a class="btn-secondary" href="wos_swag.html">← MORE GEAR</a>
+        </div>
+
+      </div>
+      <!-- end info panel -->
+
+    </div>
+    <!-- end product-page -->
+
+  </main>
+
+  <footer class="page-footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</footer>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>
