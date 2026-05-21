@@ -18,7 +18,7 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ensures full height for centering */
+    min-height: 100vh;
 }
 
 /* Sticky Navbar */
@@ -31,21 +31,29 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Main container - Centered Layout */
+/* Main container - Now a rounded card */
 .product-container {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px 20px 80px;
     text-align: center;
+    
+    /* Container styling */
+    background: #151515; /* Slightly lighter than the background to stand out */
+    border-radius: 30px; /* Beautiful curved corners */
+    margin: 60px auto; /* Centers it with space around */
+    padding: 60px 40px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* Title styling */
 .product-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 5rem; /* Increased size */
+    font-size: 4.5rem;
     letter-spacing: 4px;
     margin: 0;
     text-transform: uppercase;
@@ -56,12 +64,12 @@ body {
     color: orange;
 }
 
-/* Image styling - Made significantly larger and more prominent */
+/* Image styling - Slightly smaller than before */
 .product-image {
     position: relative;
     margin: 30px auto 40px;
     width: 100%;
-    max-width: 600px; /* Increased from 320px */
+    max-width: 450px; /* Scaled down slightly */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,8 +79,8 @@ body {
 .product-image::before {
     content: '';
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     background: radial-gradient(circle, rgba(255,165,0,0.15) 0%, rgba(13,13,13,0) 70%);
     border-radius: 50%;
     z-index: -1;
@@ -80,16 +88,16 @@ body {
 
 .product-image img {
     width: 100%;
-    max-width: 500px;
+    max-width: 380px; /* Scaled down slightly */
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8)); /* Replaced border-radius with drop-shadow for transparent PNGs */
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.8));
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
 }
 
 /* Enhanced Hover effect */
 .product-image img:hover {
-    transform: scale(1.05) translateY(-10px);
+    transform: scale(1.05) translateY(-8px);
     filter: drop-shadow(0 20px 30px rgba(255,165,0,0.3));
 }
 
@@ -102,38 +110,15 @@ body {
 .product-details p {
     font-size: 1.1rem;
     color: #cccccc;
-    margin-bottom: 25px;
+    margin: 0;
 }
 
 .price {
-    margin: 10px 0;
+    margin-bottom: 5px;
     font-weight: 700;
     color: orange;
     font-size: 1.4rem;
     letter-spacing: 1px;
-}
-
-/* Button */
-.showcase-btn {
-    padding: 14px 40px;
-    border: none;
-    background: orange;
-    color: #000000;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border-radius: 30px; /* Pill-shaped modern button */
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.2);
-}
-
-.showcase-btn:hover {
-    background: #ff9900;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
 }
 </style>
 </head>
@@ -167,8 +152,6 @@ body {
     <div class="product-details">
         <div class="price">Txt or Email for Pricing</div>
         <p>Sideline Hat With Style</p>
-
-        <button class="showcase-btn">Showcase Item</button>
     </div>
 
 </div>
