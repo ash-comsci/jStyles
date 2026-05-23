@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Form</title>
+   <link rel="icon" type="image/x-icon" href="images/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="../css/order.css"/>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ══ HEADER ══ -->
+  <div class="header">
+  <img src="../images/jstyles_logo.png" alt="jStyles Logo" class="header-logo">  
+    <h1>BUILD YOUR<br/><span>Warrior Classic ORDER</span></h1>
+    <p>Select the quantity of each size you need. Only sizes with a quantity above zero will appear on your order.<br>
+    <b>Orders will only be started once etransfer has been accepted to jstyles.soccer@gmail.com</b></p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- ══ CUSTOMER INFO ══ -->
+  <div class="info-card">
+    <div class="section-title">YOUR INFORMATION</div>
+    <div class="info-grid">
+      <div>
+        <label class="field-label" for="fname">FIRST NAME</label>
+        <input id="fname" type="text" placeholder="Jane"/>
+      </div>
+      <div>
+        <label class="field-label" for="lname">LAST NAME</label>
+        <input id="lname" type="text" placeholder="Smith"/>
+      </div>
+      <div class="full">
+        <label class="field-label" for="email">EMAIL ADDRESS</label>
+        <input id="email" type="email" placeholder="jane@example.com"/>
+      </div>
+      <div class="full">
+        <label class="field-label" for="notes">NAME FOR BACK (OPTIONAL)</label>
+        <input id="notes" type="text" placeholder="If you want your last name on the back right shoulder, please include what you want here!"/>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PRODUCT CARDS ══ -->
+  <div class="products-wrap">
+
+    <!-- ── Product 1 ── -->
+    <div class="product-card" data-product="White Hoodie">
+      <div class="product-header" onclick="toggleCard(this)">
+        <div class="product-header-left">
+          <span class="product-num">01</span>
+          <span class="product-name">WHITE Warrior Classic Hoodie</span>
+          <span class="product-badge">ITEMS SELECTED</span>
+        </div>
+        <span class="product-chevron">›</span>
+      </div>
+      <div class="product-body">
+        <div class="size-group-label">YOUTH SIZES</div>
+        <div class="size-grid" data-group="youth"></div>
+        <div class="size-group-label">ADULT SIZES</div>
+        <div class="size-grid" data-group="adult"></div>
+      </div>
+    </div>
+
+    <!-- ── Product 2 ── -->
+    <div class="product-card" data-product="Black Hoodie">
+      <div class="product-header" onclick="toggleCard(this)">
+        <div class="product-header-left">
+          <span class="product-num">02</span>
+          <span class="product-name">BLACK Warrior Classic Hoodie</span>
+          <span class="product-badge">ITEMS SELECTED</span>
+        </div>
+        <span class="product-chevron">›</span>
+      </div>
+      <div class="product-body">
+        <div class="size-group-label">YOUTH SIZES</div>
+        <div class="size-grid" data-group="youth"></div>
+        <div class="size-group-label">ADULT SIZES</div>
+        <div class="size-grid" data-group="adult"></div>
+      </div>
+    </div>
+
+
+<!-- ══ STICKY BAR ══ -->
+<div class="summary-bar">
+<div class="summary-count">
+  ITEMS <span id="total-count">0</span> • 
+  TOTAL <span id="total-cost">$0</span>
+</div>
+  <button class="btn-submit" id="submitBtn" onclick="submitOrder()">SEND ORDER →</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ════════════ SIZE DATA ════════════ */
+  const YOUTH_SIZES = ["Youth S","Youth M","Youth L","Youth XL"];
+  const ADULT_SIZES = ["Adult XS","Adult S","Adult M","Adult L","Adult XL","Adult XXL","Adult XXXL"];
+
+  const PRICES = {
+  "Pullover Hoodie": 50,
+  "Sideline Tee": 25,
+  "WOMENS Tank Top": 25,
+  "MENS Tank Top": 25,
+  "Ball Cap $25": 25,
+  "Sweats": 30
+};
+
+
+  /* ════════════════════════════════════════════════════
+     EMAILJS CONFIG
+     ─────────────────────────────────────────────────
+     1. Go to https://www.emailjs.com and create a free account
+     2. Add an Email Service (Gmail recommended) → copy the Service ID
+     3. Create a Template — paste ONLY this in the template body:
+            {{{html_body}}}
+        Set "To Email" = jstyles.soccer@gmail.com
+        Set "Subject"  = {{subject}}
+        → Copy the Template ID
+     4. Go to Account → API Keys → copy your Public Key
+     5. Paste all three values below
+  ════════════════════════════════════════════════════ */
+  const EMAILJS_PUBLIC_KEY  = "t0ZhDWn8N6TciIGFA";   // ← replace
+  const EMAILJS_SERVICE_ID  = "service_qpb17yf";   // ← replace
+  const EMAILJS_TEMPLATE_ID = "template_m8v30a6";  // ← replace
+
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+  /* ════════════ BUILD COUNTERS ════════════ */
+  document.querySelectorAll(".product-card").forEach((card, cardIdx) => {
+    card.querySelectorAll(".size-grid").forEach(grid => {
+      const sizes = grid.dataset.group === "youth" ? YOUTH_SIZES : ADULT_SIZES;
+      sizes.forEach(size => {
+        const row = document.createElement("div");
+        row.className = "size-row";
+        const safeId = `${cardIdx}_${size.replace(/\s/g,"_")}`;
+        row.innerHTML = `
+          <span class="size-label">${size}</span>
+          <div class="counter">
+            <button class="counter-btn" onclick="adjust('${safeId}',-1)" aria-label="decrease">−</button>
+            <span class="counter-val" id="val_${safeId}">0</span>
+            <button class="counter-btn" onclick="adjust('${safeId}',1)" aria-label="increase">+</button>
+          </div>`;
+        grid.appendChild(row);
+      });
+    });
+    const body = card.querySelector(".product-body");
+    body.style.maxHeight = body.scrollHeight + "px";
+  });
+
+  /* ════════════ COUNTER LOGIC ════════════ */
+  const counts = {};
+
+  function adjust(id, delta) {
+    const cur = counts[id] || 0;
+    const next = Math.max(0, cur + delta);
+    counts[id] = next;
+    const valEl = document.getElementById("val_" + id);
+    valEl.textContent = next;
+    valEl.classList.toggle("nonzero", next > 0);
+    valEl.closest(".size-row").classList.toggle("active", next > 0);
+    refreshBadges();
+    refreshTotal();
+  }
+
+  function refreshBadges() {
+    document.querySelectorAll(".product-card").forEach((card, cardIdx) => {
+      const badge = card.querySelector(".product-badge");
+      const total = cardTotal(cardIdx);
+      badge.textContent = `${total} SELECTED`;
+      badge.classList.toggle("visible", total > 0);
+    });
+  }
+
+  function cardTotal(cardIdx) {
+    return Object.entries(counts)
+      .filter(([k]) => k.startsWith(cardIdx + "_"))
+      .reduce((s,[,v]) => s + v, 0);
+  }
+
+function refreshTotal() {
+let totalItems = 0;
+let totalCost = 0;
+
+document.querySelectorAll(".product-card").forEach((card, cardIdx) => {
+  const productName = card.dataset.product;
+  const price = PRICES[productName] || 0;
+
+  let subtotal = 0;
+
+  Object.entries(counts).forEach(([key, val]) => {
+    if (key.startsWith(cardIdx + "_")) {
+      subtotal += val;
+    }
+  });
+
+  totalItems += subtotal;
+  totalCost += subtotal * price;
+});
+
+document.getElementById("total-count").textContent = totalItems;
+document.getElementById("total-cost").textContent = `$${totalCost}`;
+}
+
+  /* ════════════ COLLAPSE / EXPAND ════════════ */
+  function toggleCard(header) {
+    const card = header.closest(".product-card");
+    const body = card.querySelector(".product-body");
+    const isCollapsed = card.classList.contains("collapsed");
+    if (isCollapsed) {
+      card.classList.remove("collapsed");
+      body.style.maxHeight = body.scrollHeight + "px";
+    } else {
+      body.style.maxHeight = body.scrollHeight + "px";
+      requestAnimationFrame(() => {
+        card.classList.add("collapsed");
+        body.style.maxHeight = "0px";
+      });
+    }
+  }
+
+  /* ════════════ BUILD HTML EMAIL ════════════ */
+function buildEmailHTML(fname, lname, email, notes, orderRows, grandTotal) {
+
+const now = new Date().toLocaleString("en-CA", { dateStyle: "long", timeStyle: "short" });
+
+/* ✅ PRICING MAP */
+function getPrice(productName) {
+if (productName.includes("Hoodie")) return 50;
+if (productName.includes("Sideline Tee")) return 25;
+if (productName.includes("Tank")) return 25;
+if (productName.includes("Ball Cap")) return 25;
+if (productName.includes("Sweats")) return 30;
+return 0;
+}
+
+let grandTotalCost = 0;
+
+const productSections = orderRows.map(({ name, items, subtotal }) => {
+
+const price = getPrice(name);
+const sectionTotal = subtotal * price;
+grandTotalCost += sectionTotal;
+
+const rows = items.map(({ size, qty }) => `
+<tr>
+<td style="padding:10px 16px;border-bottom:1px solid #ddd;color:#111;font-size:14px;">
+${size}
+</td>
+<td style="padding:10px 16px;border-bottom:1px solid #ddd;color:#d72323;text-align:right;">
+×${qty}
+</td>
+</tr>`).join("");
+
+return `
+<div style="margin-bottom:20px;border-radius:6px;overflow:hidden;border:1px solid #ddd;">
+
+<div style="background:#ffffff;padding:12px 16px;border-bottom:2px solid #d72323;display:flex;justify-content:space-between;">
+<span style="font-size:14px;font-weight:700;color:#111;text-transform:uppercase;">
+${name}
+</span>
+
+<span style="font-size:12px;font-weight:700;color:#d72323;">
+${subtotal} ITEMS • $${sectionTotal}
+</span>
+</div>
+
+<table width="100%" cellspacing="0">
+${rows}
+</table>
+
+</div>`;
+}).join("");
+
+const notesRow = notes ? `
+<tr>
+<td style="padding:8px 0;color:#666;width:140px;">Name for Back</td>
+<td style="padding:8px 0;color:#111;">${notes}</td>
+</tr>` : "";
+
+return `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;background:#fff;font-family:Arial,sans-serif;">
+
+<table width="100%" style="padding:30px;">
+<tr>
+<td align="center">
+
+<table width="600" style="border:1px solid #ddd;">
+
+<!-- HEADER -->
+<tr>
+<td style="border-top:4px solid #d72323;padding:30px;text-align:center;">
+<div style="color:#d72323;font-size:12px;letter-spacing:3px;">JSTYLES</div>
+<div style="font-size:28px;font-weight:700;color:#111;">
+NEW ORDER<br><span style="color:#d72323;">RECEIVED</span>
+</div>
+</td>
+</tr>
+
+<!-- CUSTOMER -->
+<tr>
+<td style="padding:24px;">
+<table width="100%">
+<tr><td style="color:#666;">Name</td><td>${fname} ${lname}</td></tr>
+<tr><td style="color:#666;">Email</td><td><a href="mailto:${email}" style="color:#d72323;">${email}</a></td></tr>
+<tr><td style="color:#666;">Date</td><td>${now}</td></tr>
+${notesRow}
+</table>
+</td>
+</tr>
+
+<!-- ORDER DETAILS -->
+<tr>
+<td style="padding:24px;">
+${productSections}
+</td>
+</tr>
+
+<!-- ✅ GRAND TOTAL -->
+<tr>
+<td style="padding:24px;background:#fafafa;border-top:1px solid #ddd;">
+
+<table width="100%">
+<tr>
+<td style="color:#666;">TOTAL ITEMS</td>
+<td style="text-align:right;font-weight:700;">${grandTotal}</td>
+</tr>
+
+<tr>
+<td style="color:#666;padding-top:6px;">TOTAL COST</td>
+<td style="text-align:right;">
+<span style="background:#d72323;color:#fff;font-size:20px;font-weight:700;padding:6px 16px;border-radius:4px;">
+$${grandTotalCost}
+</span>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+
+<!-- FOOTER -->
+<tr>
+<td style="text-align:center;padding:18px;color:#777;font-size:12px;">
+Submitted via jStyles order form
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+
+</body>
+</html>`;
+}
+function buildCustomerEmail(fname, lname, email, notes, orderRows, grandTotal) {
+
+function getPrice(name) {
+  if (name.includes("Hoodie")) return 50;
+  if (name.includes("Sideline Tee")) return 25;
+  if (name.includes("Tank")) return 25;
+  if (name.includes("Ball Cap")) return 25;
+  if (name.includes("Sweats")) return 30;
+  return 0;
+}
+
+let totalCost = 0;
+
+const itemsHTML = orderRows.map(({ name, items, subtotal }) => {
+
+  const price = getPrice(name);
+  const sectionTotal = subtotal * price;
+  totalCost += sectionTotal;
+
+  const rows = items.map(({ size, qty }) => `
+  <tr>
+    <td style="padding:6px 0;">${size}</td>
+    <td style="text-align:right;">×${qty}</td>
+  </tr>`).join("");
+
+  return `
+  <div style="margin-bottom:16px;">
+    <strong>${name}</strong><br/>
+    ${rows}
+    <div style="text-align:right;font-weight:bold;color:#d72323;">
+      $${sectionTotal}
+    </div>
+  </div>`;
+}).join("");
+
+return `
+<html>
+<body style="font-family:Arial;padding:20px;background:#fff;">
+
+<h2 style="color:#d72323;">Order Confirmation</h2>
+
+<p>Hi ${fname},</p>
+<p>Thanks for your order! Here’s your summary:</p>
+
+${itemsHTML}
+
+<hr/>
+
+<p><strong>Total Items:</strong> ${grandTotal}</p>
+<p><strong>Total Cost:</strong> <span style="color:#d72323;">$${totalCost}</span></p>
+
+<p style="margin-top:20px;">We’ll be in touch soon.</p>
+
+</body>
+</html>
+`;
+}
+
+  /* ════════════ SUBMIT ════════════ */
+  async function submitOrder() {
+    const fname = document.getElementById("fname").value.trim();
+    const lname = document.getElementById("lname").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const notes = document.getElementById("notes").value.trim();
+
+    if (!fname || !lname || !email) {
+      showToast("Please fill in your name and email first.", true);
+      return;
+    }
+
+    const totalItems = Object.values(counts).reduce((s,v) => s+v, 0);
+    if (totalItems === 0) {
+      showToast("Please add at least one item to your order.", true);
+      return;
+    }
+
+    // Collect order data
+    const orderRows = [];
+    let grandTotal = 0;
+
+    document.querySelectorAll(".product-card").forEach((card, cardIdx) => {
+      const items = [];
+      [...YOUTH_SIZES, ...ADULT_SIZES].forEach(size => {
+        const qty = counts[`${cardIdx}_${size.replace(/\s/g,"_")}`] || 0;
+        if (qty > 0) items.push({ size, qty });
+      });
+      if (!items.length) return;
+      const subtotal = items.reduce((s,r) => s + r.qty, 0);
+      grandTotal += subtotal;
+      orderRows.push({ name: card.dataset.product, items, subtotal });
+    });
+
+    // Check if EmailJS is configured
+    if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+      showToast("⚠ Add your EmailJS keys to enable sending.", true);
+      console.log("Order data:", { fname, lname, email, notes, orderRows, grandTotal });
+      return;
+    }
+
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.textContent = "SENDING…";
+
+    try {
+      const htmlBody = buildEmailHTML(fname, lname, email, notes, orderRows, grandTotal);
+      const adminHTML = buildEmailHTML(fname, lname, email, notes, orderRows, grandTotal);
+      const customerHTML = buildCustomerEmail(fname, lname, email, notes, orderRows, grandTotal);
+
+// ✅ Send to YOU
+await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+  subject: `New jStyles Order — ${fname} ${lname}`,
+  html_body: adminHTML,
+  to_email: "jstyles.soccer@gmail.com",
+  from_name: `${fname} ${lname}`,
+  reply_to: email
+});
+
+// ✅ Send receipt to CUSTOMER
+await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+  subject: "Your jStyles Order Confirmation",
+  html_body: customerHTML,
+  to_email: email,
+  from_name: "jStyles",
+  reply_to: "jstyles.soccer@gmail.com"
+});
+
+      showToast("✓ Order sent successfully!");
+      document.getElementById("responseForm") && document.getElementById("responseForm").reset();
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      showToast("Send failed — check your EmailJS keys.", true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "SEND ORDER →";
+    }
+  }
+
+  /* ════════════ TOAST ════════════ */
+  function showToast(msg, isErr = false) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.toggle("err", isErr);
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 4000);
+  }
+</script>
+
+</body>
+</html>
