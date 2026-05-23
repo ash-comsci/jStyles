@@ -443,6 +443,17 @@ body::before {
   transform: translateY(-2px);
 }
 
+.btn-icon img {
+  width: 40px;   /* adjust as needed */
+  height: auto;  /* keeps proportions */
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Breadcrumb back link */
 .breadcrumb {
   font-family: 'Bebas Neue', sans-serif;
