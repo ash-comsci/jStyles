@@ -30,18 +30,24 @@
     .product-card--white .size-group-label {
       border-bottom-color: #ddd !important;
     }
+    /* Force white background on all sizing rows and counter elements */
     .product-card--white .size-row {
+      background: #ffffff !important;
       border-bottom-color: #eeeeee !important;
-    }
-    .product-card--white .counter-btn {
-      background: #f0f0f0 !important;
-      border: 1px solid #ccc !important;
-    }
-    .product-card--white .counter-btn:hover {
-      background: #e0e0e0 !important;
     }
     .product-card--white .size-row.active {
       background: #f5f5f5 !important;
+    }
+    .product-card--white .counter,
+    .product-card--white .counter-val {
+      background: #ffffff !important;
+    }
+    .product-card--white .counter-btn {
+      background: #e8e8e8 !important;
+      border: 1px solid #ccc !important;
+    }
+    .product-card--white .counter-btn:hover {
+      background: #d0d0d0 !important;
     }
   </style>
 </head>
@@ -52,7 +58,7 @@
   <!-- ══ HEADER ══ -->
   <div class="header">
   <img src="../images/jstyles_logo.png" alt="jStyles Logo" class="header-logo">  
-    <h1>BUILD YOUR<br/><span>613Showdown ORDER</span></h1>
+    <h1>BUILD YOUR<br/><span>613 Showdown ORDER</span></h1>
     <p>Select the quantity of each size you need. Only sizes with a quantity above zero will appear on your order.<br>
     <b>Orders will only be started once etransfer has been accepted to jstyles.soccer@gmail.com</b></p>
     <div class="rule"></div>
