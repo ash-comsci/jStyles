@@ -8,6 +8,42 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="stylesheet" href="../css/order.css"/>
+  <style>
+    /* ── White Hoodie card overrides ── */
+    .product-card--white,
+    .product-card--white *,
+    .product-card--white *::before,
+    .product-card--white *::after {
+      color: #111111 !important;
+    }
+    .product-card--white {
+      background: #ffffff !important;
+      border: 2px solid #ddd !important;
+    }
+    .product-card--white .product-header {
+      background: #ffffff !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+    .product-card--white .product-body {
+      background: #ffffff !important;
+    }
+    .product-card--white .size-group-label {
+      border-bottom-color: #ddd !important;
+    }
+    .product-card--white .size-row {
+      border-bottom-color: #eeeeee !important;
+    }
+    .product-card--white .counter-btn {
+      background: #f0f0f0 !important;
+      border: 1px solid #ccc !important;
+    }
+    .product-card--white .counter-btn:hover {
+      background: #e0e0e0 !important;
+    }
+    .product-card--white .size-row.active {
+      background: #f5f5f5 !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,7 +52,7 @@
   <!-- ══ HEADER ══ -->
   <div class="header">
   <img src="../images/jstyles_logo.png" alt="jStyles Logo" class="header-logo">  
-    <h1>BUILD YOUR<br/><span>Warrior Classic ORDER</span></h1>
+    <h1>BUILD YOUR<br/><span>613Showdown ORDER</span></h1>
     <p>Select the quantity of each size you need. Only sizes with a quantity above zero will appear on your order.<br>
     <b>Orders will only be started once etransfer has been accepted to jstyles.soccer@gmail.com</b></p>
     <div class="rule"></div>
@@ -49,11 +85,11 @@
   <div class="products-wrap">
 
     <!-- ── Product 1 ── -->
-    <div class="product-card" data-product="White Hoodie">
+    <div class="product-card product-card--white" data-product="White Hoodie">
       <div class="product-header" onclick="toggleCard(this)">
         <div class="product-header-left">
           <span class="product-num">01</span>
-          <span class="product-name">WHITE Warrior Classic Hoodie</span>
+          <span class="product-name">WHITE 613 Showdown Hoodie</span>
           <span class="product-badge">ITEMS SELECTED</span>
         </div>
         <span class="product-chevron">›</span>
@@ -71,7 +107,7 @@
       <div class="product-header" onclick="toggleCard(this)">
         <div class="product-header-left">
           <span class="product-num">02</span>
-          <span class="product-name">BLACK Warrior Classic Hoodie</span>
+          <span class="product-name">BLACK 613 Showdown Hoodie</span>
           <span class="product-badge">ITEMS SELECTED</span>
         </div>
         <span class="product-chevron">›</span>
