@@ -8,6 +8,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <link rel="stylesheet" href="../css/order.css"/>
+  <style>
+    /* ── White Hoodie card overrides ── */
+    .product-card--white {
+      background: #ffffff !important;
+      border: 2px solid #ddd !important;
+    }
+    .product-card--white .product-header {
+      background: #ffffff !important;
+      border-bottom: 1px solid #ddd !important;
+    }
+    .product-card--white .product-num,
+    .product-card--white .product-name,
+    .product-card--white .product-chevron {
+      color: #111111 !important;
+    }
+    .product-card--white .product-body {
+      background: #ffffff !important;
+    }
+    .product-card--white .size-group-label {
+      color: #555555 !important;
+      border-bottom-color: #ddd !important;
+    }
+    .product-card--white .size-label {
+      color: #111111 !important;
+    }
+    .product-card--white .size-row {
+      border-bottom-color: #eeeeee !important;
+    }
+    .product-card--white .counter-btn {
+      background: #f0f0f0 !important;
+      color: #111111 !important;
+      border: 1px solid #ccc !important;
+    }
+    .product-card--white .counter-btn:hover {
+      background: #e0e0e0 !important;
+    }
+    .product-card--white .counter-val {
+      color: #111111 !important;
+    }
+    .product-card--white .size-row.active {
+      background: #f5f5f5 !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -16,7 +59,7 @@
   <!-- ══ HEADER ══ -->
   <div class="header">
   <img src="../images/jstyles_logo.png" alt="jStyles Logo" class="header-logo">  
-    <h1>BUILD YOUR<br/><span>ORDER</span></h1>
+    <h1>BUILD YOUR<br/><span>Warrior Classic ORDER</span></h1>
     <p>Select the quantity of each size you need. Only sizes with a quantity above zero will appear on your order.<br>
     <b>Orders will only be started once etransfer has been accepted to jstyles.soccer@gmail.com</b></p>
     <div class="rule"></div>
@@ -49,11 +92,11 @@
   <div class="products-wrap">
 
     <!-- ── Product 1 ── -->
-    <div class="product-card" data-product="Pullover Hoodie">
+    <div class="product-card product-card--white" data-product="White Hoodie">
       <div class="product-header" onclick="toggleCard(this)">
         <div class="product-header-left">
           <span class="product-num">01</span>
-          <span class="product-name">Pullover Hoodie</span>
+          <span class="product-name">WHITE Warrior Classic Hoodie</span>
           <span class="product-badge">ITEMS SELECTED</span>
         </div>
         <span class="product-chevron">›</span>
@@ -67,11 +110,11 @@
     </div>
 
     <!-- ── Product 2 ── -->
-    <div class="product-card" data-product="Sideline Tee">
+    <div class="product-card" data-product="Black Hoodie">
       <div class="product-header" onclick="toggleCard(this)">
         <div class="product-header-left">
           <span class="product-num">02</span>
-          <span class="product-name">Sideline Tee</span>
+          <span class="product-name">BLACK Warrior Classic Hoodie</span>
           <span class="product-badge">ITEMS SELECTED</span>
         </div>
         <span class="product-chevron">›</span>
@@ -84,95 +127,6 @@
       </div>
     </div>
 
-    <!-- ── Product 3 ── -->
-    <div class="product-card" data-product="WOMENS Tank Top">
-      <div class="product-header" onclick="toggleCard(this)">
-        <div class="product-header-left">
-          <span class="product-num">03</span>
-          <span class="product-name">WOMENS Tank Top</span>
-          <span class="product-badge">ITEMS SELECTED</span>
-        </div>
-        <span class="product-chevron">›</span>
-      </div>
-      <div class="product-body">
-        <div class="size-group-label">YOUTH SIZES</div>
-        <div class="size-grid" data-group="youth"></div>
-        <div class="size-group-label">ADULT SIZES</div>
-        <div class="size-grid" data-group="adult"></div>
-      </div>
-    </div>
-
-    <!-- ── Product 4 ── -->
-    <div class="product-card" data-product="MENS Tank Top">
-      <div class="product-header" onclick="toggleCard(this)">
-        <div class="product-header-left">
-          <span class="product-num">04</span>
-          <span class="product-name">MENS Tank Top</span>
-          <span class="product-badge">ITEMS SELECTED</span>
-        </div>
-        <span class="product-chevron">›</span>
-      </div>
-      <div class="product-body">
-        <div class="size-group-label">YOUTH SIZES</div>
-        <div class="size-grid" data-group="youth"></div>
-        <div class="size-group-label">ADULT SIZES</div>
-        <div class="size-grid" data-group="adult"></div>
-      </div>
-    </div>
-
-    <!-- ── Product 5 ── -->
-    <div class="product-card" data-product="Ball Cap $25">
-      <div class="product-header" onclick="toggleCard(this)">
-        <div class="product-header-left">
-          <span class="product-num">05</span>
-          <span class="product-name">Ball Cap</span>
-          <span class="product-badge">ITEMS SELECTED</span>
-        </div>
-        <span class="product-chevron">›</span>
-      </div>
-      <div class="product-body">
-        <div class="size-group-label">YOUTH SIZES</div>
-        <div class="size-grid" data-group="youth"></div>
-        <div class="size-group-label">ADULT SIZES</div>
-        <div class="size-grid" data-group="adult"></div>
-      </div>
-    </div>
-
-    <!-- ── Product 6 ── -->
-    <div class="product-card" data-product="Sweats">
-      <div class="product-header" onclick="toggleCard(this)">
-        <div class="product-header-left">
-          <span class="product-num">06</span>
-          <span class="product-name">Sweats</span>
-          <span class="product-badge">ITEMS SELECTED</span>
-        </div>
-        <span class="product-chevron">›</span>
-      </div>
-      <div class="product-body">
-        <div class="size-group-label">SWEAT SIZES</div>
-        <div class="size-grid" data-group="sweats"></div>
-      </div>
-    </div>
-
-<!-- ── Product 6 ── -->
-    <div class="product-card" data-product="Long Sleeve">
-      <div class="product-header" onclick="toggleCard(this)">
-        <div class="product-header-left">
-          <span class="product-num">07</span>
-          <span class="product-name">Long Slevee</span>
-          <span class="product-badge">ITEMS SELECTED</span>
-        </div>
-        <span class="product-chevron">›</span>
-      </div>
-      <div class="product-body">
-        <div class="size-group-label">YOUTH SIZES</div>
-        <div class="size-grid" data-group="youth"></div>
-        <div class="size-group-label">ADULT SIZES</div>
-        <div class="size-grid" data-group="adult"></div>
-      </div>
-    </div>    
-  </div><!-- /products-wrap -->
-</div><!-- /container -->
 
 <!-- ══ STICKY BAR ══ -->
 <div class="summary-bar">
@@ -189,14 +143,14 @@
   /* ════════════ SIZE DATA ════════════ */
   const YOUTH_SIZES = ["Youth S","Youth M","Youth L","Youth XL"];
   const ADULT_SIZES = ["Adult XS","Adult S","Adult M","Adult L","Adult XL","Adult XXL","Adult XXXL"];
-  const SWEAT_SIZES = ["Youth S","Youth M","Youth L","Youth XL","Adult S","Adult M","Adult L","Adult XL"];
+
   const PRICES = {
-  "Pullover Hoodie $60": 50,
-  "Sideline Tee $25": 25,
-  "WOMENS Tank Top $20": 20,
-  "MENS Tank Top $20": 20,
+  "Pullover Hoodie": 50,
+  "Sideline Tee": 25,
+  "WOMENS Tank Top": 25,
+  "MENS Tank Top": 25,
   "Ball Cap $25": 25,
-  "Sweats $30": 30
+  "Sweats": 30
 };
 
 
