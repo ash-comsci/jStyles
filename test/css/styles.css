@@ -556,3 +556,41 @@ body::before {
     transform: translateY(0); /* ✅ SHOW MENU */
   }
 }
+/* ════════════════════════════════════════
+   CONTACT PAGE
+════════════════════════════════════════ */
+
+.contact-card {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px 28px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+}
+
+.contact-item a {
+  display: block;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--white);
+  text-decoration: none;
+  margin-top: 6px;
+  transition: color 0.2s ease;
+}
+
+.contact-item a:hover {
+  color: var(--red);
+}
+
+.contact-label {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--red);
+  display: block;
+}
