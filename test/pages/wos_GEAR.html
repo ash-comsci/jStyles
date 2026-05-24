@@ -91,28 +91,3 @@
   <footer class="page-footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</footer>
 
   <script src="../js/script.js"></script>
-  <script>
-async function loadNav() {
-  const res = await fetch('/nav.html'); // ✅ loads shared nav
-  const data = await res.text();
-  document.getElementById('navbar').innerHTML = data;
-
-  // ✅ highlight active page AFTER nav loads
-  const links = document.querySelectorAll('.nav-menu a');
-  let currentPage = window.location.pathname.split('/').pop();
-
-  if (currentPage === "") currentPage = "index.html";
-
-  links.forEach(link => {
-    const linkHref = link.getAttribute('href');
-
-    if (linkHref && linkHref.includes(currentPage)) {
-      link.classList.add('active'); // ✅ ACTIVE STATE
-    }
-  });
-}
-
-loadNav();
-</script>
-</body>
-</html>
