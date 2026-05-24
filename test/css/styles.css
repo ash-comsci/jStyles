@@ -515,3 +515,45 @@ body::before {
 @media (max-width: 400px) {
   .grid { grid-template-columns: 1fr; }
 }
+/* ✅ HAMBURGER BUTTON */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.nav-toggle span {
+  width: 26px;
+  height: 3px;
+  background: white;
+  display: block;
+  transition: 0.3s;
+}
+
+/* ✅ MOBILE MENU */
+@media (max-width: 640px) {
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: var(--nav-height);
+    right: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    gap: 18px;
+
+    transform: translateY(-120%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-menu.open {
+    transform: translateY(0); /* ✅ SHOW MENU */
+  }
+}
