@@ -23,9 +23,13 @@ cards.forEach(card => {
 // Optional future interactive features can go here
 console.log("j-Swag site loaded successfully.");
 
+// ✅ FIXED: prevent errors if nav loads later
 window.addEventListener("scroll", () => {
- const nav = document.querySelector(".navbar");
- nav.classList.toggle("scrolled", window.scrollY > 40);
+  const nav = document.querySelector(".navbar");
+  if (nav) {
+    nav.classList.toggle("scrolled", window.scrollY > 40);
+  }
+});
 });
 // ✅ ADDED: highlight active nav link
 function setActiveNav() {
