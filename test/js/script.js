@@ -49,8 +49,8 @@ window.addEventListener("scroll", () => {
 
 
 // ✅ EXISTING PRODUCT CARD ANIMATION
-const cards = document.querySelectorAll('.product-card');
-
+//const cards = document.querySelectorAll('.product-card');
+const cards = document.querySelectorAll('.card');
 if (cards.length > 0) {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
