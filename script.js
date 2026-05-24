@@ -27,3 +27,25 @@ window.addEventListener("scroll", () => {
  const nav = document.querySelector(".navbar");
  nav.classList.toggle("scrolled", window.scrollY > 40);
 });
+// ✅ ADDED: highlight active nav link
+function setActiveNav() {
+  const links = document.querySelectorAll('.nav-menu a');
+  let currentPage = window.location.pathname.split('/').pop();
+
+  // ✅ Handles homepage (/ = index.html)
+  if (currentPage === "") {
+    currentPage = "index.html";
+  }
+
+  links.forEach(link => {
+    const linkPage = link.getAttribute('href');
+
+    // ✅ Only match file names (ignores ../ etc.)
+    if (linkPage && currentPage && linkPage.includes(currentPage)) {
+      link.classList.add('active');
+    }
+  });
+}
+
+// ✅ ADDED: run after page loads
+window.addEventListener("DOMContentLoaded", setActiveNav);
