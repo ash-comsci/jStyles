@@ -560,7 +560,7 @@ ${itemsHTML}
       const adminHTML = buildEmailHTML(fname, lname, email, notes, orderRows, grandTotal);
       const customerHTML = buildCustomerEmail(fname, lname, email, notes, orderRows, grandTotal);
 
-// ✅ Send to YOU
+// ✅ Send order to YOU
 await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
   subject: `New jStyles Order — ${fname} ${lname}`,
   html_body: adminHTML,
@@ -568,6 +568,9 @@ await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
   from_name: `${fname} ${lname}`,
   reply_to: email
 });
+
+// ✅ Wait because EmailJS allows about 1 request per second
+await new Promise(resolve => setTimeout(resolve, 1500));
 
 // ✅ Send receipt to CUSTOMER
 await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
