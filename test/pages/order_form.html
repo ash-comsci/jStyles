@@ -18,7 +18,7 @@
   <img src="../images/jstyles_logo.png" alt="jStyles Logo" class="header-logo">  
     <h1>BUILD YOUR<br/><span>ORDER</span></h1>
     <p>Select the quantity of each size you need. Only sizes with a quantity above zero will appear on your order.<br>
-    <b>Orders will only be started once etransfer has been accepted to jstyles.soccer@gmail.com</b></p>
+    <b>Orders will only be started once etransfer has been accepted to jstyles.pro@gmail.com</b></p>
     <div class="rule"></div>
   </div>
 
@@ -209,7 +209,7 @@
      2. Add an Email Service (Gmail recommended) → copy the Service ID
      3. Create a Template — paste ONLY this in the template body:
             {{{html_body}}}
-        Set "To Email" = jstyles.soccer@gmail.com
+        Set "To Email" = jstyles.pro@gmail.com
         Set "Subject"  = {{subject}}
         → Copy the Template ID
      4. Go to Account → API Keys → copy your Public Key
@@ -564,7 +564,7 @@ ${itemsHTML}
 await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
   subject: `New jStyles Order — ${fname} ${lname}`,
   html_body: adminHTML,
-  to_email: "jstyles.soccer@gmail.com",
+  to_email: "jstyles.pro@gmail.com",
   from_name: `${fname} ${lname}`,
   reply_to: email
 });
@@ -575,7 +575,7 @@ await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
   html_body: customerHTML,
   to_email: email,
   from_name: "jStyles",
-  reply_to: "jstyles.soccer@gmail.com"
+  reply_to: "jstyles.pro@gmail.com"
 });
 
       showToast("✓ Order sent successfully!");
