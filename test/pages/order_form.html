@@ -509,7 +509,33 @@ ${itemsHTML}
 </html>
 `;
 }
+function clearOrderSelections() {
+  // Clear the saved quantity data
+  Object.keys(counts).forEach(key => {
+    counts[key] = 0;
+  });
 
+  // Reset all visible quantity numbers
+  document.querySelectorAll(".counter-val").forEach(el => {
+    el.textContent = "0";
+    el.classList.remove("nonzero");
+  });
+
+  // Remove highlighted active rows
+  document.querySelectorAll(".size-row").forEach(row => {
+    row.classList.remove("active");
+  });
+
+  // Reset product badges
+  document.querySelectorAll(".product-badge").forEach(badge => {
+    badge.textContent = "0 SELECTED";
+    badge.classList.remove("visible");
+  });
+
+  // Reset sticky bar totals
+  document.getElementById("total-count").textContent = "0";
+  document.getElementById("total-cost").textContent = "$0";
+}
   /* ════════════ SUBMIT ════════════ */
   async function submitOrder() {
     const fname = document.getElementById("fname").value.trim();
@@ -581,8 +607,8 @@ await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
   reply_to: "jstyles.pro@gmail.com"
 });
 
-      showToast("✓ Order sent successfully!");
-      document.getElementById("responseForm") && document.getElementById("responseForm").reset();
+showToast("✓ Order sent successfully!");
+clearOrderSelections();
     } catch (err) {
       console.error("EmailJS error:", err);
       showToast("Send failed — check your EmailJS keys.", true);
