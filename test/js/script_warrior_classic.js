@@ -17,8 +17,8 @@ const YOUTH_SIZES = ["Youth S","Youth M","Youth L","Youth XL"];
 const ADULT_SIZES = ["Adult XS","Adult S","Adult M","Adult L","Adult XL","Adult XXL","Adult XXXL"];
 
 const PRODUCTS = [
-  { id:"black_hoodie", name:"Black Hoodie", price:60, tags:["Warrior Classic","Fleece"], image:null },
-  { id:"white_hoodie", name:"White Hoodie", price:60, tags:["Warrior Classic","Fleece"], image:null },
+  { id:"black_hoodie", name:"Black Hoodie", price:60, tags:["Warrior Classic","Fleece"], image:"../images/warrior_black.png" },
+  { id:"white_hoodie", name:"White Hoodie", price:60, tags:["Warrior Classic","Fleece"], image:"../images/warrior_white.png" },
   { id:"black_tee",    name:"Black Tee",    price:25, tags:["Warrior Classic","Lightweight"], image:null },
   { id:"white_tee",    name:"White Tee",    price:25, tags:["Warrior Classic","Lightweight"], image:null },
 ];
