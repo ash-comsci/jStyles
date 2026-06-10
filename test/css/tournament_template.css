@@ -203,6 +203,8 @@ h1 span {
 }
 
 .logo-card {
+  logo-card-aspect: 1893 / 2037;
+  logo-card-size: min(720px, 92vw, 62svh);
   width: 100%;
   height: clamp(245px, 42svh, 430px);
   display: grid;
