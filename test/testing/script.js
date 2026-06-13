@@ -15,9 +15,9 @@ async function loadNav() {
         <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
         <ul class="nav-menu">
           <li><a href="/index.html">Home</a></li>
-          <li><a href="/test/pages/wos_GEAR.html">Fan Gear</a></li>
-          <li><a href="/test/pages/tournament_MERCH.html">Tournament Merch</a></li>
-          <li><a href="/test/pages/custom_MERCH.html">Custom Merch</a></li>
+          <li><a href="/test/testing/wos_GEAR.html">Fan Gear</a></li>
+          <li><a href="/test/testing/tournament_MERCH.html">Tournament Merch</a></li>
+          <li><a href="/test/testing/custom_MERCH.html">Custom Merch</a></li>
           <li><a href="/test/pages/contact.html">Contact</a></li>
         </ul>
       </div>
