@@ -57,7 +57,7 @@ const PRODUCTS = [
   {
     id: 'pullover-hoodie',
     name: 'Pullover Hoodie',
-    image: '../images/products/pullover-hoodie.png',
+    image: '../images/pullover-hoodie.png',
     price: 50,
     subtitle: 'Youth and adult sizing',
     groups: [
