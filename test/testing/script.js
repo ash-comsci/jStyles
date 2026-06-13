@@ -5,35 +5,57 @@ async function loadNav() {
   const navbarContainer = document.getElementById('navbar');
   if (!navbarContainer) return;
 
+  const fallbackNav = `
+    <nav class="navbar" aria-label="Main navigation">
+      <div class="nav-container">
+        <a class="nav-logo" href="../../index.html" aria-label="jStyles home">
+          <img src="../images/jstyles_logo.png" alt="jStyles logo" onerror="this.remove()" />
+          <strong>J<span>STYLES</span></strong>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation"><span></span></button>
+        <ul class="nav-menu">
+          <li><a href="../../index.html">Home</a></li>
+          <li><a href="tournament_MERCH.html" class="active">Tournament Merch</a></li>
+          <li><a href="../../index.html#custom">Custom Orders</a></li>
+          <li><a href="mailto:jstyles.pro@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  `;
+
   try {
     const res = await fetch('../../nav.html');
-    if (!res.ok) return;
+    if (!res.ok) throw new Error('Shared nav was not found.');
 
     const data = await res.text();
     navbarContainer.innerHTML = data;
-
-    const links = document.querySelectorAll('.nav-menu a');
-    let currentPage = window.location.pathname.split('/').pop();
-    if (currentPage === '') currentPage = 'index.html';
-
-    links.forEach(link => {
-      const href = link.getAttribute('href');
-      if (href && href.includes(currentPage)) {
-        link.classList.add('active');
-      }
-    });
-
-    const toggle = document.querySelector('.nav-toggle');
-    const menu = document.querySelector('.nav-menu');
-
-    if (toggle && menu) {
-      toggle.addEventListener('click', () => {
-        menu.classList.toggle('open');
-        toggle.classList.toggle('open');
-      });
-    }
   } catch (error) {
-    console.warn('Navbar was not loaded:', error);
+    console.warn('Navbar was not loaded. Using built-in fallback navbar:', error);
+    navbarContainer.innerHTML = fallbackNav;
+  }
+
+  const links = document.querySelectorAll('.nav-menu a');
+  let currentPage = window.location.pathname.split('/').pop();
+  if (currentPage === '') currentPage = 'index.html';
+
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    const isCurrentPage = href && href.includes(currentPage);
+    const isTournamentOrderPage = currentPage.toLowerCase().includes('order') && href && href.includes('tournament_MERCH');
+
+    if (isCurrentPage || isTournamentOrderPage) {
+      link.classList.add('active');
+    }
+  });
+
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.querySelector('.nav-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('open');
+      toggle.classList.toggle('open');
+    });
   }
 }
 
@@ -57,7 +79,7 @@ const PRODUCTS = [
   {
     id: 'pullover-hoodie',
     name: 'Pullover Hoodie',
-    image: '../images/black_hoodie.png',
+    image: '../images/products/pullover-hoodie.png',
     price: 50,
     subtitle: 'Youth and adult sizing',
     groups: [
@@ -328,7 +350,7 @@ function renderProducts() {
           <span class="product-title-line">
             <span class="product-num">${String(index + 1).padStart(2, '0')}</span>
             <span class="product-thumb" aria-hidden="true">
-              <img src="${escapeHTML(product.image)}" alt="" loading="lazy" onload="this.closest('.product-thumb').classList.add('has-image');" onerror="this.closest('.product-thumb').classList.add('image-missing'); this.remove();" />
+              <img src="${escapeHTML(product.image)}" alt="" loading="lazy" onload="this.closest('.product-thumb').classList.add('has-image'); window.updateCardHeights?.();" onerror="this.closest('.product-thumb').classList.add('image-missing'); this.remove();" />
               <span class="product-thumb-fallback">${productInitials(product.name)}</span>
             </span>
             <span class="product-name-wrap">
@@ -365,9 +387,11 @@ function renderProducts() {
 
 function updateCardHeights() {
   document.querySelectorAll('.product-card:not(.collapsed) .product-body').forEach(body => {
-    body.style.maxHeight = `${body.scrollHeight}px`;
+    body.style.maxHeight = `${body.scrollHeight + 32}px`;
   });
 }
+
+window.updateCardHeights = updateCardHeights;
 
 function adjust(key, delta) {
   const current = counts[key] || 0;
@@ -388,6 +412,7 @@ function adjust(key, delta) {
 
   refreshBadges();
   refreshTotals();
+  updateCardHeights();
 }
 
 function productTotal(product) {
@@ -451,9 +476,15 @@ function toggleCard(header) {
   if (isCollapsed) {
     card.classList.remove('collapsed');
     header.setAttribute('aria-expanded', 'true');
-    body.style.maxHeight = `${body.scrollHeight}px`;
+    body.style.maxHeight = `${body.scrollHeight + 32}px`;
+
+    window.setTimeout(() => {
+      if (!card.classList.contains('collapsed')) {
+        body.style.maxHeight = 'none';
+      }
+    }, 380);
   } else {
-    body.style.maxHeight = `${body.scrollHeight}px`;
+    body.style.maxHeight = `${body.scrollHeight + 32}px`;
     requestAnimationFrame(() => {
       card.classList.add('collapsed');
       header.setAttribute('aria-expanded', 'false');
@@ -767,6 +798,7 @@ function initOrderForm() {
   refreshTotals();
 
   window.addEventListener('resize', updateCardHeights);
+  window.addEventListener('load', updateCardHeights);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
