@@ -8,29 +8,30 @@ async function loadNav() {
   const fallbackNav = `
     <nav class="navbar" aria-label="Main navigation">
       <div class="nav-container">
-        <a class="nav-logo" href="../../index.html" aria-label="jStyles home">
-          <img src="../images/jstyles_logo.png" alt="jStyles logo" onerror="this.remove()" />
+        <a class="nav-logo" href="/index.html" aria-label="jStyles home">
+          <img src="/images/jstyles_logo.png" alt="jStyles logo" onerror="this.remove()" />
           <strong>J<span>STYLES</span></strong>
         </a>
-        <button class="nav-toggle" type="button" aria-label="Toggle navigation"><span></span></button>
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><span></span></button>
         <ul class="nav-menu">
-          <li><a href="../../index.html">Home</a></li>
-          <li><a href="tournament_MERCH.html" class="active">Tournament Merch</a></li>
-          <li><a href="../../index.html#custom">Custom Orders</a></li>
-          <li><a href="mailto:jstyles.pro@gmail.com">Contact</a></li>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/test/pages/wos_GEAR.html">Fan Gear</a></li>
+          <li><a href="/test/pages/tournament_MERCH.html">Tournament Merch</a></li>
+          <li><a href="/test/pages/custom_MERCH.html">Custom Merch</a></li>
+          <li><a href="/test/pages/contact.html">Contact</a></li>
         </ul>
       </div>
     </nav>
   `;
 
   try {
-    const res = await fetch('../../nav.html');
+    const res = await fetch('/nav.html');
     if (!res.ok) throw new Error('Shared nav was not found.');
 
     const data = await res.text();
     navbarContainer.innerHTML = data;
   } catch (error) {
-    console.warn('Navbar was not loaded. Using built-in fallback navbar:', error);
+    console.warn('Navbar was not loaded from /nav.html. Using built-in fallback navbar:', error);
     navbarContainer.innerHTML = fallbackNav;
   }
 
@@ -55,6 +56,7 @@ async function loadNav() {
     toggle.addEventListener('click', () => {
       menu.classList.toggle('open');
       toggle.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', menu.classList.contains('open'));
     });
   }
 }
