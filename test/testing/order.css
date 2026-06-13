@@ -1294,3 +1294,138 @@ body.modal-open {
     width: min(100%, 340px);
   }
 }
+
+/* ════════════════════════════════════════════════════
+   COMPACT CUSTOMER POP-UP OVERRIDES
+   Keeps the Continue button visible on standard laptops and phones.
+   ════════════════════════════════════════════════════ */
+.customer-modal {
+  place-items: start center;
+  align-items: start;
+  padding: clamp(8px, 2vh, 18px) 14px;
+  overflow-y: auto;
+}
+
+.customer-modal-card {
+  width: min(100%, 520px);
+  max-height: calc(100dvh - 22px);
+  margin-top: clamp(6px, 2vh, 16px);
+  overflow-y: auto;
+  padding: clamp(16px, 3vw, 24px);
+  border-top-width: 5px;
+  border-radius: 10px;
+}
+
+.customer-modal-card .eyebrow.small {
+  margin-bottom: 3px;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+}
+
+.customer-modal-card h2 {
+  font-size: clamp(30px, 5vw, 40px);
+  line-height: 0.88;
+}
+
+.modal-stripe {
+  width: 56px;
+  height: 4px;
+  margin-bottom: 10px;
+}
+
+.modal-intro {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.modal-info-grid {
+  margin-top: 14px;
+  gap: 11px;
+}
+
+.customer-modal-card .field-label {
+  margin-bottom: 5px;
+  font-size: 10px;
+  letter-spacing: 1.6px;
+}
+
+.customer-modal-card .info-grid input {
+  min-height: 42px;
+  padding: 9px 12px;
+  font-size: 13px;
+}
+
+.modal-actions {
+  margin-top: 14px;
+}
+
+.modal-actions .btn-submit {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 18px;
+  font-size: 15px;
+}
+
+.modal-note {
+  margin-top: 9px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+@media (max-width: 680px) {
+  .customer-modal {
+    padding: 8px 10px;
+  }
+
+  .customer-modal-card {
+    width: min(100%, 430px);
+    max-height: calc(100dvh - 16px);
+    margin-top: 0;
+    padding: 15px 14px;
+  }
+
+  .customer-modal-card h2 {
+    font-size: 34px;
+  }
+
+  .modal-info-grid {
+    gap: 9px;
+  }
+
+  .customer-modal-card .info-grid input {
+    min-height: 40px;
+    padding: 8px 11px;
+  }
+
+  .modal-actions .btn-submit {
+    min-height: 44px;
+  }
+}
+
+@media (max-height: 700px) {
+  .customer-modal {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .customer-modal-card {
+    margin-top: 0;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+
+  .modal-stripe {
+    margin-bottom: 7px;
+  }
+
+  .modal-intro,
+  .modal-note {
+    line-height: 1.25;
+  }
+
+  .modal-info-grid,
+  .modal-actions {
+    margin-top: 10px;
+  }
+}
