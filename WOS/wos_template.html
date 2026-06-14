@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  JSTYLES APPAREL PRODUCT TEMPLATE                    ║
+  ║                                                      ║
+  ║  How to reuse this page:                             ║
+  ║  1. Duplicate this file.                             ║
+  ║  2. Rename it for the item, e.g. black_hoodie.html.  ║
+  ║  3. Search for "EDIT" and update each section.       ║
+  ║  4. Upload apparel_template.css to /css/.             ║
+  ║  5. Keep /nav.html and /js/script2.js in place.       ║
+  ╚══════════════════════════════════════════════════════╝
+  -->
+
+  <!-- EDIT 1: page title -->
+  <title>Elite Hoodie | jStyles</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Main style for this template -->
+  <link rel="stylesheet" href="/css/apparel_template.css" />
+
+  <!-- This should load your shared /nav.html navbar -->
+  <script defer src="/js/script2.js"></script>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="apparel-shell">
+
+    <!-- EDIT 2: back link -->
+    <a class="breadcrumb" href="/WOS/index.html">← Back to WOS Gear</a>
+
+    <section class="product-hero" aria-labelledby="product-title">
+      <div class="hero-glow"></div>
+
+      <div class="product-media-card">
+        <div class="product-badge">Featured Gear</div>
+
+        <div class="product-image-wrap">
+          <!-- EDIT 3: main product image -->
+          <img src="/images/black_hoodie.png" alt="Elite Hoodie" class="product-image" />
+        </div>
+
+        <div class="image-note">Click order now to choose sizes and quantities.</div>
+      </div>
+
+      <div class="product-info-card">
+        <!-- EDIT 4: category / product name / price -->
+        <span class="product-category">WOS Apparel</span>
+        <h1 id="product-title">Elite <span>Hoodie</span></h1>
+        <div class="product-rule"></div>
+
+        <div class="price-row">
+          <span class="price-label">Starting at</span>
+          <strong class="product-price">$60</strong>
+        </div>
+
+        <!-- EDIT 5: product description -->
+        <p class="product-desc">
+          A premium soccer-inspired hoodie with a clean athletic look, comfortable fleece feel, and sharp jStyles finish. Built for players, parents, coaches, and fans.
+        </p>
+
+        <!-- EDIT 6: feature pills -->
+        <div class="feature-pills" aria-label="Product features">
+          <span>Premium Fleece</span>
+          <span>Athletic Fit</span>
+          <span>Youth + Adult Sizes</span>
+          <span>Team Gear</span>
+        </div>
+
+        <div class="product-details-grid">
+          <div class="detail-box">
+            <span>Colours</span>
+            <strong>Black</strong>
+          </div>
+          <div class="detail-box">
+            <span>Sizes</span>
+            <strong>Youth + Adult</strong>
+          </div>
+          <div class="detail-box">
+            <span>Order Type</span>
+            <strong>Online Form</strong>
+          </div>
+        </div>
+
+        <!-- EDIT 7: order and more gear links -->
+        <div class="product-actions">
+          <a class="btn-main" href="/WOS/gear_order.html">Order This Item →</a>
+          <a class="btn-secondary" href="/WOS/index.html">View More Gear</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-panel" aria-labelledby="details-title">
+      <div>
+        <span class="eyebrow small">PRODUCT DETAILS</span>
+        <h2 id="details-title">What You <span>Get</span></h2>
+        <p>
+          Use this area to explain the item, fit, material, logo placement, delivery notes, or ordering instructions. Keep it short and easy for customers to understand.
+        </p>
+      </div>
+
+      <ul class="detail-list">
+        <li><strong>Material:</strong> Soft fleece / cotton blend</li>
+        <li><strong>Fit:</strong> Comfortable athletic fit</li>
+        <li><strong>Customization:</strong> Logo or team design depending on item</li>
+        <li><strong>Ordering:</strong> Click the order button to complete your selection</li>
+      </ul>
+    </section>
+
+    <section class="related-panel" aria-labelledby="related-title">
+      <div class="section-heading compact">
+        <span class="eyebrow small">KEEP SHOPPING</span>
+        <h2 id="related-title">More <span>Apparel</span></h2>
+      </div>
+
+      <div class="mini-card-grid">
+        <!-- EDIT 8: optional related products -->
+        <a class="mini-card" href="/WOS/black_tanktop.html">
+          <img src="/images/black_Tank.png" alt="Sideline Tank" />
+          <span>Sideline Tank</span>
+        </a>
+
+        <a class="mini-card" href="/WOS/black_sideline_tee.html">
+          <img src="/images/black_Tshirt.png" alt="Sideline Tee" />
+          <span>Sideline Tee</span>
+        </a>
+
+        <a class="mini-card" href="/WOS/black_sweats.html">
+          <img src="/images/black_sweats.png" alt="Chilln' Sweats" />
+          <span>Chilln' Sweats</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</footer>
+</body>
+</html>
