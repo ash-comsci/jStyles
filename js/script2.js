@@ -4,25 +4,61 @@ async function loadNav() {
   if (!navbarContainer) return;
 
   try {
-    // nav.html should be saved in your root folder: /nav.html
     const res = await fetch('/nav.html');
-    if (!res.ok) throw new Error(`Could not load nav.html: ${res.status}`);
+    if (!res.ok) throw new Error('Could not load nav.html');
 
     const data = await res.text();
     navbarContainer.innerHTML = data;
 
-    const links = document.querySelectorAll('.nav-menu a');
-    const currentPath = window.location.pathname.replace(/\/$/, '/index.html');
+    const nav = navbarContainer.querySelector('.navbar');
+    const toggle = navbarContainer.querySelector('.nav-toggle');
+    const menu = navbarContainer.querySelector('.nav-menu');
+    const links = navbarContainer.querySelectorAll('.nav-menu a');
+
+    // Better active-page matching
+    let currentPath = window.location.pathname;
+
+    if (currentPath.endsWith('/')) {
+      currentPath += 'index.html';
+    }
 
     links.forEach(link => {
       const href = link.getAttribute('href');
       if (!href) return;
 
-      const linkPath = new URL(href, window.location.origin).pathname.replace(/\/$/, '/index.html');
+      const linkPath = new URL(href, window.location.origin).pathname;
+
       if (linkPath === currentPath) {
         link.classList.add('active');
+      } else {
+        link.classList.remove('active');
       }
     });
+
+    // Mobile menu
+    if (toggle && menu) {
+      toggle.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    // Scroll effect
+    window.addEventListener('scroll', () => {
+      if (nav) {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      }
+    });
+
+  } catch (err) {
+    console.error('Navbar failed to load:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadNav);
+
+
 
     const toggle = document.querySelector('.nav-toggle');
     const menu = document.querySelector('.nav-menu');
