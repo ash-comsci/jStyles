@@ -1,88 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ① EDIT: page title -->
-  <title>Black Ballcap — jStyles</title>
+  <!-- EDIT 1: page title -->
+  <title>Black Ball Cap | jStyles</title>
 
-  <link rel="icon" type="image/x-icon" href="../images/favicon.png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../css/styles.css"/>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Main style for this template -->
+  <link rel="stylesheet" href="/css/wos.css" />
+
+  <!-- This should load your shared /nav.html navbar -->
+  <script defer src="/js/script2.js"></script>
 </head>
 <body>
+  <div id="navbar"></div>
 
-  <!-- ══ NAVBAR ══ -->
-<div id="navbar"></div>
+  <main class="apparel-shell">
 
-  <!-- ══ CONTENT ══ -->
-  <main class="page-wrap">
+    <!-- EDIT 2: back link -->
+    <a class="breadcrumb" href="/WOS/index.html">← Back to WOS Gear</a>
 
-    <!-- ② EDIT: back link label and href -->
-    <a class="breadcrumb" href="wos_GEAR.html">BACK TO WOS GEAR</a>
+    <section class="product-hero" aria-labelledby="product-title">
+      <div class="hero-glow"></div>
 
-    <div class="product-page">
+      <div class="product-media-card">
+        <div class="product-badge">Featured Gear</div>
 
-      <!-- ── LEFT: Product Image ── -->
-      <div class="product-image-panel">
         <div class="product-image-wrap">
-
-          <!-- ③ EDIT: swap src for your product image -->
-          <img src="../images/black_hat.png" alt="Black Ballcap"/>
-
-          <!-- If no image is ready yet, remove the <img> above and
-               uncomment the placeholder below:
-          <div class="product-img-placeholder">
-            <span style="font-size:64px;">🧥</span>
-            <span>IMAGE COMING SOON</span>
-          </div>
-          -->
-
+          <!-- EDIT 3: main product image -->
+          <img src="/images/black_hat.png" alt="Ball Cap" class="product-image" />
         </div>
+
+        <div class="image-note">One size fits all, choose quantities on the order page.</div>
       </div>
 
-      <!-- ── RIGHT: Product Info ── -->
-      <div class="product-info-panel">
-
-        <!-- ④ EDIT: category, name, price, description, features -->
-
-        <span class="product-category">WOS GEAR</span>
-
-        <h2>WOSC Ballcap</h2>
-
+      <div class="product-info-card">
+        <!-- EDIT 4: category / product name / price -->
+        <span class="product-category">WOS Apparel</span>
+        <h1 id="product-title">Ball <span>Cap</span></h1>
         <div class="product-rule"></div>
 
-        <div class="product-price">Text or Email for Pricing</div>
-
-        <p class="product-desc">
-          Casual streetwear styling. Built for the sideline and
-          the streets alike.
-        </p>
-
-        <ul class="product-features">
-          <li>Premium Fit</li>
-          <li>Snapback</li>
-          <li>Black Subtle Logo</li>
-          <li>One Size</li>
-        </ul>
-
-        <!-- ⑤ EDIT: link the order button to your order form -->
-        <div class="product-actions">
-          <a class="btn-primary" href="order_form.html">ORDER NOW →</a>
-          <a class="btn-secondary" href="wos_GEAR.html">← MORE GEAR</a>
+        <div class="price-row">
+          <span class="price-label">Starting at</span>
+          <strong class="product-price">$25</strong>
         </div>
 
+        <!-- EDIT 5: product description -->
+        <p class="product-desc">
+       
+       A clean, everyday cap made to finish off the look. Great for game days, tournaments, travel, or casual wear. Simple, sharp, and easy to pair with any jStyles gear. <!-- EDIT 6: feature pills -->
+        <div class="feature-pills" aria-label="Product features">
+          <span>Premium Cap</span>
+          <span>Athletic Fit</span>
+          <span>One Size</span>
+          <span>FAN Gear</span>
+        </div>
+
+        <div class="product-details-grid">
+          <div class="detail-box">
+            <span>Colours</span>
+            <strong>Black</strong>
+          </div>
+          <div class="detail-box">
+            <span>Sizes</span>
+            <strong>Obe size Snapback</strong>
+          </div>
+          <div class="detail-box">
+            <span>Order Type</span>
+            <strong>Online Form</strong>
+          </div>
+        </div>
+
+        <!-- EDIT 7: order and more gear links -->
+        <div class="product-actions">
+          <a class="btn-main" href="/WOS/gear_order.html">Order This Item →</a>
+          <a class="btn-secondary" href="/WOS/index.html">View More Gear</a>
+        </div>
       </div>
-      <!-- end info panel -->
+    </section>
 
-    </div>
-    <!-- end product-page -->
+    <section class="details-panel" aria-labelledby="details-title">
+      <div>
+        <span class="eyebrow small">PRODUCT DETAILS</span>
+        <h2 id="details-title">What You <span>Get</span></h2>
+        <p>
+      A clean, everyday cap made to finish off the look. Great for game days, tournaments, travel, or casual wear. Simple, sharp, and easy to pair with any jStyles gear.</p>  
+      </div>
 
+      <ul class="detail-list">
+        <li><strong>Material:</strong> Polyseter / cotton blend</li>
+        <li><strong>Fit:</strong> Comfortable athletic fit</li>
+        <li><strong>Customization:</strong> Logo or team design depending on item</li>
+        <li><strong>Ordering:</strong> Click the order button to complete your selection</li>
+      </ul>
+    </section>
+
+    <section class="related-panel" aria-labelledby="related-title">
+      <div class="section-heading compact">
+        <span class="eyebrow small">KEEP SHOPPING</span>
+        <h2 id="related-title">More <span>Apparel</span></h2>
+      </div>
+
+      <div class="mini-card-grid">
+        <!-- EDIT 8: optional related products -->
+        <a class="mini-card" href="/WOS/black_tanktop.html">
+          <img src="/images/black_Tank.png" alt="Sideline Tank" />
+          <span>Sideline Tank</span>
+        </a>
+
+        <a class="mini-card" href="/WOS/black_sideline_tee.html">
+          <img src="/images/black_Tshirt.png" alt="Sideline Tee" />
+          <span>Sideline Tee</span>
+        </a>
+
+        <a class="mini-card" href="/WOS/black_sweats.html">
+          <img src="/images/black_sweats.png" alt="Chilln' Sweats" />
+          <span>Chilln' Sweats</span>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer class="page-footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</footer>
-
-  <script src="../js/script.js"></script>
 </body>
 </html>
