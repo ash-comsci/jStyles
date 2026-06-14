@@ -1,101 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Black Seeats — jStyles</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="icon" type="image/x-icon" href="../images/favicon.png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../css/styles.css"/>
+
+  <!-- EDIT 1: page title -->
+  <title>Black Sweats | jStyles</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Main style for this template -->
+  <link rel="stylesheet" href="/css/wos.css" />
+
+  <!-- This should load your shared /nav.html navbar -->
+  <script defer src="/js/script2.js"></script>
 </head>
 <body>
+  <div id="navbar"></div>
 
-  <!-- ══ NAVBAR ══ -->
-  <header class="navbar">
-    <div class="nav-container">
-      <a href="../../index.html" class="nav-logo">
-        <img src="../images/jstyles-logo.png" alt="jStyles"/>
-      </a>
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="../../index.html">Home</a></li>
-          <li><a href="wos_GEAR.html">WOS GEAR</a></li>
-          <li><a href="tournament_GEAR.html">Tournament GEAR</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  <main class="apparel-shell">
 
-  <!-- ══ CONTENT ══ -->
-  <main class="page-wrap">
+    <!-- EDIT 2: back link -->
+    <a class="breadcrumb" href="/WOS/index.html">← Back to WOS Gear</a>
 
-    <!-- ② EDIT: back link label and href -->
-    <a class="breadcrumb" href="wos_GEAR.html">BACK TO WOS GEAR</a>
+    <section class="product-hero" aria-labelledby="product-title">
+      <div class="hero-glow"></div>
 
-    <div class="product-page">
+      <div class="product-media-card">
+        <div class="product-badge">Featured Gear</div>
 
-      <!-- ── LEFT: Product Image ── -->
-      <div class="product-image-panel">
         <div class="product-image-wrap">
-
-          <!-- ③ EDIT: swap src for your product image -->
-          <img src="../images/black_sweats.png" alt="Sweats"/>
-
-          <!-- If no image is ready yet, remove the <img> above and
-               uncomment the placeholder below:
-          <div class="product-img-placeholder">
-            <span style="font-size:64px;">🧥</span>
-            <span>IMAGE COMING SOON</span>
-          </div>
-          -->
-
+          <!-- EDIT 3: main product image -->
+          <img src="/images/black_sweats.png" alt="Black Sweats" class="product-image" />
         </div>
+
+        <div class="image-note">Choose sizes and quantities on the order page.</div>
       </div>
 
-      <!-- ── RIGHT: Product Info ── -->
-      <div class="product-info-panel">
-
-        <!-- ④ EDIT: category, name, price, description, features -->
-
-        <span class="product-category">WOS GEAR</span>
-
-        <h2>Lounging Sweats</h2>
-
+      <div class="product-info-card">
+        <!-- EDIT 4: category / product name / price -->
+        <span class="product-category">WOS Apparel</span>
+        <h1 id="product-title">Black <span>Sweats</span></h1>
         <div class="product-rule"></div>
 
-        <div class="product-price">Text or Email for Pricing</div>
-
-        <p class="product-desc">
-          Premium soccer-inspired sweatpants featuring a clean athletic design,
-          modern fit, and streetwear styling. With the WOSC logo on the front pocket and WARRIORS on the back side, they are built for the sideline and
-          the streets alike.
-        </p>
-
-        <ul class="product-features">
-          <li>Premium Fleece</li>
-          <li>Athletic Fit</li>
-          <li>Black Subtle Logo</li>
-                <li>Youth &amp; Adult Sizes</li>
-        </ul>
-
-        <!-- ⑤ EDIT: link the order button to your order form -->
-        <div class="product-actions">
-          <a class="btn-primary" href="gear_order.html">ORDER NOW →</a>
-          <a class="btn-secondary" href="wos_GEAR.html">← MORE GEAR</a>
+        <div class="price-row">
+          <span class="price-label">Starting at</span>
+          <strong class="product-price">$30</strong>
         </div>
 
+        <!-- EDIT 5: product description -->
+        <p class="product-desc">
+         Comfortable sweats made for relaxing, warming up, travelling, or hanging around after the game. Soft, casual, and athletic, these are perfect for players and fans who want comfort without losing the sporty look.</p>
+
+        <!-- EDIT 6: feature pills -->
+        <div class="feature-pills" aria-label="Product features">
+          <span>Premium Cotton</span>
+          <span>Athletic Fit</span>
+          <span>Youth + Adult Sizes</span>
+          <span>FAN Gear</span>
+        </div>
+
+        <div class="product-details-grid">
+          <div class="detail-box">
+            <span>Colours</span>
+            <strong>Black</strong>
+          </div>
+          <div class="detail-box">
+            <span>Sizes</span>
+            <strong>Youth + Adult</strong>
+          </div>
+          <div class="detail-box">
+            <span>Order Type</span>
+            <strong>Online Form</strong>
+          </div>
+        </div>
+
+        <!-- EDIT 7: order and more gear links -->
+        <div class="product-actions">
+          <a class="btn-main" href="gear_order.html">Order This Item →</a>
+          <a class="btn-secondary" href="/WOS/index.html">View More Gear</a>
+        </div>
       </div>
-      <!-- end info panel -->
+    </section>
 
-    </div>
-    <!-- end product-page -->
+    <section class="details-panel" aria-labelledby="details-title">
+      <div>
+        <span class="eyebrow small">PRODUCT DETAILS</span>
+        <h2 id="details-title">What You <span>Get</span></h2>
+        <p>
+         Comfortable sweats made for relaxing, warming up, travelling, or hanging around after the game. Soft, casual, and athletic, 
+          these are perfect for players and fans who want comfort without losing the sporty look.     </p>
+      </div>
 
+      <ul class="detail-list">
+        <li><strong>Material:</strong> Soft fleece / cotton blend</li>
+        <li><strong>Fit:</strong> Comfortable athletic fit</li>
+        <li><strong>Customization:</strong> Logo or team design depending on item</li>
+        <li><strong>Ordering:</strong> Click the order button to complete your selection</li>
+      </ul>
+    </section>
+
+    <section class="related-panel" aria-labelledby="related-title">
+      <div class="section-heading compact">
+        <span class="eyebrow small">KEEP SHOPPING</span>
+        <h2 id="related-title">More <span>Apparel</span></h2>
+      </div>
+
+      <div class="mini-card-grid">
+        <!-- EDIT 8: optional related products -->
+        <a class="mini-card" href="/WOS/black_tanktop.html">
+          <img src="/images/black_Tank.png" alt="Sideline Tank" />
+          <span>Sideline Tank</span>
+        </a>
+
+        <a class="mini-card" href="/WOS/black_sideline_tee.html">
+          <img src="/images/black_Tshirt.png" alt="Sideline Tee" />
+          <span>Sideline Tee</span>
+        </a>
+
+        <a class="mini-card" href="/WOS/black_sweats.html">
+          <img src="/images/black_sweats.png" alt="Chilln' Sweats" />
+          <span>Chilln' Sweats</span>
+        </a>
+      </div>
+    </section>
   </main>
 
   <footer class="page-footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</footer>
-
-  <script src="../js/script.js"></script>
 </body>
 </html>
