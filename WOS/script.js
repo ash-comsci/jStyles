@@ -136,7 +136,7 @@ const PRODUCTS = [
     id: 'sweat-pants',
     name: 'Sweat Pants',
     image: '../images/products/sweat-pants.png',
-    price: 0,
+    price: 30,
     subtitle: 'Youth and adult sizing',
     groups: [
       { label: 'YOUTH SIZES', sizes: YOUTH_SIZES },
@@ -147,7 +147,7 @@ const PRODUCTS = [
     id: 'long-sleeve',
     name: 'Long Sleeve',
     image: '../images/products/long-sleeve.png',
-    price: 0,
+    price: 25,
     subtitle: 'Youth and adult sizing',
     groups: [
       { label: 'YOUTH SIZES', sizes: YOUTH_SIZES },
