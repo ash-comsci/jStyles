@@ -4,37 +4,25 @@ async function loadNav() {
   if (!navbarContainer) return;
 
   try {
+    // nav.html should be saved in your root folder: /nav.html
     const res = await fetch('/nav.html');
-    if (!res.ok) throw new Error('Could not load nav.html');
+    if (!res.ok) throw new Error(`Could not load nav.html: ${res.status}`);
 
     const data = await res.text();
     navbarContainer.innerHTML = data;
 
-    const nav = navbarContainer.querySelector('.navbar');
-    const toggle = navbarContainer.querySelector('.nav-toggle');
-    const menu = navbarContainer.querySelector('.nav-menu');
-    const links = navbarContainer.querySelectorAll('.nav-menu a');
-
-    // Better active-page matching
-    let currentPath = window.location.pathname;
-
-    if (currentPath.endsWith('/')) {
-      currentPath += 'index.html';
-    }
+    const links = document.querySelectorAll('.nav-menu a');
+    const currentPath = window.location.pathname.replace(/\/$/, '/index.html');
 
     links.forEach(link => {
       const href = link.getAttribute('href');
       if (!href) return;
 
-      const linkPath = new URL(href, window.location.origin).pathname;
-
+      const linkPath = new URL(href, window.location.origin).pathname.replace(/\/$/, '/index.html');
       if (linkPath === currentPath) {
         link.classList.add('active');
-      } else {
-        link.classList.remove('active');
       }
     });
-
     // Mobile menu
     if (toggle && menu) {
       toggle.addEventListener('click', () => {
