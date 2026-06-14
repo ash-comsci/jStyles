@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>613 Showdown — Order</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles_613_showdown.css"/>
+</head>
+
+<body>
+  <!-- ══ NAV ══ -->
+  <header class="site-nav" id="top">
+    <a class="brand" href="#top" aria-label="613 Showdown home">
+      <span class="brand-mark">613</span>
+      <span class="brand-text">613 <em>Showdown</em></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="nav-link" href="#merch">Merch</a>
+      <a class="nav-link" href="#customerInfo">Order Info</a>
+      <a class="nav-link" href="#payment">Payment</a>
+    </nav>
+  </header>
+
+  <main class="shell" style="padding-bottom:24px;">
+
+    <!-- ══ PAGE HEADER ══ -->
+    <section class="page-header page-header-with-logo">
+      <div class="page-copy">
+        <div class="page-eyebrow">Build Your Order</div>
+        <h1 class="page-title">613 SHOWDOWN <span>MERCH</span></h1>
+        <p class="page-subtitle">
+          Select 613 Showdown Recreational Tournament apparel, pick your sizes, and set quantities.
+          Only sizes above zero will appear on your order.<br/>
+          <b id="payment">Payment via e-transfer to jstyles.pro@gmail.com after submission.</b>
+        </p>
+      </div>
+
+      <div class="tournament-logo-card" aria-label="613 Showdown Recreational Tournament logo">
+        <img src="images/613_showdown_logo.jpg" alt="613 Showdown Recreational Tournament logo"/>
+      </div>
+    </section>
+
+    <section class="order-layout" id="merch">
+
+      <!-- ══ TOURNAMENT MERCH ══ -->
+      <div class="merch-column">
+        <div class="section-label" style="margin-bottom:14px;">613 Showdown Merch</div>
+        <div class="product-tabs" id="productTabs"></div>
+
+        <!-- Product layout: image left, options right -->
+        <div class="product-stage">
+
+          <!-- LEFT: image -->
+          <div class="product-image-panel" id="imagePanel">
+            <!-- product image or placeholder rendered here by JS -->
+          </div>
+
+          <!-- RIGHT: sizing options -->
+          <div class="product-options-panel" id="optionsPanel">
+            <!-- rendered by JS -->
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ══ CUSTOMER INFO ══ -->
+      <aside class="info-card customer-panel" id="customerInfo">
+        <div class="section-label">Your Information</div>
+        <div class="info-grid">
+          <div>
+            <label class="field-label" for="fname">First Name</label>
+            <input id="fname" type="text" placeholder="Jane"/>
+          </div>
+          <div>
+            <label class="field-label" for="lname">Last Name</label>
+            <input id="lname" type="text" placeholder="Smith"/>
+          </div>
+          <div class="full">
+            <label class="field-label" for="email">Email Address</label>
+            <input id="email" type="email" placeholder="jane@example.com"/>
+          </div>
+          <div class="full">
+            <label class="field-label" for="notes">Name for Back (optional)</label>
+            <input id="notes" type="text" placeholder="e.g. last name for back right shoulder"/>
+          </div>
+        </div>
+
+        <div class="payment-note">
+          <strong>Order Note</strong>
+          <span>Your total will update at the bottom of the page. Send your e-transfer after submitting your order.</span>
+        </div>
+      </aside>
+
+    </section>
+
+  </main>
+
+  <!-- ══ STICKY BAR ══ -->
+  <div class="summary-bar">
+    <div class="summary-count">
+      ITEMS <strong id="totalCount">0</strong> •
+      TOTAL <strong class="cost" id="totalCost">$0</strong>
+    </div>
+    <button class="btn-submit" id="submitBtn" onclick="submitOrder()">Send Order →</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <footer class="site-footer shell">613 Showdown Recreational Tournament · Official Apparel · Powered by jStyles</footer>
+
+  <script src="js/script_613_showdown.js"></script>
+</body>
+</html>
