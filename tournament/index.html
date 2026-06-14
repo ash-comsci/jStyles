@@ -1,120 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tournament MERCH — jStyles</title>
-  <link rel="icon" type="image/x-icon" href="../images/favicon.png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/css/styles2.css">
-  <script defer src="/js/script2.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournament Merch | jStyles</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/tournament_script.css" />
+  <script defer src="../js/tournament_script.js"></script>
 </head>
 <body>
+  <div id="navbar"></div>
 
-<!-- ✅ ADDED: shared navbar container -->
-<div id="navbar"></div>
-  <!-- ══ CONTENT ══ -->
   <main class="page-wrap">
-
-    <!-- Header -->
-    <div class="page-header">
-      <span class="page-eyebrow">JSTYLES &nbsp;·&nbsp; EVENT MERCH</span>
-      <h1>TOURNAMENT <span>MERCH</span></h1>
-      <p>Select your tournament below to place your merch order.</p>
-      <div class="page-rule"></div>
-    </div>
-
-    <!-- Tournament Grid -->
-    <div class="grid">
-
-      <!-- ══ TOURNEY CARDS ══
-           To customize each card:
-             • Change href to the order form or external link for that tournament
-             • Replace the <img> src with a tournament banner/photo
-             • Update the card-label text
-             • Remove the card-num badge if you don't want it
-      ═══════════════════════ -->
-
-      <!-- Card 1 -->
-      <a class="card" href="wcc.html">
-        <div class="card-img-wrap">
-          <img src="../images/warrior.png">
-          <div class="card-placeholder">
-            <span style="font-size:40px;">🏆</span>
-            <span>WESLEY CLOVER CUP<br>April 12 + 13</span>
-          </div>
-          <div class="card-num">01</div>
+    <section class="page-header hero-panel" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <span class="page-eyebrow">JSTYLES · EVENT MERCH</span>
+        <h1 id="page-title">Tournament <span>Merch</span></h1>
+        <p>Select your tournament below and lock in the gear. Street-ready merch, clean layouts, and custom tournament drops.</p>
+        <div class="hero-actions">
+          <a class="btn-main" href="#tournaments">Shop Tournaments</a>
+          <a class="btn-secondary" href="/custom/index.html">Custom Merch</a>
         </div>
-        <div class="card-label">Wesley Clover Cup</div>
-      </a>
+      </div>
 
-      <!-- Card 2 -->
-      <a class="card" href="order_wc.html">
-        <div class="card-img-wrap">
-          <img src="../images/warrior_classic.png">
-          <div class="card-placeholder">
-            <span style="font-size:40px;">🏆</span>
-            <span>Warrior Classic</span>
-          </div>
-          <div class="card-num">02</div>
-        </div>
-        <div class="card-label">Warrior Classic<br>July 18 + 19</div>
-      </a>
+      <div class="hero-badge" aria-hidden="true">
+        <span>J</span>
+        <strong>STYLES</strong>
+      </div>
+    </section>
 
-           <!-- Card 4 -->
-      <a class="card" href="613.html">
-        <div class="card-img-wrap">
-           <img src="../images/613 new.png">
-          <div class="card-placeholder">
-            <span style="font-size:40px;">🏆</span>
-            <span>3</span>
-          </div>
-          <div class="card-num">03</div>
-        </div>
-        <div class="card-label">613 Showdown<br>Aug 15 + 16</div>
-      </a>
+    <section id="tournaments" class="tournament-section" aria-labelledby="tournament-title">
+      <div class="section-heading compact-heading">
+        <span class="eyebrow small">Pick Your Drop</span>
+        <h2 id="tournament-title">Tournament <span>Merch</span></h2>
+        <p>Choose the event and jump straight to the order page.</p>
+      </div>
 
-      <!-- Card 5 -->
-      <a class="card" href="grind.html">
-        <div class="card-img-wrap">
-           <img src="../images/The Grind.png">
-          <div class="card-placeholder">
-            <span style="font-size:40px;">🏆</span>
-            <span>4</span>
+      <div class="tournament-grid" aria-label="Tournament merch options">
+        <a class="card tournament-card" href="wcc.html">
+          <div class="tournament-img-wrap">
+            <img src="../images/warrior.png" alt="Wesley Clover Cup" />
+            <span class="card-num">01</span>
+            <div class="tournament-overlay"><span>View Merch</span></div>
           </div>
-          <div class="card-num">04</div>
-        </div>
-        <div class="card-label">The Grind<br>Oct 3 + 4</div>
-      </a>
- <!-- Card 3 -->
-      <a class="card" href="cleats.html">
-        <div class="card-img-wrap">
-          <img src="../images/cleats 2.png">
-          <div class="card-placeholder">
-            <span style="font-size:40px;">🏆</span>
-            <span>Cleats In The Streets</span>
+          <div class="tournament-info">
+            <h3>Wesley Clover Cup</h3>
+            <p>April 12 + 13</p>
           </div>
-          <div class="card-num">05</div>
-        </div>
-        <div class="card-label">Cleats In The Streets<br>Fall... TBD</div>
-      </a>
-      <!-- Card 6 
-      <a class="card" href="#">
-        <div class="card-img-wrap">
-          <div class="card-placeholder">
-            <span style="font-size:40px;">🏆</span>
-            <span>TOURNEY 6</span>
+        </a>
+
+        <a class="card tournament-card" href="order_wc.html">
+          <div class="tournament-img-wrap">
+            <img src="../images/warrior_classic.png" alt="Warrior Classic" />
+            <span class="card-num">02</span>
+            <div class="tournament-overlay"><span>View Merch</span></div>
           </div>
-          <div class="card-num">06</div>
-        </div>
-        <div class="card-label">Tourney 6</div>
-      </a>
--->
-    </div>
+          <div class="tournament-info">
+            <h3>Warrior Classic</h3>
+            <p>July 18 + 19</p>
+          </div>
+        </a>
+
+        <a class="card tournament-card" href="613.html">
+          <div class="tournament-img-wrap">
+            <img src="../images/613 new.png" alt="613 Showdown" />
+            <span class="card-num">03</span>
+            <div class="tournament-overlay"><span>View Merch</span></div>
+          </div>
+          <div class="tournament-info">
+            <h3>613 Showdown</h3>
+            <p>Aug 15 + 16</p>
+          </div>
+        </a>
+
+        <a class="card tournament-card" href="grind.html">
+          <div class="tournament-img-wrap">
+            <img src="../images/The Grind.png" alt="The Grind" />
+            <span class="card-num">04</span>
+            <div class="tournament-overlay"><span>View Merch</span></div>
+          </div>
+          <div class="tournament-info">
+            <h3>The Grind</h3>
+            <p>Oct 3 + 4</p>
+          </div>
+        </a>
+
+        <a class="card tournament-card" href="cleats.html">
+          <div class="tournament-img-wrap">
+            <img src="../images/cleats 2.png" alt="Cleats In The Streets" />
+            <span class="card-num">05</span>
+            <div class="tournament-overlay"><span>View Merch</span></div>
+          </div>
+          <div class="tournament-info">
+            <h3>Cleats In The Streets</h3>
+            <p>Fall · TBD</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="contact-panel">
+      <div>
+        <span class="eyebrow small">Need Something Different?</span>
+        <h2>Build Your Own <span>Merch</span></h2>
+        <p>
+          Looking for team gear, tournament apparel, school spirit wear, hats, hoodies, or a full custom merch setup? Send the idea and we can help build it out.
+        </p>
+      </div>
+
+      <div class="contact-actions">
+        <a class="contact-pill" href="mailto:jstyles.pro@gmail.com?subject=Custom%20MERCH%20Request">
+          <span>Email</span>
+          <strong>jstyles.pro@gmail.com</strong>
+        </a>
+        <a class="contact-pill" href="/custom/index.html">
+          <span>Custom Page</span>
+          <strong>Start a Request</strong>
+        </a>
+      </div>
+    </section>
   </main>
 
-  <footer class="page-footer">JSTYLES &nbsp;·&nbsp; TOURNAMENT GEAR</footer>
-
-
+  <footer class="page-footer">JSTYLES · TOURNAMENT GEAR</footer>
 </body>
 </html>
