@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tournament Merch Order Form</title>
+  <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="order.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <div class="customer-modal" id="customerModal" role="dialog" aria-modal="true" aria-labelledby="customerModalTitle">
+    <div class="customer-modal-backdrop"></div>
+    <form class="customer-modal-card review-modal-card" id="customerModalForm" novalidate>
+      <div class="modal-stripe"></div>
+      <span class="eyebrow small">FINAL ORDER REVIEW</span>
+      <h2 id="customerModalTitle">Review &amp; Customer Info</h2>
+      <p class="modal-intro">
+        Check your order below, add your contact information, then confirm to send everything to jStyles.
+      </p>
+
+      <section class="order-review-block" aria-label="Order review before submitting">
+        <div class="review-heading-row">
+          <span class="review-label">YOUR ORDER</span>
+          <span class="review-mini-note">Only selected items appear here.</span>
+        </div>
+        <div class="modal-order-summary" id="modalOrderSummary"></div>
+        <div class="modal-total-strip">
+          <span>Total Items <strong id="modalReviewCount">0</strong></span>
+          <span>Total Cost <strong id="modalReviewCost">$0</strong></span>
+        </div>
+      </section>
+
+      <div class="info-grid modal-info-grid">
+        <div>
+          <label class="field-label" for="fname">FIRST NAME</label>
+          <input id="fname" type="text" autocomplete="given-name" placeholder="Jane" required />
+        </div>
+
+        <div>
+          <label class="field-label" for="lname">LAST NAME</label>
+          <input id="lname" type="text" autocomplete="family-name" placeholder="Smith" required />
+        </div>
+
+        <div class="full">
+          <label class="field-label" for="email">EMAIL ADDRESS</label>
+          <input id="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+        </div>
+
+        <div class="full">
+          <label class="field-label" for="notes">NAME FOR BACK / NOTES</label>
+          <input id="notes" type="text" placeholder="Optional: name for back, team, special notes, etc." />
+        </div>
+      </div>
+
+      <div class="modal-actions review-actions">
+        <button class="btn-secondary compact-edit" id="closeCustomerModalBtn" type="button">KEEP SHOPPING</button>
+        <button class="btn-submit" id="customerInfoSubmit" type="submit">CONFIRM &amp; SEND ORDER →</button>
+      </div>
+
+      <p class="modal-note">
+        Orders begin once e-transfer is accepted to <strong>jstyles.pro@gmail.com</strong>.
+      </p>
+    </form>
+  </div>
+
+  <main class="page-shell">
+    <header class="hero-card">
+      <div class="hero-glow"></div>
+
+      <div class="brand-row">
+        <img src="../images/jstyles_logo.png" alt="jStyles Logo" class="brand-logo" />
+        <div>
+          <span class="eyebrow">TOURNAMENT MERCH</span>
+          <h1>Build Your <span>Order</span></h1>
+        </div>
+      </div>
+
+      <p class="hero-text">
+        Select your merch, choose the size or one-size option, and add the quantity you need.
+        Only items with a quantity above zero will be included in the final order.
+      </p>
+
+      <div class="payment-note">
+        Orders will only be started once e-transfer has been accepted to
+        <strong>jstyles.pro@gmail.com</strong>
+      </div>
+    </header>
+
+    <section class="order-layout">
+      <section class="main-order-area" aria-label="Tournament merch items">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow small">MERCH OPTIONS</span>
+            <h2>Choose Your Gear</h2>
+          </div>
+          <p>Click a merch item to expand the size options. All items start closed to keep the page clean.</p>
+        </div>
+
+        <div class="products-wrap" id="productsWrap"></div>
+      </section>
+
+      <aside class="order-sidebar" aria-label="Order total">
+        <div class="order-total-card clean-total-card">
+          <span class="eyebrow small">LIVE TOTAL</span>
+          <div class="total-row">
+            <span>Items</span>
+            <strong id="sidebarTotalCount">0</strong>
+          </div>
+          <div class="total-row">
+            <span>Total</span>
+            <strong id="sidebarTotalCost">$0</strong>
+          </div>
+          <button class="btn-submit full-width" id="sidebarSubmitBtn" type="button">REVIEW ORDER →</button>
+          <p class="saved-customer-line" id="customerSummaryText">Customer info is added after you finish selecting merch.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="summary-bar">
+    <div class="summary-count">
+      ITEMS <span id="total-count">0</span> • TOTAL <span id="total-cost">$0</span>
+    </div>
+    <button class="btn-submit" id="submitBtn" type="button">REVIEW ORDER →</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
