@@ -5,7 +5,7 @@ async function loadNav() {
   // ✅ Only run if page actually has a navbar
   if (!navbarContainer) return;
 
-  const res = await fetch('../../nav.html');
+  const res = await fetch('../../nav1.html');
   const data = await res.text();
   navbarContainer.innerHTML = data;
 
