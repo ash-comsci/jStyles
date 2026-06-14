@@ -175,9 +175,11 @@ body::before {
   display: grid;
   place-items: center;
   min-height: 315px;
-  background:
-    radial-gradient(circle at center, rgba(225,25,25,0.18), transparent 58%),
-    radial-gradient(circle at center, rgba(255,255,255,0.06), transparent 50%);
+   background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,0.72), transparent 0 24%, transparent 54%),
+    radial-gradient(circle at 18% 18%, rgba(225,25,25,0.34), transparent 34%),
+    radial-gradient(circle at 82% 76%, rgba(225,25,25,0.22), transparent 36%),
+    linear-gradient(135deg, #f6f4ef 0%, #c7c7c7 18%, #8f8f8f 38%, #f8f4ee 58%, #6f0707 79%, #180202 100%);
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: 8px;
 }
