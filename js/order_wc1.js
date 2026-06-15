@@ -11,6 +11,11 @@ const TOURNAMENT = {
   paymentNote: 'Payment via e-transfer to jstyles.pro@gmail.com after submission.'
 };
 
+const CUSTOMER_CONFIRMATION_NOTE =
+  'Thank you for your order. I will contact you once your order is complete. ' +
+  'Production will only begin once the e-transfer has been received. ' +
+  'I will also confirm pickup or drop-off details with you directly.';
+
 /* Optional EmailJS setup.
    Leave these blank to use the built-in mailto fallback. */
 const EMAILJS_CONFIG = {
@@ -23,16 +28,16 @@ const EMAILJS_CONFIG = {
    Change names, prices, and image paths here for another tournament. */
 const PRODUCTS = [
   {
-    id: 'black-hoodie',
-    name: 'Black Hoodie',
-    price: 60,
-    image: '/images/warrior_black_large.png',
-    images: {
-      'large-logo': '/images/wc_hoodie_black_large.png',
-      'small-logo': '/images/wc_hoodie_black_small.png'
-    },
-    sizeChart: '/images/sizing_chart.png',
-    tags: ['Hoodie', 'Warm Fit', '$60']
+  id: 'black-hoodie',
+  name: 'Black Hoodie',
+  price: 60,
+  image: '/images/warrior_black_large.png',
+  images: {
+    'large-logo': '/images/wc_hoodie_black_large.png',
+    'small-logo': '/images/wc_hoodie_black_small.png'
+  },
+  sizeChart: '/images/sizing_chart.png',
+  tags: ['Hoodie', 'Warm Fit', '$60']
   },
   {
     id: 'white-hoodie',
@@ -43,7 +48,6 @@ const PRODUCTS = [
       'large-logo': '/images/wc_hoodie_white_large.png',
       'small-logo': '/images/wc_hoodie_white_small.png'
     },
-    sizeChart: '/images/sizing_chart.png',
     tags: ['Hoodie', 'Clean Look', '$60']
   },
   {
@@ -55,7 +59,6 @@ const PRODUCTS = [
       'large-logo': '/images/wc_tee_black_large.png',
       'small-logo': '/images/wc_tee_black_small.png'
     },
-    sizeChart: '/images/sizing_chart_tee.png',
     tags: ['T-Shirt', 'Street Ready', '$25']
   },
   {
@@ -67,7 +70,6 @@ const PRODUCTS = [
       'large-logo': '/images/wc_tee_white_large.png',
       'small-logo': '/images/wc_tee_white_small.png'
     },
-    sizeChart: '/images/sizing_chart_tee.png',
     tags: ['T-Shirt', 'Light Fit', '$25']
   }
 ];
@@ -356,8 +358,6 @@ function formatProductTitle(name) {
 }
 
 function renderProductOptions() {
-  createSizeChartStyles();
-
   const panel = document.getElementById('optionsPanel');
   if (!panel) return;
 
@@ -392,11 +392,6 @@ function renderProductOptions() {
     <div>
       <h2 class="product-options-name">${formatProductTitle(product.name)}</h2>
       <p class="product-options-meta">Choose a logo size, then click + or − to set sizes and quantities.</p>
-      ${product.sizeChart ? `
-        <button class="size-chart-btn" type="button" id="sizeChartBtn">
-          View Sizing Chart
-        </button>
-      ` : ''}
     </div>
     ${renderLogoOptions(product)}
     ${groups}
@@ -426,190 +421,6 @@ function renderProductOptions() {
       updateQuantity(product.id, logoOption.id, size, direction);
     });
   });
-
-  const sizeChartBtn = panel.querySelector('#sizeChartBtn');
-  if (sizeChartBtn && product.sizeChart) {
-    sizeChartBtn.addEventListener('click', () => {
-      openSizeChart(product.sizeChart, `${product.name} Sizing Chart`);
-    });
-  }
-}
-
-/* =========================================================
-   SIZING CHART MODAL
-   The button is rendered from product.sizeChart.
-   Change each product's sizeChart path if hoodies/tees need different charts.
-   ========================================================= */
-function createSizeChartStyles() {
-  if (document.getElementById('sizeChartModalStyles')) return;
-
-  const style = document.createElement('style');
-  style.id = 'sizeChartModalStyles';
-  style.textContent = `
-    .size-chart-btn {
-      margin-top: 14px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 38px;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 226, 122, 0.48);
-      background: rgba(255, 218, 105, 0.12);
-      color: #fff2bf;
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: 15px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .size-chart-btn:hover,
-    .size-chart-btn:focus-visible {
-      transform: translateY(-2px);
-      background: rgba(255, 218, 105, 0.22);
-      border-color: rgba(255, 226, 122, 0.82);
-      box-shadow: 0 12px 28px rgba(214, 168, 55, 0.28);
-      outline: none;
-    }
-
-    .size-chart-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 3000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-
-    .size-chart-modal.show {
-      display: flex;
-    }
-
-    .size-chart-window {
-      position: relative;
-      width: min(900px, 96vw);
-      max-height: 90vh;
-      padding: 22px;
-      border-radius: 18px;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(255, 226, 122, 0.18), transparent 42%),
-        linear-gradient(145deg, #151008, #050403);
-      border: 1px solid rgba(255, 218, 105, 0.38);
-      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.72);
-      overflow: auto;
-    }
-
-    .size-chart-window h3 {
-      margin: 0 48px 16px 0;
-      color: #ffe27a;
-      font-family: 'Bebas Neue', Impact, sans-serif;
-      font-size: clamp(26px, 5vw, 36px);
-      line-height: 1;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .size-chart-window img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 12px;
-      background: #fff;
-    }
-
-    .size-chart-close {
-      position: absolute;
-      top: 12px;
-      right: 14px;
-      width: 38px;
-      height: 38px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.58);
-      color: #fff;
-      font-size: 28px;
-      line-height: 1;
-      cursor: pointer;
-      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-    }
-
-    .size-chart-close:hover,
-    .size-chart-close:focus-visible {
-      background: rgba(255, 106, 0, 0.22);
-      border-color: rgba(255, 106, 0, 0.7);
-      transform: scale(1.04);
-      outline: none;
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-  `;
-
-  document.head.appendChild(style);
-}
-
-function createSizeChartModal() {
-  createSizeChartStyles();
-
-  if (document.getElementById('sizeChartModal')) return;
-
-  const modal = document.createElement('div');
-  modal.id = 'sizeChartModal';
-  modal.className = 'size-chart-modal';
-  modal.setAttribute('aria-hidden', 'true');
-
-  modal.innerHTML = `
-    <div class="size-chart-window" role="dialog" aria-modal="true" aria-labelledby="sizeChartTitle">
-      <button class="size-chart-close" type="button" aria-label="Close sizing chart">×</button>
-      <h3 id="sizeChartTitle">Sizing Chart</h3>
-      <img id="sizeChartImg" src="" alt="Sizing chart" />
-    </div>
-  `;
-
-  document.body.appendChild(modal);
-
-  modal.addEventListener('click', event => {
-    if (
-      event.target.id === 'sizeChartModal' ||
-      event.target.classList.contains('size-chart-close')
-    ) {
-      closeSizeChart();
-    }
-  });
-}
-
-function openSizeChart(imageSrc, title = 'Sizing Chart') {
-  createSizeChartModal();
-
-  const modal = document.getElementById('sizeChartModal');
-  const img = document.getElementById('sizeChartImg');
-  const heading = document.getElementById('sizeChartTitle');
-
-  if (!modal || !img || !heading) return;
-
-  heading.textContent = title;
-  img.src = imageSrc;
-  img.alt = title;
-
-  modal.classList.add('show');
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('modal-open');
-}
-
-function closeSizeChart() {
-  const modal = document.getElementById('sizeChartModal');
-  if (!modal) return;
-
-  modal.classList.remove('show');
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('modal-open');
 }
 
 function updateQuantity(productId, logoId, size, direction) {
@@ -720,7 +531,7 @@ function buildOrderText() {
     return `${item.productName} | ${item.logoName} | ${item.size} | Qty: ${item.qty} | $${item.subtotal}`;
   }).join('\n');
 
-  return `${TOURNAMENT.name} Order\n\nCustomer Information\nName: ${customer.firstName} ${customer.lastName}\nEmail: ${customer.email}\nClub Name: ${customer.clubName}\nAge Group: ${customer.ageGroup}\nGender: ${customer.gender}\n\nOrder Items\n${itemLines}\n\nTotal Items: ${totals.count}\nTotal Cost: $${totals.total}\n\n${TOURNAMENT.paymentNote}`;
+  return `${TOURNAMENT.name} Order\n\nCustomer Information\nName: ${customer.firstName} ${customer.lastName}\nEmail: ${customer.email}\nClub Name: ${customer.clubName}\nAge Group: ${customer.ageGroup}\nGender: ${customer.gender}\n\nOrder Items\n${itemLines}\n\nTotal Items: ${totals.count}\nTotal Cost: $${totals.total}\n\nPayment Information\n${TOURNAMENT.paymentNote}\n\nCustomer Note\n${CUSTOMER_CONFIRMATION_NOTE}`;
 }
 
 function canUseEmailJS() {
@@ -756,6 +567,8 @@ async function submitOrder() {
         age_group: customer.ageGroup,
         gender: customer.gender,
         order_summary: orderText,
+        payment_note: TOURNAMENT.paymentNote,
+        customer_note: CUSTOMER_CONFIRMATION_NOTE,
         total_items: totals.count,
         total_cost: `$${totals.total}`,
         to_email: TOURNAMENT.emailTo
@@ -795,9 +608,6 @@ function showToast(message, isError = false) {
 function addKeyboardFocus() {
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
-
-    closeSizeChart();
-
     const menu = document.querySelector('.nav-menu');
     const toggle = document.querySelector('.nav-toggle');
     if (menu && toggle) {
