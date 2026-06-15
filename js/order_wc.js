@@ -29,6 +29,13 @@ const PRODUCTS = [
     image: '/images/warrior_black_large.png',
     tags: ['Hoodie', 'Warm Fit', '$60']
   },
+   {
+    id: 'black-hoodie-small',
+    name: 'Black Hoodie Small',
+    price: 60,
+    image: '/images/black_hoodie.png',
+    tags: ['Hoodie', 'Warm Fit', '$60']
+  },
   {
     id: 'white-hoodie',
     name: 'White Hoodie',
