@@ -46,9 +46,9 @@ const CUSTOMER_CONFIRMATION_NOTE =
    the site will show an error instead of opening the visitor's email app.
    ========================================================= */
 const EMAILJS_CONFIG = {
-  publicKey: 'PASTE_YOUR_PUBLIC_KEY_HERE',
-  serviceId: 'PASTE_YOUR_SERVICE_ID_HERE',
-  templateId: 'PASTE_YOUR_MAIN_ORDER_TEMPLATE_ID_HERE'
+  publicKey: 't0ZhDWn8N6TciIGFA',
+  serviceId: 'service_qpb17yf',
+  templateId: 'template_m8v30a6'
 };
 
 const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
