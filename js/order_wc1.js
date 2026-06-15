@@ -3,18 +3,18 @@
 /*
    EMAILJS TEMPLATE SETUP NOTES
 
-   Main order template:
-   - To Email: {{to_email}} OR your fixed jstyles.pro@gmail.com address
-   - Reply To: {{reply_to}}
-   - Subject: {{order_subject}}
-   - Body can use: {{order_summary}}, {{order_lines}}, {{total_cost}}, {{customer_note}}
+   This file sends TWO direct EmailJS messages:
+   1) A detailed admin order email to jstyles.pro@gmail.com
+   2) A polished customer confirmation email to the buyer
 
-   Customer auto-reply:
-   - In EmailJS, open your MAIN order template.
-   - Go to Auto-Reply.
-   - Link your customer confirmation template.
-   - In the customer confirmation template, set To Email to: {{to_customer_email}}
-   - The customer template can use: {{customer_name}}, {{order_lines}}, {{total_cost}}, {{payment_note}}, {{customer_note}}
+   The EmailJS template should include these fields:
+   - To Email: {{to_email}}
+   - Reply To: {{reply_to}}
+   - Subject: {{subject}}
+   - Body: {{html_body}}
+
+   This matches the working order.js flow and does not rely on mailto or
+   a separate EmailJS auto-reply setup.
 */
 
 /* =========================================================
@@ -25,7 +25,7 @@ const TOURNAMENT = {
   name: 'Warrior Classic',
   emailTo: 'jstyles.pro@gmail.com',
   logo: '/images/warrior_classic.png',
-  paymentNote: 'Payment via e-transfer to jstyles.pro@gmail.com after submission.'
+  paymentNote: 'Please send your e-transfer to jstyles.pro@gmail.com after submitting your order. Production starts once the e-transfer has been received.'
 };
 
 const CUSTOMER_CONFIRMATION_NOTE =
@@ -48,7 +48,7 @@ const CUSTOMER_CONFIRMATION_NOTE =
 const EMAILJS_CONFIG = {
   publicKey: 't0ZhDWn8N6TciIGFA',
   serviceId: 'service_qpb17yf',
-  templateId: 'template_hfxilqc'
+  templateId: 'template_m8v30a6'
 };
 
 const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
@@ -523,7 +523,7 @@ function validateOrder() {
     ['fname', customer.firstName, 'first name'],
     ['lname', customer.lastName, 'last name'],
     ['email', customer.email, 'email address'],
-    ['clubName', customer.clubName, 'club name'],
+    ['clubName', customer.clubName, 'team / club name'],
     ['ageGroup', customer.ageGroup, 'age group'],
     ['gender', customer.gender, 'gender']
   ];
@@ -569,6 +569,248 @@ function buildOrderLines() {
   return items.map(item => {
     return `${item.productName} | ${item.logoName} | ${item.size} | Qty: ${item.qty} | $${item.subtotal}`;
   }).join('\n');
+}
+
+function money(value) {
+  return `$${value}`;
+}
+
+function escapeHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function buildAdminEmailHTML(customer, items, totals) {
+  const now = new Date().toLocaleString('en-CA', { dateStyle: 'long', timeStyle: 'short' });
+  const customerName = `${customer.firstName} ${customer.lastName}`.trim();
+
+  const itemRows = items.map(item => `
+    <tr>
+      <td style="padding:14px 16px;border-bottom:1px solid #e7e2dc;color:#161616;font-weight:700;">${escapeHTML(item.productName)}</td>
+      <td style="padding:14px 16px;border-bottom:1px solid #e7e2dc;color:#555;">${escapeHTML(item.logoName)}</td>
+      <td style="padding:14px 16px;border-bottom:1px solid #e7e2dc;color:#555;">${escapeHTML(item.size)}</td>
+      <td style="padding:14px 16px;border-bottom:1px solid #e7e2dc;color:#e85d1c;text-align:center;font-weight:800;">×${item.qty}</td>
+      <td style="padding:14px 16px;border-bottom:1px solid #e7e2dc;color:#161616;text-align:right;font-weight:800;">${money(item.subtotal)}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <body style="margin:0;background:#f1eee9;font-family:Arial,Helvetica,sans-serif;color:#161616;">
+      <table width="100%" cellspacing="0" cellpadding="0" style="background:#f1eee9;padding:28px 12px;">
+        <tr>
+          <td align="center">
+            <table width="640" cellspacing="0" cellpadding="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #dfd6cc;box-shadow:0 12px 30px rgba(0,0,0,0.12);">
+              <tr>
+                <td style="background:#101820;padding:30px 26px;text-align:center;border-bottom:5px solid #e85d1c;">
+                  <div style="color:#f7b267;font-size:12px;letter-spacing:4px;text-transform:uppercase;font-weight:900;">${escapeHTML(TOURNAMENT.name)}</div>
+                  <div style="color:#ffffff;font-size:34px;line-height:1.05;font-weight:900;text-transform:uppercase;margin-top:8px;">New Order<br><span style="color:#e85d1c;">Received</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:26px;">
+                  <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                    <tr>
+                      <td style="padding:9px 0;color:#777;width:150px;font-weight:700;">Customer</td>
+                      <td style="padding:9px 0;color:#161616;font-weight:800;">${escapeHTML(customerName)}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:9px 0;color:#777;font-weight:700;">Email</td>
+                      <td style="padding:9px 0;"><a href="mailto:${escapeHTML(customer.email)}" style="color:#e85d1c;font-weight:800;text-decoration:none;">${escapeHTML(customer.email)}</a></td>
+                    </tr>
+                    <tr>
+                      <td style="padding:9px 0;color:#777;font-weight:700;">Team / Club</td>
+                      <td style="padding:9px 0;color:#161616;">${escapeHTML(customer.clubName)}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:9px 0;color:#777;font-weight:700;">Age / Gender</td>
+                      <td style="padding:9px 0;color:#161616;">${escapeHTML(customer.ageGroup)} • ${escapeHTML(customer.gender)}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:9px 0;color:#777;font-weight:700;">Submitted</td>
+                      <td style="padding:9px 0;color:#161616;">${escapeHTML(now)}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:0 26px 26px;">
+                  <div style="border-radius:14px;overflow:hidden;border:1px solid #e7e2dc;">
+                    <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                      <tr>
+                        <th align="left" style="background:#fbf7f1;padding:12px 16px;color:#101820;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Item</th>
+                        <th align="left" style="background:#fbf7f1;padding:12px 16px;color:#101820;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Logo</th>
+                        <th align="left" style="background:#fbf7f1;padding:12px 16px;color:#101820;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Size</th>
+                        <th align="center" style="background:#fbf7f1;padding:12px 16px;color:#101820;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Qty</th>
+                        <th align="right" style="background:#fbf7f1;padding:12px 16px;color:#101820;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Subtotal</th>
+                      </tr>
+                      ${itemRows}
+                    </table>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:24px 26px;background:#fbf7f1;border-top:1px solid #e7e2dc;">
+                  <table width="100%" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td style="color:#777;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;">Total Items</td>
+                      <td style="color:#161616;text-align:right;font-size:18px;font-weight:900;">${totals.count}</td>
+                    </tr>
+                    <tr>
+                      <td style="color:#777;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding-top:12px;">Total Cost</td>
+                      <td style="text-align:right;padding-top:12px;"><span style="display:inline-block;background:#e85d1c;color:#ffffff;font-size:24px;font-weight:900;padding:9px 20px;border-radius:999px;">${money(totals.total)}</span></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:20px 26px;text-align:center;color:#777;font-size:12px;">
+                  Reply directly to this email to contact ${escapeHTML(customerName)}.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `;
+}
+
+function buildCustomerEmailHTML(customer, items, totals) {
+  const customerName = `${customer.firstName} ${customer.lastName}`.trim();
+
+  const itemCards = items.map(item => `
+    <div style="border:1px solid #e7e2dc;border-radius:14px;padding:14px 16px;margin-bottom:12px;background:#ffffff;">
+      <table width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <div style="color:#101820;font-size:15px;font-weight:900;text-transform:uppercase;">${escapeHTML(item.productName)}</div>
+            <div style="color:#777;font-size:13px;margin-top:4px;">${escapeHTML(item.logoName)} • ${escapeHTML(item.size)} • Qty ${item.qty}</div>
+          </td>
+          <td style="text-align:right;color:#e85d1c;font-size:18px;font-weight:900;">${money(item.subtotal)}</td>
+        </tr>
+      </table>
+    </div>
+  `).join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <body style="margin:0;background:#f1eee9;font-family:Arial,Helvetica,sans-serif;color:#161616;">
+      <table width="100%" cellspacing="0" cellpadding="0" style="background:#f1eee9;padding:28px 12px;">
+        <tr>
+          <td align="center">
+            <table width="620" cellspacing="0" cellpadding="0" style="max-width:620px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #dfd6cc;box-shadow:0 12px 30px rgba(0,0,0,0.10);">
+              <tr>
+                <td style="background:#101820;padding:30px 26px;text-align:center;border-bottom:5px solid #e85d1c;">
+                  <div style="color:#f7b267;font-size:12px;letter-spacing:4px;text-transform:uppercase;font-weight:900;">JSTYLES</div>
+                  <div style="color:#ffffff;font-size:30px;line-height:1.08;font-weight:900;text-transform:uppercase;margin-top:8px;">Your ${escapeHTML(TOURNAMENT.name)}<br><span style="color:#e85d1c;">Order Summary</span></div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:26px;">
+                  <p style="margin:0 0 12px;font-size:16px;line-height:1.5;">Hi ${escapeHTML(customer.firstName)},</p>
+                  <p style="margin:0 0 18px;font-size:16px;line-height:1.5;">Thanks for your order. Here is a copy of what you submitted:</p>
+
+                  ${itemCards}
+
+                  <div style="margin-top:18px;background:#fbf7f1;border:1px solid #e7e2dc;border-radius:16px;padding:18px;">
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="color:#777;font-weight:800;text-transform:uppercase;font-size:13px;">Total Items</td>
+                        <td style="text-align:right;color:#161616;font-size:18px;font-weight:900;">${totals.count}</td>
+                      </tr>
+                      <tr>
+                        <td style="padding-top:10px;color:#777;font-weight:800;text-transform:uppercase;font-size:13px;">Total Cost</td>
+                        <td style="padding-top:10px;text-align:right;color:#e85d1c;font-size:24px;font-weight:900;">${money(totals.total)}</td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div style="margin-top:20px;border-left:5px solid #e85d1c;background:#fff7ef;padding:16px 18px;border-radius:12px;">
+                    <div style="font-weight:900;color:#101820;margin-bottom:6px;">What happens next?</div>
+                    <p style="margin:0;color:#333;font-size:15px;line-height:1.55;">${escapeHTML(CUSTOMER_CONFIRMATION_NOTE)}</p>
+                    <p style="margin:12px 0 0;color:#333;font-size:15px;line-height:1.55;">${escapeHTML(TOURNAMENT.paymentNote)}</p>
+                  </div>
+
+                  <p style="margin:20px 0 0;color:#777;font-size:13px;line-height:1.5;">Order name: ${escapeHTML(customerName)}<br>Team / Club: ${escapeHTML(customer.clubName)}<br>Age Group: ${escapeHTML(customer.ageGroup)} • ${escapeHTML(customer.gender)}</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `;
+}
+
+function buildTemplateParams({ toEmail, subject, htmlBody, customer, items, totals, replyTo, fromName }) {
+  const orderText = buildOrderText();
+  const orderLines = buildOrderLines();
+
+  return {
+    subject,
+    order_subject: subject,
+    html_body: htmlBody,
+    message: htmlBody,
+    message_html: htmlBody,
+
+    tournament_name: TOURNAMENT.name,
+    to_email: toEmail,
+    owner_email: TOURNAMENT.emailTo,
+    reply_to: replyTo,
+    from_name: fromName,
+
+    customer_name: `${customer.firstName} ${customer.lastName}`,
+    customer_first_name: customer.firstName,
+    customer_last_name: customer.lastName,
+    customer_email: customer.email,
+    to_customer_email: customer.email,
+
+    club_name: customer.clubName,
+    age_group: customer.ageGroup,
+    gender: customer.gender,
+
+    order_summary: orderText,
+    order_lines: orderLines,
+    total_items: totals.count,
+    total_cost: money(totals.total),
+
+    payment_note: TOURNAMENT.paymentNote,
+    customer_note: CUSTOMER_CONFIRMATION_NOTE,
+    items_json: JSON.stringify(items)
+  };
+}
+
+function clearCompletedOrder() {
+  PRODUCTS.forEach(product => {
+    LOGO_OPTIONS.forEach(logoOption => {
+      SIZE_GROUPS.forEach(group => {
+        group.sizes.forEach(size => {
+          state.quantities[product.id][logoOption.id][size] = 0;
+        });
+      });
+    });
+  });
+
+  ['fname', 'lname', 'email', 'clubName', 'ageGroup', 'gender'].forEach(id => {
+    const field = document.getElementById(id);
+    if (field) field.value = '';
+  });
+
+  renderAll();
 }
 
 function hasEmailJSConfig() {
@@ -629,10 +871,10 @@ async function submitOrder() {
   if (!validateOrder()) return;
 
   const submitBtn = document.getElementById('submitBtn');
-  const orderText = buildOrderText();
-  const orderLines = buildOrderLines();
   const customer = getCustomerInfo();
+  const items = getOrderItems();
   const totals = getOrderTotals();
+  const customerName = `${customer.firstName} ${customer.lastName}`.trim();
 
   if (submitBtn) {
     submitBtn.disabled = true;
@@ -642,44 +884,48 @@ async function submitOrder() {
   try {
     await setupEmailJS();
 
-    const templateParams = {
-      tournament_name: TOURNAMENT.name,
-      order_subject: `${TOURNAMENT.name} Order - ${customer.firstName} ${customer.lastName}`,
+    const adminHTML = buildAdminEmailHTML(customer, items, totals);
+    const customerHTML = buildCustomerEmailHTML(customer, items, totals);
 
-      // Your main order email should go to this address.
-      to_email: TOURNAMENT.emailTo,
-      owner_email: TOURNAMENT.emailTo,
+    const adminParams = buildTemplateParams({
+      toEmail: TOURNAMENT.emailTo,
+      subject: `${TOURNAMENT.name} Order - ${customerName}`,
+      htmlBody: adminHTML,
+      customer,
+      items,
+      totals,
+      replyTo: customer.email,
+      fromName: customerName
+    });
 
-      // Customer details.
-      customer_name: `${customer.firstName} ${customer.lastName}`,
-      customer_first_name: customer.firstName,
-      customer_last_name: customer.lastName,
-      customer_email: customer.email,
-      to_customer_email: customer.email,
-      reply_to: customer.email,
-
-      club_name: customer.clubName,
-      age_group: customer.ageGroup,
-      gender: customer.gender,
-
-      // Order details.
-      order_summary: orderText,
-      order_lines: orderLines,
-      total_items: totals.count,
-      total_cost: `$${totals.total}`,
-
-      // Notes for customer confirmation.
-      payment_note: TOURNAMENT.paymentNote,
-      customer_note: CUSTOMER_CONFIRMATION_NOTE
-    };
+    const customerParams = buildTemplateParams({
+      toEmail: customer.email,
+      subject: `Your ${TOURNAMENT.name} Order Confirmation`,
+      htmlBody: customerHTML,
+      customer,
+      items,
+      totals,
+      replyTo: TOURNAMENT.emailTo,
+      fromName: 'jStyles'
+    });
 
     await window.emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
-      templateParams
+      adminParams
     );
 
-    showToast('Order sent. A confirmation email has been sent to the customer.');
+    // Small pause helps avoid EmailJS rate-limit hiccups when sending two messages back-to-back.
+    await new Promise(resolve => window.setTimeout(resolve, 1200));
+
+    await window.emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      customerParams
+    );
+
+    showToast('✓ Order sent to jStyles and the customer.');
+    clearCompletedOrder();
   } catch (error) {
     console.error('Order submission failed:', error);
     const message = error?.message || 'The order could not be sent. Please check your EmailJS settings.';
