@@ -433,7 +433,7 @@ h1 {
 
 .portal-title {
   font-family: var(--font-display);
-  font-size: clamp(34px, 4vw, 52px);
+  font-size: clamp(24px, 4vw, 42px);
   line-height: 0.88;
   letter-spacing: 0.04em;
   color: #fff;
