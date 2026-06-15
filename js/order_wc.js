@@ -28,8 +28,8 @@ const PRODUCTS = [
     price: 60,
     image: '/images/warrior_black_large.png',
     images: {
-      'large-logo': '/images/warrior_black_large.png',
-      'small-logo': '/images/black_hoodie.png'
+      'large-logo': '/images/wc_hoodie_black_large.png',
+      'small-logo': '/images/wc_hoodie_black_small.png'
     },
     tags: ['Hoodie', 'Warm Fit', '$60']
   },
@@ -37,10 +37,10 @@ const PRODUCTS = [
     id: 'white-hoodie',
     name: 'White Hoodie',
     price: 60,
-    image: '/images/warrior_white_large.png',
+    image: '/images/wc_hoodie_white_large.png',
     images: {
-      'large-logo': '/images/warrior_white_large.png',
-      'small-logo': '/images/mom_gear.png'
+      'large-logo': '/images/wc_hoodie_white_large.png',
+      'small-logo': '/images/wc_hoodie_white_small.png'
     },
     tags: ['Hoodie', 'Clean Look', '$60']
   },
@@ -48,10 +48,10 @@ const PRODUCTS = [
     id: 'black-tee',
     name: 'Black Tee',
     price: 25,
-    image: '/images/black_tee_large.png',
+    image: '/images/wc_tee_black_large.png',
     images: {
-      'large-logo': '/images/black_tee_large.png',
-      'small-logo': '/images/black_sweats.png'
+      'large-logo': '/images/wc_tee_black_large.png',
+      'small-logo': '/images/wc_tee_black_small.png'
     },
     tags: ['T-Shirt', 'Street Ready', '$25']
   },
@@ -59,10 +59,10 @@ const PRODUCTS = [
     id: 'white-tee',
     name: 'White Tee',
     price: 25,
-    image: '/images/white_tee_large_logo.png',
+    image: '/images/wc_tee_white_large.png',
     images: {
-      'large-logo': '/images/white_tee_large_logo.png',
-      'small-logo': '/images/white_tee_small_logo.png'
+      'large-logo': '/images/wc_tee_white_large.png',
+      'small-logo': '/images/wc_tee_white_small.png'
     },
     tags: ['T-Shirt', 'Light Fit', '$25']
   }
