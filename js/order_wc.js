@@ -26,33 +26,50 @@ const PRODUCTS = [
     id: 'black-hoodie',
     name: 'Black Hoodie',
     price: 60,
-    image: '/images/warrior_black_large.png',
+    image: '/images/black_hoodie_large_logo.png',
+    images: {
+      'large-logo': '/images/black_hoodie_large_logo.png',
+      'small-logo': '/images/black_hoodie_small_logo.png'
+    },
     tags: ['Hoodie', 'Warm Fit', '$60']
   },
   {
     id: 'white-hoodie',
     name: 'White Hoodie',
     price: 60,
-    image: '/images/warrior_white_large.png',
+    image: '/images/white_hoodie_large_logo.png',
+    images: {
+      'large-logo': '/images/white_hoodie_large_logo.png',
+      'small-logo': '/images/white_hoodie_small_logo.png'
+    },
     tags: ['Hoodie', 'Clean Look', '$60']
   },
   {
     id: 'black-tee',
     name: 'Black Tee',
     price: 25,
-    image: '/images/black_tee_large.png',
+    image: '/images/black_tee_large_logo.png',
+    images: {
+      'large-logo': '/images/black_tee_large_logo.png',
+      'small-logo': '/images/black_tee_small_logo.png'
+    },
     tags: ['T-Shirt', 'Street Ready', '$25']
   },
   {
     id: 'white-tee',
     name: 'White Tee',
     price: 25,
-    image: '/images/white_tee_large.png',
+    image: '/images/white_tee_large_logo.png',
+    images: {
+      'large-logo': '/images/white_tee_large_logo.png',
+      'small-logo': '/images/white_tee_small_logo.png'
+    },
     tags: ['T-Shirt', 'Light Fit', '$25']
   }
 ];
 
-/* Logo options available for every apparel item. */
+/* Logo options available for every apparel item.
+   The id matches the image keys above, so changing Large/Small also changes the preview image. */
 const LOGO_OPTIONS = [
   {
     id: 'large-logo',
@@ -192,6 +209,10 @@ function getLogoOption(logoId) {
   return LOGO_OPTIONS.find(option => option.id === logoId) || LOGO_OPTIONS[0];
 }
 
+function getProductImage(product, logoId = state.activeLogoId) {
+  return product.images?.[logoId] || product.image || '';
+}
+
 function getProductCount(productId) {
   return LOGO_OPTIONS.reduce((logoSum, logoOption) => {
     return logoSum + Object.values(state.quantities[productId][logoOption.id]).reduce((sum, qty) => sum + qty, 0);
@@ -296,10 +317,11 @@ function renderProductImage() {
 
   const product = getProduct(state.activeProductId);
   const logoOption = getLogoOption(state.activeLogoId);
+  const productImage = getProductImage(product, logoOption.id);
   const tags = [...product.tags, logoOption.name].map(tag => `<span class="product-tag">${tag}</span>`).join('');
 
   panel.innerHTML = `
-    <img class="product-img" src="${product.image}" alt="${product.name}" onerror="this.replaceWith(createProductPlaceholder('${product.name.replace(/'/g, '&apos;')}'))" />
+    <img class="product-img" src="${productImage}" alt="${product.name} - ${logoOption.name}" onerror="this.replaceWith(createProductPlaceholder('${product.name.replace(/'/g, '&apos;')}'))" />
     <div class="product-tag-strip">${tags}</div>
     <div class="product-price-display">
       <div class="price-label">Price</div>
