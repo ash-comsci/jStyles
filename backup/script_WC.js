@@ -7,7 +7,68 @@ const EMAILJS_PUBLIC_KEY  = "t0ZhDWn8N6TciIGFA";
 const EMAILJS_SERVICE_ID  = "service_qpb17yf";
 const EMAILJS_TEMPLATE_ID = "template_m8v30a6";
 emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+/* ════════════════════════════════════
+   LOAD SHARED NAVBAR
+════════════════════════════════════ */
+async function loadNavbar() {
+  const navHolder = document.getElementById('navbar');
 
+  // If the navbar is already hard-coded into the page, just activate hamburger.
+  if (!navHolder) {
+    initNavbar();
+    updateStickyNavHeight();
+    return;
+  }
+
+  const navPaths = [
+    'nav.html',
+    './nav.html',
+    '../nav.html',
+    '/nav.html',
+    '/test/nav.html',
+    '/test/pages/nav.html'
+  ];
+
+  for (const path of navPaths) {
+    try {
+      const response = await fetch(path, { cache: 'no-cache' });
+
+      if (!response.ok) continue;
+
+      navHolder.innerHTML = await response.text();
+      initNavbar();
+      updateStickyNavHeight();
+      return;
+    } catch (error) {
+      // Try next path
+    }
+  }
+
+  console.warn('Navbar could not be loaded. Check nav.html path.');
+}
+
+function initNavbar() {
+  const toggle = document.querySelector('.nav-toggle');
+  const menu = document.querySelector('.nav-menu');
+
+  if (!toggle || !menu) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('active');
+    toggle.classList.toggle('active', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    updateStickyNavHeight();
+  });
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('active');
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+      updateStickyNavHeight();
+    });
+  });
+}
 /* ════════════════════════════════════
    PRODUCT DATA
    — Add a real `image` path per product
@@ -461,7 +522,7 @@ window.addEventListener('load', updateStickyNavHeight);
 /* ════════════════════════════════════
    INIT
 ════════════════════════════════════ */
-initNavbar();
+loadNavbar();
 buildTabs();
 selectProduct(0);
 refreshGrandTotal();
