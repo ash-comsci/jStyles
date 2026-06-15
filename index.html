@@ -1,53 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <link rel="icon" type="image/x-icon" href="images/favicon.png">
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>jStyles Apparel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
- <link rel="stylesheet" href="css/index.css">
+  <link rel="icon" type="image/x-icon" href="images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Ops+One&family=DM+Sans:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
+  <main class="landing-shell">
+    <section class="hero-card" aria-label="jStyles starting page">
+      <div class="paint paint-orange"></div>
+      <div class="paint paint-blue"></div>
+      <div class="street-grid"></div>
 
-  <div class="wrapper">
+   <!--   <header class="topbar">
+        <a class="mini-brand" href="/" aria-label="jStyles Home">
+          <img src="../images/jstyles_logo.png" alt="jStyles logo" />
+        </a>
 
-    <!-- LOGO -->
-    <div class="logo-wrap">
-      <img src="images/jstyles_logo.png">  
-    </div>
+        <nav class="quick-nav" aria-label="Quick navigation">
+          <a href="WOS">WOS</a>
+          <a href="tournament">Tournament</a>
+          <a href="custom">Custom</a>
+        </nav>
+      </header>
+-->
+      <div class="hero-content">
+        <p class="eyebrow">Soccer Pitch GEAR · Tournament MERCH · Custom DROPS</p>
 
-    <!-- TAGLINE -->
-    <p class="tagline">SELECT YOUR STORE</p>
+        <div class="logo-wrap">
+          <img src="../images/jstyles_logo.png" alt="jStyles Apparel" />
+        </div>
+<!--
+        <h2>Pick your lane.</h2>
+        <p class="lead">
+          Built for the game, made for the culture. Choose your store below and get your squad looking sharp.
+        </p>
+-->
+        <div class="btn-row" aria-label="Store options">
+          <a class="portal-card portal-wos" href="WOS">
+            <span class="card-number">01</span>
+            <span class="portal-badge">WOS</span>
+            <span class="portal-title">West Ottawa<br />Soccer</span>
+            <span class="portal-sub">Fan Gear</span>
+            <span class="portal-action">Enter Store <b>→</b></span>
+          </a>
 
-    <!-- BUTTONS -->
-    <div class="btn-row">
+          <a class="portal-card portal-tourney" href="tournament">
+            <span class="card-number">02</span>
+            <span class="portal-badge">🏆</span>
+            <span class="portal-title">Tournament<br />Merch</span>
+            <span class="portal-sub">Event Apparel</span>
+            <span class="portal-action">View Drops <b>→</b></span>
+          </a>
 
-      <a class="portal-btn" href="WOS">
-        <div class="btn-icon"><img src="images/wos_logo.png" style="width:40px;"> </div>
-        <div class="btn-label">West Ottawa<br/>Soccer<br/></div>
-        <div class="btn-sub">FAN Gear</div>
-        <span class="btn-arrow">→</span>
-      </a>
+          <a class="portal-card portal-custom" href="custom">
+            <span class="card-number">03</span>
+            <span class="portal-badge">JS</span>
+            <span class="portal-title">Custom<br />Merch</span>
+            <span class="portal-sub">Made For You</span>
+            <span class="portal-action">Start Custom <b>→</b></span>
+          </a>
+        </div>
+      </div>
 
-      <a class="portal-btn" href="tournament">
-        <div class="btn-icon">🏆</div>
-        <div class="btn-label">Tournament<br/>MERCH</div>
-        <div class="btn-sub">Event Apparel</div>
-        <span class="btn-arrow">→</span>
-      </a>
+<!--      <aside class="side-tag">
+        <span>Orange</span>
+        <i></i>
+        <span>Blue</span>
+        <i></i>
+        <span>Streetstyle</span>
+      </aside>
+      -->
+    </section>
+  </main>
 
-      <a class="portal-btn" href="custom">
-        <div class="btn-icon">🎨</div>
-        <div class="btn-label">Custom<br/>MERCH</div>
-        <div class="btn-sub">Made For You</div>
-        <span class="btn-arrow">→</span>
-      </a>
-
-    </div>
-  </div>
-<br><br>
-  <div class="footer">JSTYLES &nbsp;·&nbsp; APPAREL &amp; GEAR</div>
-
+  <footer class="footer">JSTYLES · APPAREL &amp; GEAR · EST. 2024</footer>
 </body>
 </html>
