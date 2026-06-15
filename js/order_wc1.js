@@ -48,7 +48,7 @@ const CUSTOMER_CONFIRMATION_NOTE =
 const EMAILJS_CONFIG = {
   publicKey: 't0ZhDWn8N6TciIGFA',
   serviceId: 'service_qpb17yf',
-  templateId: 'template_m8v30a6'
+  templateId: 'template_hfxilqc'
 };
 
 const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
