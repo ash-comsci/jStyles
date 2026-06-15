@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Warrior Classic — Order</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="../css/styles_warrior_classic.css"/>
+</head>
+
+<body>
+  <!-- ══ NAV ══ -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="/index.html" class="nav-logo" aria-label="jStyles Home"></a>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-menu">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/test/pages/wos_GEAR.html">Wos GEAR</a></li>
+          <li><a href="/test/pages/tournament_MERCH.html">Tournament MERCH</a></li>
+          <li><a href="/test/pages/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+<main class="shell" style="padding-bottom:24px;">
+
+    <!-- ══ PAGE HEADER ══ -->
+    <section class="page-header page-header-with-logo">
+      <div class="page-copy">
+        <div class="page-eyebrow">Build Your Order</div>
+        <h1 class="page-title">WARRIOR CLASSIC <span>MERCH</span></h1>
+        <p class="page-subtitle">
+          Select Warrior Classic apparel, pick your sizes, and set quantities.
+          Only sizes above zero will appear on your order.<br/>
+          <b id="payment">Payment via e-transfer to jstyles.pro@gmail.com after submission.</b>
+        </p>
+      </div>
+
+      <div class="tournament-logo-card" aria-label="Warrior Classic Tournament logo">
+        <img src="../images/warrior_classic.png" alt="Warrior Classic Tournament logo"/>
+      </div>
+    </section>
+
+    <section class="order-layout" id="merch">
+
+      <!-- ══ TOURNAMENT MERCH ══ -->
+      <div class="merch-column">
+        <div class="section-label" style="margin-bottom:14px;">Warrior Classic Merch</div>
+        <div class="product-tabs" id="productTabs"></div>
+
+        <!-- Product layout: image left, options right -->
+        <div class="product-stage">
+
+          <!-- LEFT: image -->
+          <div class="product-image-panel" id="imagePanel">
+            <!-- product image or placeholder rendered here by JS -->
+          </div>
+
+          <!-- RIGHT: sizing options -->
+          <div class="product-options-panel" id="optionsPanel">
+            <!-- rendered by JS -->
+          </div>
+
+        </div>
+      </div>
+      <!-- ══ CUSTOMER INFO ══ -->
+      <aside class="info-card customer-panel" id="customerInfo">
+        <div class="section-label">Your Information</div>
+        <div class="info-grid">
+          <div>
+            <label class="field-label" for="fname">First Name</label>
+            <input id="fname" type="text" placeholder="Jane"/>
+          </div>
+
+          <div>
+            <label class="field-label" for="lname">Last Name</label>
+            <input id="lname" type="text" placeholder="Smith"/>
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="email">Email Address</label>
+            <input id="email" type="email" placeholder="jane@example.com"/>
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="teamName">Team Name</label>
+            <input id="teamName" type="text" placeholder="e.g. West Ottawa Warriors"/>
+          </div>
+
+          <div>
+            <label class="field-label" for="ageGroup">Age Group</label>
+            <input id="ageGroup" type="text" placeholder="e.g. U12, U14, Adult"/>
+          </div>
+
+          <div>
+            <label class="field-label" for="gender">Gender</label>
+            <select id="gender">
+              <option value="">Select gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+      </aside>
+
+</section>
+
+  </main>
+
+  <!-- ══ STICKY BAR ══ -->
+  <div class="summary-bar">
+    <div class="summary-count">
+      ITEMS <strong id="totalCount">0</strong> •
+      TOTAL <strong class="cost" id="totalCost">$0</strong>
+    </div>
+    <button class="btn-submit" id="submitBtn" onclick="submitOrder()">Send Order →</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <footer class="site-footer shell">Warrior Classic Tournament · Official Apparel · Powered by jStyles</footer>
+
+  <script src="../js/script_WC2.js"></script>
+</body>
+</html>
