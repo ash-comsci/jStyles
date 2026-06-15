@@ -318,7 +318,7 @@ h1 {
 
 .portal-card {
   position: relative;
-  min-height: 170px;
+  min-height: 140px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -326,7 +326,7 @@ h1 {
   text-align: left;
   overflow: hidden;
   text-decoration: none;
-  padding: 18px;
+  padding: 14px;
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.13);
   background:
