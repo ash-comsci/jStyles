@@ -55,7 +55,7 @@ const PRODUCTS = [
       'large-logo': '/images/wc_tee_black_large.png',
       'small-logo': '/images/wc_tee_black_small.png'
     },
-    sizeChart: '/images/sizing_chart.png',
+    sizeChart: '/images/sizing_chart_tee.png',
     tags: ['T-Shirt', 'Street Ready', '$25']
   },
   {
@@ -67,7 +67,7 @@ const PRODUCTS = [
       'large-logo': '/images/wc_tee_white_large.png',
       'small-logo': '/images/wc_tee_white_small.png'
     },
-    sizeChart: '/images/sizing_chart.png',
+    sizeChart: '/images/sizing_chart_tee.png',
     tags: ['T-Shirt', 'Light Fit', '$25']
   }
 ];
