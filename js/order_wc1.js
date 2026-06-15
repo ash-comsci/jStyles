@@ -1,5 +1,22 @@
 'use strict';
 
+/*
+   EMAILJS TEMPLATE SETUP NOTES
+
+   Main order template:
+   - To Email: {{to_email}} OR your fixed jstyles.pro@gmail.com address
+   - Reply To: {{reply_to}}
+   - Subject: {{order_subject}}
+   - Body can use: {{order_summary}}, {{order_lines}}, {{total_cost}}, {{customer_note}}
+
+   Customer auto-reply:
+   - In EmailJS, open your MAIN order template.
+   - Go to Auto-Reply.
+   - Link your customer confirmation template.
+   - In the customer confirmation template, set To Email to: {{to_customer_email}}
+   - The customer template can use: {{customer_name}}, {{order_lines}}, {{total_cost}}, {{payment_note}}, {{customer_note}}
+*/
+
 /* =========================================================
    TOURNAMENT TEMPLATE SETTINGS
    Change these values for each new tournament page.
@@ -16,13 +33,25 @@ const CUSTOMER_CONFIRMATION_NOTE =
   'Production will only begin once the e-transfer has been received. ' +
   'I will also confirm pickup or drop-off details with you directly.';
 
-/* Optional EmailJS setup.
-   Leave these blank to use the built-in mailto fallback. */
+/* =========================================================
+   EMAILJS SETTINGS
+   Fill these in from your EmailJS dashboard.
+
+   publicKey: Account > API Keys > Public Key
+   serviceId: Email Services > your connected email service
+   templateId: Email Templates > your MAIN order template
+
+   IMPORTANT:
+   This file no longer uses mailto. If these are not filled in,
+   the site will show an error instead of opening the visitor's email app.
+   ========================================================= */
 const EMAILJS_CONFIG = {
-  publicKey: '',
-  serviceId: '',
-  templateId: ''
+  publicKey: 'PASTE_YOUR_PUBLIC_KEY_HERE',
+  serviceId: 'PASTE_YOUR_SERVICE_ID_HERE',
+  templateId: 'PASTE_YOUR_MAIN_ORDER_TEMPLATE_ID_HERE'
 };
+
+const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
 
 /* Product options shown as clickable tabs.
    Change names, prices, and image paths here for another tournament. */
@@ -534,13 +563,66 @@ function buildOrderText() {
   return `${TOURNAMENT.name} Order\n\nCustomer Information\nName: ${customer.firstName} ${customer.lastName}\nEmail: ${customer.email}\nClub Name: ${customer.clubName}\nAge Group: ${customer.ageGroup}\nGender: ${customer.gender}\n\nOrder Items\n${itemLines}\n\nTotal Items: ${totals.count}\nTotal Cost: $${totals.total}\n\nPayment Information\n${TOURNAMENT.paymentNote}\n\nCustomer Note\n${CUSTOMER_CONFIRMATION_NOTE}`;
 }
 
-function canUseEmailJS() {
-  return Boolean(
-    window.emailjs &&
-    EMAILJS_CONFIG.publicKey &&
-    EMAILJS_CONFIG.serviceId &&
+function buildOrderLines() {
+  const items = getOrderItems();
+
+  return items.map(item => {
+    return `${item.productName} | ${item.logoName} | ${item.size} | Qty: ${item.qty} | $${item.subtotal}`;
+  }).join('\n');
+}
+
+function hasEmailJSConfig() {
+  const values = [
+    EMAILJS_CONFIG.publicKey,
+    EMAILJS_CONFIG.serviceId,
     EMAILJS_CONFIG.templateId
-  );
+  ];
+
+  return values.every(value => {
+    return value &&
+      typeof value === 'string' &&
+      value.trim() &&
+      !value.startsWith('PASTE_');
+  });
+}
+
+function loadEmailJSScript() {
+  return new Promise((resolve, reject) => {
+    if (window.emailjs) {
+      resolve();
+      return;
+    }
+
+    const existingScript = document.querySelector(`script[src="${EMAILJS_SDK_URL}"]`);
+    if (existingScript) {
+      existingScript.addEventListener('load', resolve, { once: true });
+      existingScript.addEventListener('error', reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = EMAILJS_SDK_URL;
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('EmailJS browser SDK could not be loaded.'));
+    document.head.appendChild(script);
+  });
+}
+
+async function setupEmailJS() {
+  if (!hasEmailJSConfig()) {
+    throw new Error(
+      'EmailJS is not configured. Add your publicKey, serviceId, and templateId in EMAILJS_CONFIG.'
+    );
+  }
+
+  await loadEmailJSScript();
+
+  if (!window.emailjs) {
+    throw new Error('EmailJS browser SDK is unavailable.');
+  }
+
+  window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 }
 
 async function submitOrder() {
@@ -548,6 +630,7 @@ async function submitOrder() {
 
   const submitBtn = document.getElementById('submitBtn');
   const orderText = buildOrderText();
+  const orderLines = buildOrderLines();
   const customer = getCustomerInfo();
   const totals = getOrderTotals();
 
@@ -557,32 +640,50 @@ async function submitOrder() {
   }
 
   try {
-    if (canUseEmailJS()) {
-      window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
-      await window.emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
-        tournament_name: TOURNAMENT.name,
-        customer_name: `${customer.firstName} ${customer.lastName}`,
-        customer_email: customer.email,
-        club_name: customer.clubName,
-        age_group: customer.ageGroup,
-        gender: customer.gender,
-        order_summary: orderText,
-        payment_note: TOURNAMENT.paymentNote,
-        customer_note: CUSTOMER_CONFIRMATION_NOTE,
-        total_items: totals.count,
-        total_cost: `$${totals.total}`,
-        to_email: TOURNAMENT.emailTo
-      });
-      showToast('Order sent. Thank you!');
-    } else {
-      const subject = encodeURIComponent(`${TOURNAMENT.name} Order - ${customer.firstName} ${customer.lastName}`);
-      const body = encodeURIComponent(orderText);
-      window.location.href = `mailto:${TOURNAMENT.emailTo}?subject=${subject}&body=${body}`;
-      showToast('Email opened with your order details.');
-    }
+    await setupEmailJS();
+
+    const templateParams = {
+      tournament_name: TOURNAMENT.name,
+      order_subject: `${TOURNAMENT.name} Order - ${customer.firstName} ${customer.lastName}`,
+
+      // Your main order email should go to this address.
+      to_email: TOURNAMENT.emailTo,
+      owner_email: TOURNAMENT.emailTo,
+
+      // Customer details.
+      customer_name: `${customer.firstName} ${customer.lastName}`,
+      customer_first_name: customer.firstName,
+      customer_last_name: customer.lastName,
+      customer_email: customer.email,
+      to_customer_email: customer.email,
+      reply_to: customer.email,
+
+      club_name: customer.clubName,
+      age_group: customer.ageGroup,
+      gender: customer.gender,
+
+      // Order details.
+      order_summary: orderText,
+      order_lines: orderLines,
+      total_items: totals.count,
+      total_cost: `$${totals.total}`,
+
+      // Notes for customer confirmation.
+      payment_note: TOURNAMENT.paymentNote,
+      customer_note: CUSTOMER_CONFIRMATION_NOTE
+    };
+
+    await window.emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      templateParams
+    );
+
+    showToast('Order sent. A confirmation email has been sent to the customer.');
   } catch (error) {
     console.error('Order submission failed:', error);
-    showToast('The order could not be sent. Please try again.', true);
+    const message = error?.message || 'The order could not be sent. Please check your EmailJS settings.';
+    showToast(message, true);
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
