@@ -23,16 +23,17 @@ const EMAILJS_CONFIG = {
    Change names, prices, and image paths here for another tournament. */
 const PRODUCTS = [
   {
-    id: 'black-hoodie',
-    name: 'Black Hoodie',
-    price: 60,
-    image: '/images/warrior_black_large.png',
-    images: {
-      'large-logo': '/images/wc_hoodie_black_large.png',
-      'small-logo': '/images/wc_hoodie_black_small.png'
-    },
-    tags: ['Hoodie', 'Warm Fit', '$60']
+  id: 'black-hoodie',
+  name: 'Black Hoodie',
+  price: 60,
+  image: '/images/warrior_black_large.png',
+  images: {
+    'large-logo': '/images/wc_hoodie_black_large.png',
+    'small-logo': '/images/wc_hoodie_black_small.png'
   },
+  sizeChart: '/images/sizing_chart.png',
+  tags: ['Hoodie', 'Warm Fit', '$60']
+}
   {
     id: 'white-hoodie',
     name: 'White Hoodie',
