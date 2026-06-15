@@ -40,14 +40,14 @@ const PRODUCTS = [
     id: 'black-tee',
     name: 'Black Tee',
     price: 25,
-    image: '/images/black_tee.png',
+    image: '/images/black_tee_large.png',
     tags: ['T-Shirt', 'Street Ready', '$25']
   },
   {
     id: 'white-tee',
     name: 'White Tee',
     price: 25,
-    image: '/images/white_tee.png',
+    image: '/images/white_tee_large.png',
     tags: ['T-Shirt', 'Light Fit', '$25']
   }
 ];
