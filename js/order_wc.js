@@ -1,5 +1,22 @@
 'use strict';
 
+/*
+   EMAILJS TEMPLATE SETUP NOTES
+
+   Main order template:
+   - To Email: {{to_email}} OR your fixed jstyles.pro@gmail.com address
+   - Reply To: {{reply_to}}
+   - Subject: {{order_subject}}
+   - Body can use: {{order_summary}}, {{order_lines}}, {{total_cost}}, {{customer_note}}
+
+   Customer auto-reply:
+   - In EmailJS, open your MAIN order template.
+   - Go to Auto-Reply.
+   - Link your customer confirmation template.
+   - In the customer confirmation template, set To Email to: {{to_customer_email}}
+   - The customer template can use: {{customer_name}}, {{order_lines}}, {{total_cost}}, {{payment_note}}, {{customer_note}}
+*/
+
 /* =========================================================
    TOURNAMENT TEMPLATE SETTINGS
    Change these values for each new tournament page.
@@ -11,13 +28,30 @@ const TOURNAMENT = {
   paymentNote: 'Payment via e-transfer to jstyles.pro@gmail.com after submission.'
 };
 
-/* Optional EmailJS setup.
-   Leave these blank to use the built-in mailto fallback. */
+const CUSTOMER_CONFIRMATION_NOTE =
+  'Thank you for your order. I will contact you once your order is complete. ' +
+  'Production will only begin once the e-transfer has been received. ' +
+  'I will also confirm pickup or drop-off details with you directly.';
+
+/* =========================================================
+   EMAILJS SETTINGS
+   Fill these in from your EmailJS dashboard.
+
+   publicKey: Account > API Keys > Public Key
+   serviceId: Email Services > your connected email service
+   templateId: Email Templates > your MAIN order template
+
+   IMPORTANT:
+   This file no longer uses mailto. If these are not filled in,
+   the site will show an error instead of opening the visitor's email app.
+   ========================================================= */
 const EMAILJS_CONFIG = {
-  publicKey: '',
-  serviceId: '',
-  templateId: ''
+  publicKey: 't0ZhDWn8N6TciIGFA',
+  serviceId: 'service_qpb17yf',
+  templateId: 'template_hfxilqc'
 };
+
+const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
 
 /* Product options shown as clickable tabs.
    Change names, prices, and image paths here for another tournament. */
@@ -33,7 +67,7 @@ const PRODUCTS = [
   },
   sizeChart: '/images/sizing_chart.png',
   tags: ['Hoodie', 'Warm Fit', '$60']
-}
+  },
   {
     id: 'white-hoodie',
     name: 'White Hoodie',
@@ -197,6 +231,94 @@ function setupNav(navbarContainer) {
 function setScrolledNav() {
   const nav = document.querySelector('.navbar');
   if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+}
+
+
+/* =========================================================
+   WARRIOR CLASSIC STYLE TWEAKS
+   Keeps the gender dropdown readable and makes the product
+   image panel smaller with a cleaner black/gold/white gradient.
+   ========================================================= */
+function injectWarriorClassicStyleTweaks() {
+  if (document.getElementById('warrior-classic-style-tweaks')) return;
+
+  const style = document.createElement('style');
+  style.id = 'warrior-classic-style-tweaks';
+  style.textContent = `
+    #gender,
+    select#gender {
+      color: #ffffff !important;
+      background:
+        linear-gradient(135deg, #070707 0%, #1f1708 45%, #b8862f 100%) !important;
+      border: 1px solid rgba(224, 181, 86, 0.9) !important;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 12px 24px rgba(0,0,0,0.28) !important;
+      font-weight: 800 !important;
+    }
+
+    #gender option {
+      color: #ffffff !important;
+      background-color: #111111 !important;
+    }
+
+    #gender:focus,
+    select#gender:focus {
+      outline: none !important;
+      border-color: #f1c86b !important;
+      box-shadow: 0 0 0 3px rgba(241, 200, 107, 0.28), 0 12px 24px rgba(0,0,0,0.32) !important;
+    }
+
+    #imagePanel {
+      max-width: 440px !important;
+      min-height: 380px !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      padding: clamp(16px, 2vw, 24px) !important;
+      background:
+        radial-gradient(circle at 30% 18%, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.08) 22%, transparent 45%),
+        radial-gradient(circle at 78% 15%, rgba(234,185,78,0.38) 0%, transparent 34%),
+        linear-gradient(145deg, #050505 0%, #151515 38%, #30240d 66%, #b8862f 100%) !important;
+      border: 1px solid rgba(230, 190, 105, 0.62) !important;
+      box-shadow:
+        0 18px 42px rgba(0,0,0,0.42),
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        inset 0 -1px 0 rgba(0,0,0,0.35) !important;
+      overflow: hidden !important;
+    }
+
+    #imagePanel .product-img {
+      display: block !important;
+      width: auto !important;
+      max-width: 86% !important;
+      max-height: min(330px, 42vh) !important;
+      margin: 0 auto !important;
+      object-fit: contain !important;
+      filter: drop-shadow(0 22px 26px rgba(0,0,0,0.38));
+    }
+
+    #imagePanel .product-img-placeholder {
+      max-width: 86% !important;
+      min-height: 250px !important;
+      margin: 0 auto !important;
+    }
+
+    #imagePanel .product-tag-strip {
+      margin-top: 12px !important;
+    }
+
+    @media (max-width: 760px) {
+      #imagePanel {
+        max-width: 100% !important;
+        min-height: 320px !important;
+      }
+
+      #imagePanel .product-img {
+        max-height: 280px !important;
+        max-width: 90% !important;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
 }
 
 /* =========================================================
@@ -464,6 +586,181 @@ function renderAll() {
   renderSummary();
 }
 
+
+function escapeHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function money(value) {
+  return `$${Number(value || 0)}`;
+}
+
+function buildAdminEmailHTML(customer, items, totals) {
+  const now = new Date().toLocaleString('en-CA', { dateStyle: 'long', timeStyle: 'short' });
+
+  const itemRows = items.map(item => `
+    <tr>
+      <td style="padding:12px 14px;border-bottom:1px solid #e6dfcf;color:#111;font-weight:700;">${escapeHTML(item.productName)}</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #e6dfcf;color:#5a4520;">${escapeHTML(item.logoName)}</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #e6dfcf;color:#111;">${escapeHTML(item.size)}</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #e6dfcf;color:#111;text-align:center;font-weight:800;">${item.qty}</td>
+      <td style="padding:12px 14px;border-bottom:1px solid #e6dfcf;color:#b17819;text-align:right;font-weight:900;">${money(item.subtotal)}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <body style="margin:0;background:#ece7db;font-family:Arial,Helvetica,sans-serif;color:#111;">
+      <table width="100%" cellspacing="0" cellpadding="0" style="padding:28px;background:#ece7db;">
+        <tr>
+          <td align="center">
+            <table width="680" cellspacing="0" cellpadding="0" style="max-width:680px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #d8c08a;box-shadow:0 18px 45px rgba(0,0,0,0.18);">
+              <tr>
+                <td style="background:linear-gradient(135deg,#050505 0%,#1a1a1a 48%,#b8862f 100%);padding:34px 28px;text-align:center;color:#fff;">
+                  <div style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#f3cd75;font-weight:900;">${escapeHTML(TOURNAMENT.name)}</div>
+                  <div style="font-size:34px;line-height:1.05;font-weight:900;margin-top:8px;text-transform:uppercase;">New Order Received</div>
+                  <div style="margin-top:12px;color:#f7ecd4;font-size:14px;">Submitted ${escapeHTML(now)}</div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:26px 28px 12px;">
+                  <h3 style="margin:0 0 14px;color:#111;font-size:18px;">Customer Information</h3>
+                  <table width="100%" cellspacing="0" cellpadding="0" style="font-size:14px;">
+                    <tr><td style="padding:7px 0;color:#7a6a4a;width:145px;">Name</td><td style="padding:7px 0;color:#111;font-weight:700;">${escapeHTML(customer.firstName)} ${escapeHTML(customer.lastName)}</td></tr>
+                    <tr><td style="padding:7px 0;color:#7a6a4a;">Email</td><td style="padding:7px 0;"><a href="mailto:${escapeHTML(customer.email)}" style="color:#b17819;font-weight:700;">${escapeHTML(customer.email)}</a></td></tr>
+                    <tr><td style="padding:7px 0;color:#7a6a4a;">Team / Club</td><td style="padding:7px 0;color:#111;">${escapeHTML(customer.clubName)}</td></tr>
+                    <tr><td style="padding:7px 0;color:#7a6a4a;">Age Group</td><td style="padding:7px 0;color:#111;">${escapeHTML(customer.ageGroup)}</td></tr>
+                    <tr><td style="padding:7px 0;color:#7a6a4a;">Gender</td><td style="padding:7px 0;color:#111;">${escapeHTML(customer.gender)}</td></tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:16px 28px 24px;">
+                  <h3 style="margin:0 0 14px;color:#111;font-size:18px;">Order Details</h3>
+                  <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e6dfcf;border-radius:12px;overflow:hidden;border-collapse:separate;border-spacing:0;font-size:13px;">
+                    <tr style="background:#111;color:#f3cd75;text-transform:uppercase;font-size:11px;letter-spacing:1px;">
+                      <th align="left" style="padding:12px 14px;">Item</th>
+                      <th align="left" style="padding:12px 14px;">Logo</th>
+                      <th align="left" style="padding:12px 14px;">Size</th>
+                      <th align="center" style="padding:12px 14px;">Qty</th>
+                      <th align="right" style="padding:12px 14px;">Subtotal</th>
+                    </tr>
+                    ${itemRows}
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:24px 28px;background:#f8f4ea;border-top:1px solid #e5d7b8;">
+                  <table width="100%" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td style="color:#6b5a36;font-weight:700;">TOTAL ITEMS</td>
+                      <td style="text-align:right;color:#111;font-size:18px;font-weight:900;">${totals.count}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top:10px;color:#6b5a36;font-weight:700;">TOTAL COST</td>
+                      <td style="padding-top:10px;text-align:right;"><span style="display:inline-block;background:#111;color:#f3cd75;font-size:24px;font-weight:900;padding:9px 20px;border-radius:999px;border:1px solid #b8862f;">${money(totals.total)}</span></td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:18px 28px;text-align:center;color:#7a6a4a;font-size:12px;">Submitted through the jStyles ${escapeHTML(TOURNAMENT.name)} order form.</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `;
+}
+
+function buildCustomerEmailHTML(customer, items, totals) {
+  const itemBlocks = items.map(item => `
+    <tr>
+      <td style="padding:11px 0;border-bottom:1px solid #e6dfcf;">
+        <strong style="color:#111;">${escapeHTML(item.productName)}</strong><br>
+        <span style="color:#766647;font-size:12px;">${escapeHTML(item.logoName)} · ${escapeHTML(item.size)}</span>
+      </td>
+      <td style="padding:11px 0;border-bottom:1px solid #e6dfcf;text-align:center;color:#111;font-weight:800;">${item.qty}</td>
+      <td style="padding:11px 0;border-bottom:1px solid #e6dfcf;text-align:right;color:#b17819;font-weight:900;">${money(item.subtotal)}</td>
+    </tr>
+  `).join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <body style="margin:0;background:#ece7db;font-family:Arial,Helvetica,sans-serif;color:#111;">
+      <table width="100%" cellspacing="0" cellpadding="0" style="padding:28px;background:#ece7db;">
+        <tr>
+          <td align="center">
+            <table width="640" cellspacing="0" cellpadding="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:18px;overflow:hidden;border:1px solid #d8c08a;box-shadow:0 18px 45px rgba(0,0,0,0.15);">
+              <tr>
+                <td style="background:linear-gradient(135deg,#050505 0%,#161616 50%,#b8862f 100%);padding:32px 28px;text-align:center;color:#fff;">
+                  <div style="font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#f3cd75;font-weight:900;">jStyles Tournament Merch</div>
+                  <div style="font-size:30px;line-height:1.05;font-weight:900;margin-top:8px;text-transform:uppercase;">Order Confirmation</div>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding:28px;">
+                  <p style="font-size:16px;line-height:1.55;margin:0 0 14px;">Hi ${escapeHTML(customer.firstName)},</p>
+                  <p style="font-size:15px;line-height:1.6;margin:0 0 20px;">Thanks for your ${escapeHTML(TOURNAMENT.name)} merch order. Here is a copy of what was submitted.</p>
+
+                  <table width="100%" cellspacing="0" cellpadding="0" style="font-size:14px;">
+                    ${itemBlocks}
+                  </table>
+
+                  <div style="margin-top:22px;padding:18px;border-radius:14px;background:#f8f4ea;border:1px solid #e5d7b8;">
+                    <table width="100%" cellspacing="0" cellpadding="0">
+                      <tr><td style="color:#6b5a36;font-weight:700;">Total Items</td><td style="text-align:right;color:#111;font-weight:900;">${totals.count}</td></tr>
+                      <tr><td style="padding-top:8px;color:#6b5a36;font-weight:700;">Total Cost</td><td style="padding-top:8px;text-align:right;color:#b17819;font-size:22px;font-weight:900;">${money(totals.total)}</td></tr>
+                    </table>
+                  </div>
+
+                  <div style="margin-top:22px;padding:18px;border-radius:14px;background:#111;color:#fff;border:1px solid #b8862f;">
+                    <strong style="color:#f3cd75;">Next steps</strong>
+                    <p style="margin:8px 0 0;line-height:1.6;color:#f7ecd4;">${escapeHTML(CUSTOMER_CONFIRMATION_NOTE)}</p>
+                    <p style="margin:12px 0 0;line-height:1.6;color:#f7ecd4;">${escapeHTML(TOURNAMENT.paymentNote)}</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `;
+}
+
+function clearOrderAfterSend() {
+  PRODUCTS.forEach(product => {
+    LOGO_OPTIONS.forEach(logoOption => {
+      Object.keys(state.quantities[product.id][logoOption.id]).forEach(size => {
+        state.quantities[product.id][logoOption.id][size] = 0;
+      });
+    });
+  });
+
+  ['fname', 'lname', 'email', 'clubName', 'ageGroup', 'gender'].forEach(id => {
+    const field = document.getElementById(id);
+    if (field) field.value = '';
+  });
+
+  renderAll();
+}
+
 /* =========================================================
    ORDER SUBMIT
    ========================================================= */
@@ -526,16 +823,69 @@ function buildOrderText() {
     return `${item.productName} | ${item.logoName} | ${item.size} | Qty: ${item.qty} | $${item.subtotal}`;
   }).join('\n');
 
-  return `${TOURNAMENT.name} Order\n\nCustomer Information\nName: ${customer.firstName} ${customer.lastName}\nEmail: ${customer.email}\nClub Name: ${customer.clubName}\nAge Group: ${customer.ageGroup}\nGender: ${customer.gender}\n\nOrder Items\n${itemLines}\n\nTotal Items: ${totals.count}\nTotal Cost: $${totals.total}\n\n${TOURNAMENT.paymentNote}`;
+  return `${TOURNAMENT.name} Order\n\nCustomer Information\nName: ${customer.firstName} ${customer.lastName}\nEmail: ${customer.email}\nClub Name: ${customer.clubName}\nAge Group: ${customer.ageGroup}\nGender: ${customer.gender}\n\nOrder Items\n${itemLines}\n\nTotal Items: ${totals.count}\nTotal Cost: $${totals.total}\n\nPayment Information\n${TOURNAMENT.paymentNote}\n\nCustomer Note\n${CUSTOMER_CONFIRMATION_NOTE}`;
 }
 
-function canUseEmailJS() {
-  return Boolean(
-    window.emailjs &&
-    EMAILJS_CONFIG.publicKey &&
-    EMAILJS_CONFIG.serviceId &&
+function buildOrderLines() {
+  const items = getOrderItems();
+
+  return items.map(item => {
+    return `${item.productName} | ${item.logoName} | ${item.size} | Qty: ${item.qty} | $${item.subtotal}`;
+  }).join('\n');
+}
+
+function hasEmailJSConfig() {
+  const values = [
+    EMAILJS_CONFIG.publicKey,
+    EMAILJS_CONFIG.serviceId,
     EMAILJS_CONFIG.templateId
-  );
+  ];
+
+  return values.every(value => {
+    return value &&
+      typeof value === 'string' &&
+      value.trim() &&
+      !value.startsWith('PASTE_');
+  });
+}
+
+function loadEmailJSScript() {
+  return new Promise((resolve, reject) => {
+    if (window.emailjs) {
+      resolve();
+      return;
+    }
+
+    const existingScript = document.querySelector(`script[src="${EMAILJS_SDK_URL}"]`);
+    if (existingScript) {
+      existingScript.addEventListener('load', resolve, { once: true });
+      existingScript.addEventListener('error', reject, { once: true });
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = EMAILJS_SDK_URL;
+    script.async = true;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('EmailJS browser SDK could not be loaded.'));
+    document.head.appendChild(script);
+  });
+}
+
+async function setupEmailJS() {
+  if (!hasEmailJSConfig()) {
+    throw new Error(
+      'EmailJS is not configured. Add your publicKey, serviceId, and templateId in EMAILJS_CONFIG.'
+    );
+  }
+
+  await loadEmailJSScript();
+
+  if (!window.emailjs) {
+    throw new Error('EmailJS browser SDK is unavailable.');
+  }
+
+  window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
 }
 
 async function submitOrder() {
@@ -543,7 +893,9 @@ async function submitOrder() {
 
   const submitBtn = document.getElementById('submitBtn');
   const orderText = buildOrderText();
+  const orderLines = buildOrderLines();
   const customer = getCustomerInfo();
+  const items = getOrderItems();
   const totals = getOrderTotals();
 
   if (submitBtn) {
@@ -552,30 +904,75 @@ async function submitOrder() {
   }
 
   try {
-    if (canUseEmailJS()) {
-      window.emailjs.init({ publicKey: EMAILJS_CONFIG.publicKey });
-      await window.emailjs.send(EMAILJS_CONFIG.serviceId, EMAILJS_CONFIG.templateId, {
+    await setupEmailJS();
+
+    const adminHTML = buildAdminEmailHTML(customer, items, totals);
+    const customerHTML = buildCustomerEmailHTML(customer, items, totals);
+
+    await window.emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      {
+        subject: `${TOURNAMENT.name} Order - ${customer.firstName} ${customer.lastName}`,
+        html_body: adminHTML,
+        to_email: TOURNAMENT.emailTo,
+        owner_email: TOURNAMENT.emailTo,
+        from_name: `${customer.firstName} ${customer.lastName}`,
+        reply_to: customer.email,
+
         tournament_name: TOURNAMENT.name,
+        order_subject: `${TOURNAMENT.name} Order - ${customer.firstName} ${customer.lastName}`,
         customer_name: `${customer.firstName} ${customer.lastName}`,
+        customer_first_name: customer.firstName,
+        customer_last_name: customer.lastName,
         customer_email: customer.email,
         club_name: customer.clubName,
         age_group: customer.ageGroup,
         gender: customer.gender,
         order_summary: orderText,
+        order_lines: orderLines,
         total_items: totals.count,
         total_cost: `$${totals.total}`,
-        to_email: TOURNAMENT.emailTo
-      });
-      showToast('Order sent. Thank you!');
-    } else {
-      const subject = encodeURIComponent(`${TOURNAMENT.name} Order - ${customer.firstName} ${customer.lastName}`);
-      const body = encodeURIComponent(orderText);
-      window.location.href = `mailto:${TOURNAMENT.emailTo}?subject=${subject}&body=${body}`;
-      showToast('Email opened with your order details.');
-    }
+        payment_note: TOURNAMENT.paymentNote,
+        customer_note: CUSTOMER_CONFIRMATION_NOTE
+      }
+    );
+
+    await window.emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.templateId,
+      {
+        subject: `Your ${TOURNAMENT.name} Merch Order Confirmation`,
+        html_body: customerHTML,
+        to_email: customer.email,
+        from_name: 'jStyles',
+        reply_to: TOURNAMENT.emailTo,
+
+        tournament_name: TOURNAMENT.name,
+        order_subject: `Your ${TOURNAMENT.name} Merch Order Confirmation`,
+        customer_name: `${customer.firstName} ${customer.lastName}`,
+        customer_first_name: customer.firstName,
+        customer_last_name: customer.lastName,
+        customer_email: customer.email,
+        to_customer_email: customer.email,
+        club_name: customer.clubName,
+        age_group: customer.ageGroup,
+        gender: customer.gender,
+        order_summary: orderText,
+        order_lines: orderLines,
+        total_items: totals.count,
+        total_cost: `$${totals.total}`,
+        payment_note: TOURNAMENT.paymentNote,
+        customer_note: CUSTOMER_CONFIRMATION_NOTE
+      }
+    );
+
+    showToast('✓ Order sent successfully. A confirmation email was sent to the customer.');
+    clearOrderAfterSend();
   } catch (error) {
     console.error('Order submission failed:', error);
-    showToast('The order could not be sent. Please try again.', true);
+    const message = error?.message || 'The order could not be sent. Please check your EmailJS settings.';
+    showToast(message, true);
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
@@ -583,7 +980,6 @@ async function submitOrder() {
     }
   }
 }
-
 function showToast(message, isError = false) {
   const toast = document.getElementById('toast');
   if (!toast) return;
@@ -614,6 +1010,7 @@ function addKeyboardFocus() {
 window.submitOrder = submitOrder;
 
 document.addEventListener('DOMContentLoaded', async () => {
+  injectWarriorClassicStyleTweaks();
   await loadNav();
   addKeyboardFocus();
   renderAll();
