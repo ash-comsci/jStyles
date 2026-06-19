@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#06240f" />
+  <title>Aiden’s Army — Fundraiser Apparel</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- EmailJS powers the order email and customer confirmation. -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="./aiden_army_order.css" />
+  <script defer src="./aiden_army_order.js"></script>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="shell page-shell">
+    <section class="page-header" aria-labelledby="pageTitle">
+      <div class="page-copy">
+        <div class="page-eyebrow">Fundraiser Apparel</div>
+        <h1 class="page-title" id="pageTitle">Aiden’s <span>Army</span></h1>
+        <p class="page-subtitle">
+          Wear your support for Aiden. Every apparel order helps his family as he goes through surgery and radiation treatment.
+        </p>
+        <p class="page-payment-note">
+          Orders are confirmed by email. Payment instructions will be included after your order is submitted.
+        </p>
+      </div>
+
+      <div class="tournament-logo-card" aria-label="Aiden's Army fundraiser logo">
+        <img src="./images/aiden_army_logo.png" alt="Aiden’s Army hockey fundraiser logo" />
+      </div>
+
+      <aside class="header-order-card" aria-live="polite">
+        <div class="header-order-top">
+          <span>Current Order</span>
+          <strong id="headerTotalCost">$0</strong>
+        </div>
+        <div class="header-order-list" id="headerOrderList">
+          <span class="header-order-empty">No items selected yet.</span>
+        </div>
+        <div class="header-order-bottom">
+          <span>Items</span>
+          <strong id="headerTotalItems">0</strong>
+        </div>
+      </aside>
+    </section>
+
+    <section class="fundraiser-banner" aria-label="About Aiden's Army">
+      <div class="fundraiser-icon" aria-hidden="true">♥</div>
+      <div>
+        <strong>Standing together for Aiden.</strong>
+        <p>This fundraiser is built to show love, support, and strength for one incredible young hockey fan and his family.</p>
+      </div>
+    </section>
+
+    <section class="order-layout" aria-label="Aiden's Army fundraiser apparel order form">
+      <div class="merch-column">
+        <div class="section-label">Aiden’s Army Apparel</div>
+
+        <div class="product-tabs" id="productTabs" aria-label="Product options"></div>
+
+        <div class="product-stage">
+          <div class="product-image-panel" id="imagePanel" aria-live="polite">
+            <!-- Product image / placeholder is rendered by JavaScript. -->
+          </div>
+
+          <div class="product-options-panel" id="optionsPanel">
+            <!-- Product details and size controls are rendered by JavaScript. -->
+          </div>
+        </div>
+
+        <section class="donation-card" aria-labelledby="supportTitle">
+          <div class="donation-copy">
+            <div class="section-label" id="supportTitle">Optional Extra Support</div>
+            <p>Add a little more to your order to support Aiden’s Army.</p>
+          </div>
+          <div class="donation-controls">
+            <div class="donation-buttons" role="group" aria-label="Choose an optional support amount">
+              <button type="button" class="donation-btn" data-donation="5">$5</button>
+              <button type="button" class="donation-btn" data-donation="10">$10</button>
+              <button type="button" class="donation-btn" data-donation="25">$25</button>
+              <button type="button" class="donation-btn" data-donation="50">$50</button>
+            </div>
+            <label class="custom-donation-label" for="customDonation">
+              Other amount
+              <span>$</span>
+              <input id="customDonation" type="number" min="0" step="1" inputmode="decimal" placeholder="0" />
+            </label>
+          </div>
+        </section>
+      </div>
+
+      <aside class="right-column">
+        <section class="info-card customer-panel">
+          <div class="section-label">Your Information</div>
+
+          <div class="info-grid">
+            <div>
+              <label class="field-label" for="fname">First Name</label>
+              <input id="fname" name="fname" type="text" placeholder="Jane" autocomplete="given-name" required />
+            </div>
+
+            <div>
+              <label class="field-label" for="lname">Last Name</label>
+              <input id="lname" name="lname" type="text" placeholder="Smith" autocomplete="family-name" required />
+            </div>
+
+            <div class="full">
+              <label class="field-label" for="email">Email Address</label>
+              <input id="email" name="email" type="email" placeholder="jane@example.com" autocomplete="email" required />
+            </div>
+
+            <div>
+              <label class="field-label" for="phone">Phone Number</label>
+              <input id="phone" name="phone" type="tel" placeholder="613-555-0123" autocomplete="tel" />
+            </div>
+
+            <div>
+              <label class="field-label" for="fulfillment">Pickup / Delivery</label>
+              <select id="fulfillment" name="fulfillment">
+                <option value="">Select</option>
+                <option value="Pickup">Pickup</option>
+                <option value="Delivery information requested">Delivery information requested</option>
+                <option value="Please contact me">Please contact me</option>
+              </select>
+            </div>
+
+            <div class="full">
+              <label class="field-label" for="customerNote">Order Note <span>(optional)</span></label>
+              <textarea id="customerNote" name="customerNote" rows="4" placeholder="Any helpful order, pickup, or delivery notes?"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <section class="support-card">
+          <div class="support-card-icon" aria-hidden="true">★</div>
+          <div>
+            <strong>Thank you for showing up for Aiden.</strong>
+            <p>Your order helps turn support into something his family can truly feel.</p>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div class="summary-bar" aria-live="polite">
+    <div class="summary-count">
+      ITEMS <strong id="totalCount">0</strong>
+      <span class="summary-divider">·</span>
+      TOTAL <strong class="cost" id="totalCost">$0</strong>
+    </div>
+    <button class="btn-submit" id="submitBtn" type="button">Review Order →</button>
+  </div>
+
+  <div class="order-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewTitle" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="document">
+      <button class="modal-close" type="button" aria-label="Close order review" data-close-modal>×</button>
+      <div class="modal-eyebrow">Almost There</div>
+      <h2 id="reviewTitle">Review Your <span>Order</span></h2>
+      <p class="modal-lead">Please check your order before sending it to Aiden’s Army.</p>
+
+      <div class="modal-summary" id="modalSummary"></div>
+
+      <div class="modal-total-row">
+        <span>Order Total</span>
+        <strong id="modalTotal">$0</strong>
+      </div>
+
+      <p class="modal-payment-note" id="modalPaymentNote">
+        Payment instructions will be included in your confirmation email.
+      </p>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" type="button" data-close-modal>Make Changes</button>
+        <button class="btn-submit" id="confirmSubmitBtn" type="button">Send My Order →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer shell">
+    Aiden’s Army Fundraiser · Apparel by jStyles · Thank you for the support
+  </footer>
+</body>
+</html>
