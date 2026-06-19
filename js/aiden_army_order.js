@@ -59,7 +59,7 @@ const PRODUCTS = [
     id: "green-cap",
     name: "Kelly Green Ball Cap",
     price: 25,
-    image: "./images/aiden_cap.png",
+    image: "../images/aiden_cap.png",
     imageFileHint: "aiden_cap.png",
     tags: ["Ball Cap", "One Size", "$25"],
     description: "A clean Kelly green ball cap with a one-size fit and a whole lot of support behind it.",
