@@ -7,7 +7,7 @@
 */
 const ORDER_PAGE = './aiden_army_order.html';
 const INTRO_DURATION_MS = 1700;
-const HOLD_DURATION_MS = 5000;
+const HOLD_DURATION_MS = 3000;
 const REDUCED_MOTION_DELAY_MS = 900;
 
 function openOrderPage() {
