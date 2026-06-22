@@ -66,6 +66,18 @@ const PRODUCTS = [
     sizeGroups: [
       { title: "Cap Size", sizes: ["One Size"] }
     ]
+  },
+  {
+    id: "black-fitted-hat",
+    name: "Black Fitted Hat",
+    price: 30,
+    image: "../images/aiden_black_fitted_hat.png",
+    imageFileHint: "aiden_black_fitted_hat.png",
+    tags: ["Fitted Hat", "S/M or L/XL", "$30"],
+    description: "A clean black fitted hat made to show your support for Aiden’s Army.",
+    sizeGroups: [
+      { title: "Fitted Hat Size", sizes: ["S/M", "L/XL"] }
+    ]
   }
 ];
 
