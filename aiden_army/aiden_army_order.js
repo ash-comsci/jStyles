@@ -28,6 +28,17 @@ const EMAILJS_CONFIG = {
   templateId: "template_hfxilqc"
 };
 
+
+/*
+  GOOGLE SHEETS ORDER LOG
+  1. Put the Apps Script code from Code.gs into the Google Sheet.
+  2. Deploy it as a Web app.
+  3. Paste the deployment URL ending in /exec below.
+*/
+const GOOGLE_SHEETS_CONFIG = {
+  webAppUrl: https://script.google.com/macros/s/AKfycbwGJRpOa7fwzIJeks8AGMATMGTYb0oUQDfjovyRaSGK5KG3__bZbfqgv-PmSYdRdZHJYg/exec
+};
+
 const PRODUCTS = [
   {
     id: "green-hoodie",
@@ -716,6 +727,75 @@ function buildCustomerEmailHTML(customer, items, totals) {
   `;
 }
 
+function makeOrderId() {
+  const now = new Date();
+  const stamp = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0"),
+    "-",
+    String(now.getHours()).padStart(2, "0"),
+    String(now.getMinutes()).padStart(2, "0"),
+    String(now.getSeconds()).padStart(2, "0")
+  ].join("");
+  const random = Math.random().toString(36).slice(2, 7).toUpperCase();
+  return `AA-${stamp}-${random}`;
+}
+
+function hasGoogleSheetsWebhook() {
+  const url = String(GOOGLE_SHEETS_CONFIG.webAppUrl || "").trim();
+  return /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:\?.*)?$/i.test(url);
+}
+
+async function addOrderToGoogleSheet(customer, items, totals, orderId) {
+  if (!hasGoogleSheetsWebhook()) {
+    console.warn("Google Sheets log is not active yet. Add the Apps Script /exec URL in GOOGLE_SHEETS_CONFIG.webAppUrl.");
+    return false;
+  }
+
+  const payload = {
+    orderId,
+    submittedAt: new Date().toISOString(),
+    tournament: TOURNAMENT.name,
+    customer: {
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      email: customer.email,
+      phone: customer.phone,
+      fulfillment: customer.fulfillment,
+      note: customer.note
+    },
+    items: items.map(item => ({
+      productName: item.productName,
+      size: item.size,
+      qty: item.qty,
+      price: item.price,
+      subtotal: item.subtotal
+    })),
+    totals: {
+      count: totals.count,
+      itemTotal: totals.itemTotal,
+      donation: totals.donation,
+      total: totals.total
+    }
+  };
+
+  /*
+    Apps Script web apps do not reliably return CORS-readable responses.
+    A no-cors request keeps the customer order flow fast and lets the
+    web app add the row without exposing your sheet credentials.
+  */
+  await fetch(GOOGLE_SHEETS_CONFIG.webAppUrl, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload),
+    keepalive: true
+  });
+
+  return true;
+}
+
 function setupEmailJS() {
   if (emailjsReady) return;
 
@@ -743,6 +823,7 @@ async function submitOrder() {
   const totals = getOrderTotals();
   const orderLines = buildOrderLines(items, totals);
   const customerName = `${customer.firstName} ${customer.lastName}`.trim();
+  const orderId = makeOrderId();
 
   if (submitButton) {
     submitButton.disabled = true;
@@ -767,7 +848,8 @@ async function submitOrder() {
       order_lines: orderLines,
       total_items: totals.count,
       total_cost: formatMoney(totals.total),
-      payment_note: TOURNAMENT.paymentNote
+      payment_note: TOURNAMENT.paymentNote,
+      order_id: orderId
     };
 
     await window.emailjs.send(
@@ -799,6 +881,14 @@ async function submitOrder() {
         reply_to: TOURNAMENT.emailTo
       }
     );
+
+    // The email order is already safely sent. If Sheets is temporarily unavailable,
+    // do not prevent the customer confirmation from completing.
+    try {
+      await addOrderToGoogleSheet(customer, items, totals, orderId);
+    } catch (sheetError) {
+      console.error("Google Sheets order log failed:", sheetError);
+    }
 
     closeReviewModal();
     showToast("✓ Your order was sent. A confirmation email is on its way.");
