@@ -42,11 +42,11 @@ const GOOGLE_SHEETS_CONFIG = {
 const PRODUCTS = [
   {
     id: "green-hoodie",
-    name: "Kelly Green Hoodie",
+    name: "Green Hoodie",
     price: 60,
     image: "../images/aiden_hoodie.png",
     imageFileHint: "aiden_hoodie.png",
-    tags: ["Hoodie", "Kelly Green", "$60"],
+    tags: ["Hoodie", "Green", "$60"],
     description: "A warm, comfortable hoodie made to show your support for Aiden’s Army.",
     sizeGroups: [
       { title: "Youth Sizes", sizes: ["Youth XS", "Youth S", "Youth M", "Youth L", "Youth XL"] },
@@ -55,7 +55,7 @@ const PRODUCTS = [
   },
   {
     id: "green-tee",
-    name: "Kelly Green Tee",
+    name: "Green Tee",
     price: 25,
     image: "../images/aiden_tee.png",
     imageFileHint: "aiden_tee.png",
@@ -68,12 +68,12 @@ const PRODUCTS = [
   },
   {
     id: "green-cap",
-    name: "Kelly Green Ball Cap",
+    name: "Green Ball Cap",
     price: 25,
     image: "../images/aiden_cap.png",
     imageFileHint: "aiden_ball_cap.png",
     tags: ["Ball Cap", "One Size", "$25"],
-    description: "A clean Kelly green ball cap with a one-size fit and a whole lot of support behind it.",
+    description: "A clean Evergreen ball cap with a one-size fit and a whole lot of support behind it.",
     sizeGroups: [
       { title: "Cap Size", sizes: ["One Size"] }
     ]
