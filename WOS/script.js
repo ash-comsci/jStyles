@@ -80,9 +80,9 @@ const ADULT_SIZES = ['Adult XS', 'Adult S', 'Adult M', 'Adult L', 'Adult XL', 'A
 const PRODUCTS = [
   {
     id: 'pullover-hoodie',
-    name: 'Pullover Hoodie',
-    image: '../images/products/pullover-hoodie.png',
-    price: 50,
+    name: 'Elite Sideline Hoodie',
+    image: '../images/products/black_hoodie.png',
+    price: 60,
     subtitle: 'Youth and adult sizing',
     groups: [
       { label: 'YOUTH SIZES', sizes: YOUTH_SIZES },
@@ -93,7 +93,7 @@ const PRODUCTS = [
     id: 'sideline-tee',
     name: 'Sideline Tee',
     image: '../images/products/sideline-tee.png',
-    price: 25,
+    price: 30,
     subtitle: 'Youth and adult sizing',
     groups: [
       { label: 'YOUTH SIZES', sizes: YOUTH_SIZES },
@@ -134,7 +134,7 @@ const PRODUCTS = [
   },
   {
     id: 'sweat-pants',
-    name: 'Sweat Pants',
+    name: 'Sideline Sweats',
     image: '../images/products/sweat-pants.png',
     price: 30,
     subtitle: 'Youth and adult sizing',
