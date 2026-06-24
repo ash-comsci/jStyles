@@ -92,7 +92,7 @@ const PRODUCTS = [
   {
     id: 'sideline-tee',
     name: 'Sideline Tee',
-    image: '../images/Sideline-TEE.png',
+    image: '../images/sideline_TEE.png',
     price: 30,
     subtitle: 'Youth and adult sizing',
     groups: [
