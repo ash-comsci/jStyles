@@ -92,7 +92,7 @@ const PRODUCTS = [
   {
     id: 'sideline-tee',
     name: 'Sideline Tee',
-    image: '../images/products/sideline-tee.png',
+    image: '../images/Sideline-TEE.png',
     price: 30,
     subtitle: 'Youth and adult sizing',
     groups: [
@@ -103,7 +103,7 @@ const PRODUCTS = [
   {
     id: 'womens-tank-top',
     name: "Women's Tank Top",
-    image: '../images/products/womens-tank-top.png',
+    image: '../images/black_Tank.png',
     price: 25,
     subtitle: 'Youth and adult sizing',
     groups: [
@@ -114,7 +114,7 @@ const PRODUCTS = [
   {
     id: 'mens-tank-top',
     name: "Men's Tank Top",
-    image: '../images/products/mens-tank-top.png',
+    image: '../images/black_Tank.png',
     price: 25,
     subtitle: 'Youth and adult sizing',
     groups: [
@@ -125,7 +125,7 @@ const PRODUCTS = [
   {
     id: 'ball-cap',
     name: 'Ball Cap',
-    image: '../images/products/ball-cap.png',
+    image: '../images/black_hat.png',
     price: 25,
     subtitle: 'One size fits all',
     groups: [
@@ -135,7 +135,7 @@ const PRODUCTS = [
   {
     id: 'sweat-pants',
     name: 'Sideline Sweats',
-    image: '../images/products/sweat-pants.png',
+    image: '../images/black_sweats.png',
     price: 30,
     subtitle: 'Youth and adult sizing',
     groups: [
@@ -146,7 +146,7 @@ const PRODUCTS = [
   {
     id: 'long-sleeve',
     name: 'Long Sleeve',
-    image: '../images/products/long-sleeve.png',
+    image: '../images/black_long.png',
     price: 25,
     subtitle: 'Youth and adult sizing',
     groups: [
