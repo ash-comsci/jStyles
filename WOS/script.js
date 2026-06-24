@@ -81,9 +81,9 @@ const PRODUCTS = [
   {
     id: 'pullover-hoodie',
     name: 'Elite Sideline Hoodie',
-    image: '../images/products/black_hoodie.png',
+    image: '../images/black_hoodie.png',
     price: 60,
-    subtitle: 'Youth and adult sizing',
+    subtitle: 'Youth and Adult Sizing',
     groups: [
       { label: 'YOUTH SIZES', sizes: YOUTH_SIZES },
       { label: 'ADULT SIZES', sizes: ADULT_SIZES }
