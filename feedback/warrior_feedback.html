@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Share feedback about your Warrior Classic tournament merchandise order." />
+  <title>Warrior Classic — Order Feedback</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/warrior_feedback.css" />
+  <script defer src="../js/warrior_feedback.js"></script>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="shell page-shell">
+    <section class="survey-hero" aria-labelledby="pageTitle">
+      <div class="hero-copy">
+        <div class="eyebrow">Warrior Classic Tournament Merch</div>
+        <h1 id="pageTitle">How Did We <span>Do?</span></h1>
+        <p>
+          Thank you for ordering tournament merchandise from jStyles. Your feedback will help us improve future tournament shops, especially for teams travelling from out of town.
+        </p>
+        <div class="anonymous-note">
+          Your name and email are optional. You may submit the survey completely anonymously.
+        </div>
+      </div>
+
+      <div class="hero-logo">
+        <img src="/images/warrior_classic.png" alt="Warrior Classic logo" />
+      </div>
+    </section>
+
+    <form id="feedbackForm" class="survey-form" novalidate>
+      <section class="form-card identity-card">
+        <div class="section-heading">
+          <span>Optional</span>
+          <h2>About You</h2>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="Leave blank to stay anonymous" />
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" maxlength="150" autocomplete="email" placeholder="Optional" />
+          </div>
+
+          <div class="field">
+            <label for="team">Team or club</label>
+            <input id="team" name="team" type="text" maxlength="120" placeholder="Optional" />
+          </div>
+
+          <div class="field">
+            <label for="location">Where did you travel from?</label>
+            <input id="location" name="location" type="text" maxlength="120" placeholder="City or community — optional" />
+          </div>
+        </div>
+      </section>
+
+      <section class="form-card ratings-card">
+        <div class="section-heading">
+          <span>Required</span>
+          <h2>Rate Your Experience</h2>
+          <p>Choose one rating for each category.</p>
+        </div>
+
+        <div id="ratingQuestions" class="rating-list"></div>
+      </section>
+
+      <section class="form-card details-card">
+        <div class="section-heading">
+          <span>Tell Us More</span>
+          <h2>Your Feedback</h2>
+        </div>
+
+        <div class="field-grid single-column">
+          <div class="field">
+            <label for="bestPart">What did we do well?</label>
+            <textarea id="bestPart" name="bestPart" rows="4" maxlength="1000" placeholder="Quality, design, communication, pickup, shipping, or anything else..."></textarea>
+          </div>
+
+          <div class="field">
+            <label for="improvements">What could we improve?</label>
+            <textarea id="improvements" name="improvements" rows="4" maxlength="1000" placeholder="Your honest feedback is appreciated."></textarea>
+          </div>
+
+          <fieldset class="choice-group">
+            <legend>Would you order from jStyles again?</legend>
+            <div class="pill-options">
+              <label><input type="radio" name="orderAgain" value="Yes" required /><span>Yes</span></label>
+              <label><input type="radio" name="orderAgain" value="Maybe" /><span>Maybe</span></label>
+              <label><input type="radio" name="orderAgain" value="No" /><span>No</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="choice-group">
+            <legend>Would you recommend jStyles to another team or tournament?</legend>
+            <div class="pill-options">
+              <label><input type="radio" name="recommend" value="Yes" required /><span>Yes</span></label>
+              <label><input type="radio" name="recommend" value="Maybe" /><span>Maybe</span></label>
+              <label><input type="radio" name="recommend" value="No" /><span>No</span></label>
+            </div>
+          </fieldset>
+        </div>
+      </section>
+
+      <div class="submit-panel">
+        <div>
+          <strong>Thank you for helping us improve.</strong>
+          <span>Required questions must be completed before submitting.</span>
+        </div>
+        <button id="submitBtn" class="submit-btn" type="submit">Submit Feedback →</button>
+      </div>
+    </form>
+
+    <section id="successCard" class="success-card" hidden aria-live="polite">
+      <div class="success-icon">✓</div>
+      <h2>Feedback Received</h2>
+      <p>Thank you for taking the time to share your experience with jStyles.</p>
+      <button id="newResponseBtn" type="button">Submit Another Response</button>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer shell">Warrior Classic Tournament · Order Feedback · Powered by jStyles</footer>
+</body>
+</html>
