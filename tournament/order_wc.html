@@ -3,62 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The Warrior Classic merchandise shop is now closed. Contact jStyles to ask about late orders and shipping." />
-  <title>Warrior Classic — Shop Closed</title>
+  <title>Warrior Classic — Order</title>
   <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="../css/order_wc_closed.css" />
-  <script defer src="../js/order_wc_closed.js"></script>
+  <!-- EmailJS is optional. Fill in the config at the top of order_wc.js to use it. -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="../css/order_wc.css" />
+  <script defer src="../js/order_wc.js"></script>
 </head>
 <body>
+  <!-- Shared navbar loads from /nav.html, ../nav.html, or falls back automatically. -->
   <div id="navbar"></div>
 
-  <main class="shell closed-page-shell">
-    <section class="closed-card" aria-labelledby="closedTitle">
-      <div class="closed-content">
-        <div class="closed-badge">Tournament Shop Closed</div>
-
-        <h1 class="closed-title" id="closedTitle">
-          The Shop Has <span>Closed</span>
-        </h1>
-
-        <p class="closed-message">
-          The online shop for this tournament is now closed. However, if you are still interested in placing an order, please contact us directly. It may still be possible to complete your order and have it shipped to you.
-          <br><br>
-          <strong>Sorry for the inconvenience, and thank you for supporting the tournament.</strong>
-        </p>
-
-        <div class="closed-contact-grid" aria-label="Contact jStyles">
-          <a class="closed-contact-btn" href="sms:+16132986301" aria-label="Text jStyles at 613 298 6301">
-            <div>
-              <span>Text Us</span>
-              <strong>613.298.6301</strong>
-            </div>
-          </a>
-
-          <a class="closed-contact-btn" href="mailto:jstyles.pro@gmail.com?subject=Warrior%20Classic%20Late%20Order%20Request" aria-label="Email jStyles about a late Warrior Classic order">
-            <div>
-              <span>Email Us</span>
-              <strong>jstyles.pro@gmail.com</strong>
-            </div>
-          </a>
-        </div>
-
-        <p class="closed-note">
-          Late orders are not guaranteed and may depend on available stock, production timing, and shipping arrangements.
+  <main class="shell page-shell">
+    <section class="page-header page-header-with-logo" aria-labelledby="pageTitle">
+      <div class="page-copy">
+        <div class="page-eyebrow">Build Your Order</div>
+        <h1 class="page-title" id="pageTitle">Warrior Classic <span>Merch</span></h1>
+        <p class="page-subtitle">
+          Select Warrior Classic apparel, choose small or large logo, pick your sizes, and set quantities. Only sizes above zero will appear on your order.
+          <br><b>Payment via e-transfer to jstyles.pro@gmail.com after submission.</b>
         </p>
       </div>
 
-      <div class="closed-logo-wrap" aria-label="Warrior Classic Tournament logo">
+      <div class="tournament-logo-card" aria-label="Warrior Classic Tournament logo">
         <img src="/images/warrior_classic.png" alt="Warrior Classic logo" />
       </div>
+
+      <aside class="header-order-card" aria-live="polite">
+        <div class="header-order-top">
+          <span>Current Order</span>
+          <strong id="headerTotalCost">$0</strong>
+        </div>
+        <div class="header-order-list" id="headerOrderList">
+          <span class="header-order-empty">No items selected yet.</span>
+        </div>
+        <div class="header-order-bottom">
+          <span>Items</span>
+          <strong id="headerTotalItems">0</strong>
+        </div>
+      </aside>
+    </section>
+
+    <section class="order-layout" aria-label="Tournament merch order form">
+      <div class="merch-column">
+        <div class="section-label">Warrior Classic Merch</div>
+
+        <!-- Product tabs are rendered by JS from the PRODUCTS array. -->
+        <div class="product-tabs" id="productTabs" aria-label="Product options"></div>
+
+        <div class="product-stage">
+          <div class="product-image-panel" id="imagePanel">
+            <!-- Product image is rendered by JS. -->
+          </div>
+
+          <div class="product-options-panel" id="optionsPanel">
+            <!-- Size options are rendered by JS. -->
+          </div>
+        </div>
+      </div>
+
+      <aside class="info-card customer-panel">
+        <div class="section-label">Your Information</div>
+        <div class="info-grid">
+          <div>
+            <label class="field-label" for="fname">First Name</label>
+            <input id="fname" name="fname" type="text" placeholder="Jane" autocomplete="given-name" required />
+          </div>
+
+          <div>
+            <label class="field-label" for="lname">Last Name</label>
+            <input id="lname" name="lname" type="text" placeholder="Smith" autocomplete="family-name" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="jane@example.com" autocomplete="email" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="clubName">Club Name</label>
+            <input id="clubName" name="clubName" type="text" placeholder="e.g. Ottawa Warriors" required />
+          </div>
+
+          <div>
+            <label class="field-label" for="ageGroup">Age Group</label>
+            <input id="ageGroup" name="ageGroup" type="text" placeholder="e.g. U12, U15, Adult" required />
+          </div>
+
+          <div>
+            <label class="field-label" for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+      </aside>
     </section>
   </main>
 
-  <footer class="site-footer shell closed-footer">Warrior Classic Tournament · Official Apparel · Powered by jStyles</footer>
+  <div class="summary-bar">
+    <div class="summary-count">
+      ITEMS <strong id="totalCount">0</strong> · TOTAL <strong class="cost" id="totalCost">$0</strong>
+    </div>
+    <button class="btn-submit" id="submitBtn" type="button">Send Order →</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer shell">Warrior Classic Tournament · Official Apparel · Powered by jStyles</footer>
 </body>
 </html>
