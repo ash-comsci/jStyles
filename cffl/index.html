@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#09111f" />
+  <title>Fantasy Football Draft Lottery</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="confettiLayer" class="confetti-layer" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">12-Team • 4-Keeper League</p>
+      <h1>Draft Night Lottery</h1>
+      <p class="hero__subtitle">
+        Enter the final standings, lock the champion and runner-up into picks 12 and 11,
+        then reveal the lottery from pick 1 down the board to pick 10.
+      </p>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="panel setup-panel" aria-labelledby="setupTitle">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Step 1</p>
+          <h2 id="setupTitle">Enter Final Standings</h2>
+        </div>
+        <button id="restoreDefaultsBtn" class="button button--ghost button--small" type="button">
+          Restore Defaults
+        </button>
+      </div>
+
+      <div class="rule-box">
+        <strong>Lottery rule:</strong>
+        The champion receives pick 12, the runner-up receives pick 11, and no lottery team
+        may fall more than
+        <label class="inline-field">
+          <input id="maxDropInput" type="number" min="0" max="9" value="3" aria-label="Maximum spots a team can move down" />
+        </label>
+        draft positions.
+      </div>
+
+      <div class="table-wrap">
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th>Finish</th>
+              <th>Team Name</th>
+              <th>Base Pick</th>
+              <th>Entries</th>
+            </tr>
+          </thead>
+          <tbody id="standingsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="setup-actions">
+        <button id="startBtn" class="button button--primary" type="button">
+          Lock Standings &amp; Start
+        </button>
+        <button id="resetBtn" class="button button--secondary" type="button" disabled>
+          Reset Lottery
+        </button>
+      </div>
+
+      <p id="setupMessage" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel lottery-panel" aria-labelledby="lotteryTitle">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Step 2</p>
+          <h2 id="lotteryTitle">Drop the Next Ball</h2>
+        </div>
+        <span id="remainingBadge" class="badge">10 teams remaining</span>
+      </div>
+
+      <div class="machine-layout">
+        <div class="lottery-machine" aria-label="Animated lottery machine">
+          <div class="machine-top">
+            <span class="machine-light"></span>
+            <span class="machine-title">KEEPER LEAGUE LOTTERY</span>
+            <span class="machine-light"></span>
+          </div>
+
+          <div id="ballChamber" class="ball-chamber">
+            <div class="chamber-glow"></div>
+            <div id="ballsLayer" class="balls-layer"></div>
+            <div id="dropBall" class="drop-ball" aria-hidden="true"></div>
+          </div>
+
+          <div class="chute">
+            <div class="chute-line"></div>
+          </div>
+
+          <div class="machine-console">
+            <div>
+              <span class="console-label">NEXT REVEAL</span>
+              <strong id="nextPickLabel">Pick #1</strong>
+            </div>
+            <button id="drawBtn" class="button button--draw" type="button" disabled>
+              Drop Ball
+            </button>
+          </div>
+        </div>
+
+        <aside class="status-card">
+          <p class="status-card__label">Lottery Official</p>
+          <h3 id="statusTitle">Waiting for standings</h3>
+          <p id="statusText">
+            Enter all 12 teams and lock the standings to begin.
+          </p>
+          <div id="constraintStatus" class="constraint-status constraint-status--idle">
+            Constraint check not started
+          </div>
+        </aside>
+      </div>
+
+      <div class="remaining-section">
+        <h3>Teams Still in the Machine</h3>
+        <div id="remainingTeams" class="remaining-teams"></div>
+      </div>
+    </section>
+
+    <section class="panel results-panel" aria-labelledby="resultsTitle">
+      <div class="section-heading">
+        <div>
+          <p class="step-label">Step 3</p>
+          <h2 id="resultsTitle">Draft Order Reveal</h2>
+        </div>
+        <button id="copyBtn" class="button button--ghost button--small" type="button" disabled>
+          Copy Results
+        </button>
+      </div>
+
+      <div class="fixed-picks">
+        <article id="pick12Card" class="fixed-pick">
+          <span>Pick 12</span>
+          <strong>League Champion</strong>
+          <small>Locked</small>
+        </article>
+        <article id="pick11Card" class="fixed-pick">
+          <span>Pick 11</span>
+          <strong>Runner-Up</strong>
+          <small>Locked</small>
+        </article>
+      </div>
+
+      <div id="resultsGrid" class="results-grid" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Weighted random selection with a maximum-drop safeguard checked before every reveal.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
