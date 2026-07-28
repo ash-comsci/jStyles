@@ -362,7 +362,7 @@ function renderSummary() {
   if (!list) return;
 
   if (!items.length) {
-    list.innerHTML = '<span class="header-order-empty">No items selected yet.</span>';
+    list.innerHTML = '<span class="header-order-empty">Nothing in the smoke stack yet.</span>';
     return;
   }
 
@@ -722,7 +722,7 @@ async function submitOrder() {
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Send Order →';
+      submitBtn.textContent = 'Send the smoke signal →';
     }
   }
 }
