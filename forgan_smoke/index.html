@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Order official Forgan Smoke apparel — hoodies, tees, caps and Dickies work shirts from Ottawa's family-run smokehouse." />
+  <title>Forgan Smoke — Apparel Order</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="./forgan_smoke.css" />
+  <script defer src="./forgan_smoke.js"></script>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="shell page-shell">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="hero-copy">
+        <div class="eyebrow">Ottawa, Ontario · Family Smokehouse</div>
+        <h1 id="pageTitle" class="hero-title">Slow Smoke.<br />Bold Flavour.</h1>
+        <p class="hero-lede">
+          Forgan Smoke started at home, around a backyard smoker and a family that couldn't stop tinkering with wood, rubs and rest times. What began as feeding neighbours turned into a full passion project: bringing our favourite smoked creations to the Ottawa community, one market and one plate at a time.
+        </p>
+        <p class="hero-lede">
+          This apparel line is how you carry that with you between visits. Pick an item below, set your size and quantity, and send it over — we'll follow up to sort out payment, pickup or delivery.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#shop">Shop The Rack ↓</a>
+          <a class="btn-ghost" href="https://www.facebook.com/ForganSmoke/" target="_blank" rel="noopener">Find us on Facebook →</a>
+        </div>
+      </div>
+
+      <div class="hero-badge" aria-hidden="false">
+        <div class="badge-ring">
+          <div class="badge-ember"></div>
+          <img src="./images/forgan-smoke-logo.png" alt="Forgan Smoke logo" />
+        </div>
+        <div class="badge-caption">Family run · Ottawa, ON</div>
+      </div>
+    </section>
+
+    <!-- ============ SHOP ============ -->
+    <section class="shop-section" id="shop" aria-label="Forgan Smoke apparel order form">
+      <div class="section-heading">
+        <div class="eyebrow">The Rack</div>
+        <h2>Pick your gear</h2>
+        <p class="section-note">Only sizes with a quantity above zero are added to your order.</p>
+      </div>
+
+      <div class="chalk-tabs" id="productTabs" aria-label="Product options"></div>
+
+      <div class="ticket-stage">
+        <div class="ticket-image" id="imagePanel"></div>
+        <div class="order-ticket" id="optionsPanel"></div>
+      </div>
+    </section>
+
+    <!-- ============ CUSTOMER INFO ============ -->
+    <section class="pickup-section" aria-label="Your information">
+      <div class="pickup-ticket">
+        <div class="ticket-punch" aria-hidden="true"></div>
+        <div class="ticket-tag-label">Pickup Ticket</div>
+        <h2 class="pickup-title">Your information</h2>
+        <p class="section-note">So we know who this order belongs to, and how to reach you.</p>
+
+        <div class="info-grid">
+          <div>
+            <label class="field-label" for="fname">First Name</label>
+            <input id="fname" name="fname" type="text" placeholder="Jane" autocomplete="given-name" required />
+          </div>
+
+          <div>
+            <label class="field-label" for="lname">Last Name</label>
+            <input id="lname" name="lname" type="text" placeholder="Smith" autocomplete="family-name" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="jane@example.com" autocomplete="email" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" placeholder="613-555-0123" autocomplete="tel" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="contactPreference">Preferred Contact Method</label>
+            <select id="contactPreference" name="contactPreference" required>
+              <option value="">Select one</option>
+              <option value="Email">Email</option>
+              <option value="Text">Text</option>
+              <option value="Phone Call">Phone Call</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="orderNotes">Order Notes <span class="optional">Optional</span></label>
+            <textarea id="orderNotes" name="orderNotes" rows="4" placeholder="Add pickup questions, sizing notes or other details here."></textarea>
+          </div>
+        </div>
+
+        <p class="pickup-fineprint"><b>Payment, pickup and delivery details will be confirmed after the order is reviewed.</b></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FLOATING CART ============ -->
+  <button class="cart-fab" id="cartFab" type="button" aria-expanded="false" aria-controls="cartDrawer">
+    <span class="cart-fab-icon">🧾</span>
+    <span class="cart-fab-label">Order</span>
+    <span class="cart-fab-count" id="headerTotalItems">0</span>
+  </button>
+
+  <div class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-drawer-head">
+      <span>Current Order</span>
+      <button class="cart-drawer-close" id="cartDrawerClose" type="button" aria-label="Close order summary">×</button>
+    </div>
+    <div class="cart-drawer-list" id="headerOrderList">
+      <span class="header-order-empty">No items selected yet.</span>
+    </div>
+    <div class="cart-drawer-foot">
+      <span>Total</span>
+      <strong id="headerTotalCost">$0</strong>
+    </div>
+  </div>
+  <div class="cart-scrim" id="cartScrim" aria-hidden="true"></div>
+
+  <div class="summary-bar">
+    <div class="summary-count">
+      ITEMS <strong id="totalCount">0</strong> · TOTAL <strong class="cost" id="totalCost">$0</strong>
+    </div>
+    <button class="btn-submit" id="submitBtn" type="button">Send Order →</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer shell">Forgan Smoke · Official Apparel · Ottawa, Ontario</footer>
+</body>
+</html>
