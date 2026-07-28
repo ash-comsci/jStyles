@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Order official Forgan Smoke apparel including hoodies, tees, caps and Dickies work shirts." />
+  <title>Forgan Smoke — Apparel Order</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="./forgan_smoke.css" />
+  <script defer src="./forgan_smoke.js"></script>
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main class="shell page-shell">
+    <section class="page-header page-header-with-logo" aria-labelledby="pageTitle">
+      <div class="page-copy">
+        <div class="page-eyebrow">Fire · Smoke · Flavour</div>
+        <h1 class="page-title" id="pageTitle">Forgan Smoke <span>Apparel</span></h1>
+        <p class="page-subtitle">
+          Forgan Smoke is a family-run Ottawa passion project built around a love of smoked foods and sharing favourite smoked creations with the community. This collection gives customers, friends and supporters a way to carry that bold, local flavour beyond market day.
+        </p>
+        <p class="page-subtitle order-help">
+          Choose an item, select a size and set the quantity. Only selections above zero will be included in the final order.
+          <br><b>Payment, pickup and delivery details will be confirmed after the order is reviewed.</b>
+        </p>
+        <a class="brand-link" href="https://www.facebook.com/ForganSmoke/" target="_blank" rel="noopener">Visit Forgan Smoke on Facebook →</a>
+      </div>
+
+      <div class="tournament-logo-card" aria-label="Forgan Smoke logo">
+        <img src="./images/forgan-smoke-logo.png" alt="Forgan Smoke logo" />
+      </div>
+
+      <aside class="header-order-card" aria-live="polite">
+        <div class="header-order-top">
+          <span>Current Order</span>
+          <strong id="headerTotalCost">$0</strong>
+        </div>
+        <div class="header-order-list" id="headerOrderList">
+          <span class="header-order-empty">No items selected yet.</span>
+        </div>
+        <div class="header-order-bottom">
+          <span>Items</span>
+          <strong id="headerTotalItems">0</strong>
+        </div>
+      </aside>
+    </section>
+
+    <section class="order-layout" aria-label="Forgan Smoke apparel order form">
+      <div class="merch-column">
+        <div class="section-label">Forgan Smoke Apparel</div>
+        <div class="product-tabs" id="productTabs" aria-label="Product options"></div>
+
+        <div class="product-stage">
+          <div class="product-image-panel" id="imagePanel"></div>
+          <div class="product-options-panel" id="optionsPanel"></div>
+        </div>
+      </div>
+
+      <aside class="info-card customer-panel">
+        <div class="section-label">Your Information</div>
+        <div class="info-grid">
+          <div>
+            <label class="field-label" for="fname">First Name</label>
+            <input id="fname" name="fname" type="text" placeholder="Jane" autocomplete="given-name" required />
+          </div>
+
+          <div>
+            <label class="field-label" for="lname">Last Name</label>
+            <input id="lname" name="lname" type="text" placeholder="Smith" autocomplete="family-name" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="jane@example.com" autocomplete="email" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" placeholder="613-555-0123" autocomplete="tel" required />
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="contactPreference">Preferred Contact Method</label>
+            <select id="contactPreference" name="contactPreference" required>
+              <option value="">Select one</option>
+              <option value="Email">Email</option>
+              <option value="Text">Text</option>
+              <option value="Phone Call">Phone Call</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label class="field-label" for="orderNotes">Order Notes <span class="optional">Optional</span></label>
+            <textarea id="orderNotes" name="orderNotes" rows="4" placeholder="Add pickup questions, sizing notes or other details here."></textarea>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="summary-bar">
+    <div class="summary-count">
+      ITEMS <strong id="totalCount">0</strong> · TOTAL <strong class="cost" id="totalCost">$0</strong>
+    </div>
+    <button class="btn-submit" id="submitBtn" type="button">Send Order →</button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="site-footer shell">Forgan Smoke · Official Apparel · Powered by jStyles</footer>
+</body>
+</html>
