@@ -37,7 +37,7 @@ const PRODUCTS = [
     id: 'black-hoodie',
     name: 'Black Hoodie',
     price: 60,
-    image: './images/forgan_black-hoodie.png,
+    image: './images/forgan_black-hoodie.png',
     tags: ['Hoodie', 'Black', '$60'],
     sizeGroups: [
       { title: 'Adult Sizes', sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'] }
