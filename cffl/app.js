@@ -2,32 +2,32 @@
   "use strict";
 
   const DEFAULT_NAMES = [
-    "League Champion",
-    "Runner-Up",
-    "Third Place",
-    "Fourth Place",
-    "Fifth Place",
-    "Sixth Place",
-    "Seventh Place",
-    "Eighth Place",
-    "Ninth Place",
-    "Tenth Place",
-    "Eleventh Place",
-    "Last Place"
+    "League Champion - 49ers",
+    "Stooges",
+    "Chefs",
+    "Skydragon",
+    "Sensasians",
+    "Orange Crush",
+    "Hustlaz",
+    "DaBears",
+    "jGoody",
+    "Screaming Vikings",
+    "Packers",
+    "The Greek"
   ];
 
   // Default entries from strongest eligible finisher (3rd) to worst finisher (12th).
   const DEFAULT_WEIGHTS_BY_FINISH = {
-    3: 3,
-    4: 4,
+    3: 1,
+    4: 3,
     5: 5,
     6: 7,
     7: 8,
     8: 10,
     9: 12,
-    10: 14,
-    11: 17,
-    12: 20
+    10: 15,
+    11: 20,
+    12: 25
   };
 
   const els = {
