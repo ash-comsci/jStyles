@@ -33,6 +33,7 @@
   const els = {
     standingsBody: document.getElementById("standingsBody"),
     maxDropInput: document.getElementById("maxDropInput"),
+    maxRiseInput: document.getElementById("maxRiseInput"),
     restoreDefaultsBtn: document.getElementById("restoreDefaultsBtn"),
     startBtn: document.getElementById("startBtn"),
     resetBtn: document.getElementById("resetBtn"),
@@ -58,6 +59,8 @@
     started: false,
     drawing: false,
     maxDrop: 3,
+    maxRise: 5,
+    nextPick: 1,
     remaining: [],
     results: new Map(),
     fixed: { 12: null, 11: null }
@@ -75,8 +78,8 @@
       const weight = DEFAULT_WEIGHTS_BY_FINISH[finish] ?? 0;
 
       row.innerHTML = `
-        <td><span class="position-pill">${ordinal(finish)}</span></td>
-        <td>
+        <td data-label="Finish"><span class="position-pill">${ordinal(finish)}</span></td>
+        <td data-label="Team Name">
           <input
             class="team-input"
             data-finish="${finish}"
@@ -86,14 +89,14 @@
             aria-label="Team name for ${ordinal(finish)} place"
           />
         </td>
-        <td>
+        <td data-label="Base Pick">
           ${
             isLocked
               ? `<span class="locked-text">Locked to pick ${basePick}</span>`
               : `<span class="base-pick">#${basePick}</span>`
           }
         </td>
-        <td>
+        <td data-label="Entries">
           ${
             isLocked
               ? `<span class="locked-text">Not in lottery</span>`
@@ -105,6 +108,7 @@
                   max="999"
                   step="1"
                   value="${weight}"
+                  inputmode="numeric"
                   aria-label="Weighted entries for ${ordinal(finish)} place"
                 />`
           }
@@ -139,6 +143,7 @@
       input.addEventListener("input", saveSetup);
     });
     els.maxDropInput.addEventListener("input", saveSetup);
+    els.maxRiseInput.addEventListener("input", saveSetup);
   }
 
   function saveSetup() {
@@ -154,7 +159,8 @@
     const payload = {
       names,
       weights,
-      maxDrop: els.maxDropInput.value
+      maxDrop: els.maxDropInput.value,
+      maxRise: els.maxRiseInput.value
     };
 
     try {
@@ -189,6 +195,11 @@
       if (Number.isInteger(savedMaxDrop) && savedMaxDrop >= 0 && savedMaxDrop <= 9) {
         els.maxDropInput.value = String(savedMaxDrop);
       }
+
+      const savedMaxRise = Number(saved.maxRise);
+      if (Number.isInteger(savedMaxRise) && savedMaxRise >= 0 && savedMaxRise <= 9) {
+        els.maxRiseInput.value = String(savedMaxRise);
+      }
     } catch {
       // Ignore malformed saved data.
     }
@@ -206,8 +217,9 @@
     });
 
     els.maxDropInput.value = "3";
+    els.maxRiseInput.value = "5";
     saveSetup();
-    setSetupMessage("Default names, entries and three-position limit restored.", "success");
+    setSetupMessage("Default names, entries, three-down and five-up limits restored.", "success");
   }
 
   function readSetup() {
@@ -227,6 +239,11 @@
       throw new Error("Maximum drop must be a whole number from 0 to 9.");
     }
 
+    const maxRise = Number(els.maxRiseInput.value);
+    if (!Number.isInteger(maxRise) || maxRise < 0 || maxRise > 9) {
+      throw new Error("Maximum move up must be a whole number from 0 to 9.");
+    }
+
     const teams = [];
     for (let finish = 3; finish <= 12; finish += 1) {
       const weightInput = document.querySelector(`.weight-input[data-finish="${finish}"]`);
@@ -242,15 +259,16 @@
         finish,
         baselinePick,
         weight: Math.floor(weight),
+        minAllowedPick: Math.max(1, baselinePick - maxRise),
         maxAllowedPick: Math.min(10, baselinePick + maxDrop)
       });
     }
 
-    return {
-      names,
-      teams,
-      maxDrop
-    };
+    if (!canCompleteRemaining(teams, range(1, 10))) {
+      throw new Error("Those movement limits do not allow a complete 10-team draft order.");
+    }
+
+    return { names, teams, maxDrop, maxRise };
   }
 
   function startLottery() {
@@ -260,6 +278,8 @@
       state.started = true;
       state.drawing = false;
       state.maxDrop = setup.maxDrop;
+      state.maxRise = setup.maxRise;
+      state.nextPick = 1;
       state.remaining = setup.teams.map((team) => ({ ...team }));
       state.results = new Map();
       state.fixed = {
@@ -281,7 +301,8 @@
       updatePreDrawConstraint();
       setSetupMessage("Standings locked. The first click will reveal pick 1.", "success");
       els.statusTitle.textContent = "Lottery is live";
-      els.statusText.textContent = "The machine will verify the three-position safeguard before every draw.";
+      els.statusText.textContent =
+        `Every draw is checked against the ${state.maxRise}-spot up and ${state.maxDrop}-spot down safeguards.`;
 
       window.setTimeout(() => {
         document.querySelector(".lottery-panel").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -294,6 +315,7 @@
   function resetLottery() {
     state.started = false;
     state.drawing = false;
+    state.nextPick = 1;
     state.remaining = [];
     state.results = new Map();
     state.fixed = { 12: null, 11: null };
@@ -322,18 +344,18 @@
       input.disabled = locked;
     });
     els.maxDropInput.disabled = locked;
+    els.maxRiseInput.disabled = locked;
   }
 
   function nextDraw() {
     if (!state.started || state.drawing || state.remaining.length === 0) return;
 
-    const pick = 11 - state.remaining.length;
-
-    if (state.remaining.length === 2) {
-      drawFinalTwo(pick);
+    if (state.nextPick === 9) {
+      drawFinalTwo();
       return;
     }
 
+    const pick = state.nextPick;
     const candidates = getFeasibleCandidates(state.remaining, pick);
 
     if (candidates.length === 0) {
@@ -348,10 +370,12 @@
       state.remaining = state.remaining.filter((team) => team.id !== selected.id);
       revealCard(pick, selected, false);
 
+      const movement = movementDescription(selected, pick);
       els.statusTitle.textContent = `${selected.name} gets pick ${pick}`;
       els.statusText.textContent =
-        `${selected.name} finished ${ordinal(selected.finish)} and had ${selected.weight} weighted entries.`;
+        `${selected.name} finished ${ordinal(selected.finish)}, had ${selected.weight} entries, and ${movement.toLowerCase()}.`;
 
+      state.nextPick += 1;
       state.drawing = false;
       els.drawBtn.disabled = false;
       updateAllDisplays();
@@ -359,8 +383,8 @@
     });
   }
 
-  function drawFinalTwo(firstFinalPick) {
-    const pickNineCandidates = getFeasibleCandidates(state.remaining, firstFinalPick);
+  function drawFinalTwo() {
+    const pickNineCandidates = getFeasibleCandidates(state.remaining, 9);
     if (pickNineCandidates.length === 0) {
       setConstraintStatus("The final two could not be assigned legally.", "bad");
       els.drawBtn.disabled = true;
@@ -370,23 +394,26 @@
     const pickNineTeam = weightedRandom(pickNineCandidates);
     const pickTenTeam = state.remaining.find((team) => team.id !== pickNineTeam.id);
 
-    runAnimation(pickNineTeam, "Final Two", () => {
-      assignPick(firstFinalPick, pickNineTeam);
-      assignPick(firstFinalPick + 1, pickTenTeam);
-      revealCard(firstFinalPick, pickNineTeam, true);
-      revealCard(firstFinalPick + 1, pickTenTeam, true);
+    runAnimation(pickNineTeam, "Picks #9 and #10", () => {
+      assignPick(9, pickNineTeam);
+      assignPick(10, pickTenTeam);
+      revealCard(9, pickNineTeam, true);
+      revealCard(10, pickTenTeam, true);
 
       state.remaining = [];
+      state.nextPick = 11;
       state.drawing = false;
 
       els.statusTitle.textContent = "The final two are revealed!";
       els.statusText.textContent =
-        `${pickNineTeam.name} owns pick ${firstFinalPick}, and ${pickTenTeam.name} owns pick ${firstFinalPick + 1}.`;
-      setConstraintStatus("Lottery complete — every team stayed within the maximum-drop rule.", "good");
+        `${pickNineTeam.name} owns pick 9, and ${pickTenTeam.name} owns pick 10.`;
+      setConstraintStatus(
+        `Lottery complete — every team stayed within ${state.maxRise} spots up and ${state.maxDrop} spots down.`,
+        "good"
+      );
 
       els.drawBtn.disabled = true;
       els.copyBtn.disabled = false;
-      els.nextPickLabel.textContent = "Complete";
       updateAllDisplays();
       launchConfetti();
     });
@@ -394,30 +421,55 @@
 
   function getFeasibleCandidates(teams, pick) {
     return teams.filter((candidate) => {
-      if (pick > candidate.maxAllowedPick) return false;
+      if (!isPickAllowed(candidate, pick)) return false;
 
       const afterSelection = teams.filter((team) => team.id !== candidate.id);
-      return canCompleteRemaining(afterSelection, pick + 1);
+      return canCompleteRemaining(afterSelection, range(pick + 1, 10));
     });
   }
 
-  // Remaining picks run from lowestRemainingPick through pick 10.
-  // Assign the tightest cap to the earliest available slot; every slot must fit its cap.
-  function canCompleteRemaining(teams, lowestRemainingPick) {
-    const availableSlots = [];
-    for (let pick = lowestRemainingPick; pick <= 10; pick += 1) {
-      availableSlots.push(pick);
-    }
+  function isPickAllowed(team, pick) {
+    return pick >= team.minAllowedPick && pick <= team.maxAllowedPick;
+  }
 
-    if (teams.length !== availableSlots.length) return false;
+  // Exact bipartite-matching check. This reserves legal future picks before each ball is drawn.
+  function canCompleteRemaining(teams, picks) {
+    if (teams.length !== picks.length) return false;
     if (teams.length === 0) return true;
 
-    const caps = teams
-      .map((team) => team.maxAllowedPick)
-      .sort((a, b) => a - b);
+    const teamById = new Map(teams.map((team) => [team.id, team]));
+    const eligiblePicks = new Map(
+      teams.map((team) => [
+        team.id,
+        picks.filter((pick) => isPickAllowed(team, pick))
+      ])
+    );
 
-    for (let index = 0; index < caps.length; index += 1) {
-      if (availableSlots[index] > caps[index]) return false;
+    if ([...eligiblePicks.values()].some((teamPicks) => teamPicks.length === 0)) {
+      return false;
+    }
+
+    const orderedTeams = [...teams].sort(
+      (a, b) => eligiblePicks.get(a.id).length - eligiblePicks.get(b.id).length
+    );
+    const pickAssignments = new Map();
+
+    function tryAssign(team, visitedPicks) {
+      for (const pick of eligiblePicks.get(team.id)) {
+        if (visitedPicks.has(pick)) continue;
+        visitedPicks.add(pick);
+
+        const assignedTeamId = pickAssignments.get(pick);
+        if (!assignedTeamId || tryAssign(teamById.get(assignedTeamId), visitedPicks)) {
+          pickAssignments.set(pick, team.id);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    for (const team of orderedTeams) {
+      if (!tryAssign(team, new Set())) return false;
     }
 
     return true;
@@ -439,7 +491,7 @@
     state.drawing = true;
     els.drawBtn.disabled = true;
     els.ballChamber.classList.add("is-spinning");
-    setConstraintStatus(`Constraint check passed. Drawing ${label}…`, "good");
+    setConstraintStatus(`Both safeguards passed. Drawing ${label}…`, "good");
 
     window.setTimeout(() => {
       els.dropBall.textContent = shortBallName(team.name);
@@ -465,21 +517,26 @@
 
     card.querySelector("strong").textContent = team.name;
     card.querySelector("small").textContent =
-      `Finished ${ordinal(team.finish)} • Base pick ${team.baselinePick} • ${team.weight} entries`;
+      `Finished ${ordinal(team.finish)} • Base ${team.baselinePick} • ${movementDescription(team, pick)}`;
     card.classList.add("is-revealed");
     if (finalTwo) card.classList.add("is-final-two");
+  }
+
+  function movementDescription(team, pick) {
+    const movement = pick - team.baselinePick;
+    if (movement < 0) return `Moved up ${Math.abs(movement)} spot${Math.abs(movement) === 1 ? "" : "s"}`;
+    if (movement > 0) return `Moved down ${movement} spot${movement === 1 ? "" : "s"}`;
+    return "Stayed at its base pick";
   }
 
   function updatePreDrawConstraint() {
     if (!state.started || state.remaining.length === 0) return;
 
-    const pick = 11 - state.remaining.length;
-
-    if (state.remaining.length === 2) {
-      const candidates = getFeasibleCandidates(state.remaining, pick);
+    if (state.nextPick === 9) {
+      const candidates = getFeasibleCandidates(state.remaining, 9);
       if (candidates.length > 0) {
         setConstraintStatus(
-          `Final check passed: picks ${pick} and ${pick + 1} can both be assigned legally.`,
+          `Final check passed: picks 9 and 10 can both be assigned legally.`,
           "good"
         );
       } else {
@@ -488,15 +545,14 @@
       return;
     }
 
-    const candidates = getFeasibleCandidates(state.remaining, pick);
-
+    const candidates = getFeasibleCandidates(state.remaining, state.nextPick);
     if (candidates.length > 0) {
       setConstraintStatus(
-        `Pick ${pick} check passed: ${candidates.length} legal team${candidates.length === 1 ? "" : "s"} available.`,
+        `Pick ${state.nextPick} check passed: ${candidates.length} legal team${candidates.length === 1 ? "" : "s"} available.`,
         "good"
       );
     } else {
-      setConstraintStatus(`Pick ${pick} has no legal candidates.`, "bad");
+      setConstraintStatus(`Pick ${state.nextPick} has no legal candidates.`, "bad");
     }
   }
 
@@ -507,11 +563,11 @@
 
     if (!state.started) {
       els.nextPickLabel.textContent = "Pick #1";
-    } else if (remainingCount > 2) {
-      const nextPick = 11 - remainingCount;
-      els.nextPickLabel.textContent = `Pick #${nextPick}`;
       els.drawBtn.textContent = "Drop Ball";
-    } else if (remainingCount === 2) {
+    } else if (state.nextPick <= 8) {
+      els.nextPickLabel.textContent = `Pick #${state.nextPick}`;
+      els.drawBtn.textContent = "Drop Ball";
+    } else if (state.nextPick === 9) {
       els.nextPickLabel.textContent = "Picks #9 & #10";
       els.drawBtn.textContent = "Reveal Final Two";
     } else {
@@ -546,14 +602,14 @@
       const chip = document.createElement("span");
       chip.className = "remaining-chip";
       chip.textContent = `${team.name} (${team.weight})`;
-      chip.title = `Base pick ${team.baselinePick}; cannot fall past pick ${team.maxAllowedPick}`;
+      chip.title =
+        `Base pick ${team.baselinePick}; legal range ${team.minAllowedPick}–${team.maxAllowedPick}`;
       els.remainingTeams.appendChild(chip);
     });
   }
 
   function renderBalls() {
     els.ballsLayer.innerHTML = "";
-
     if (!state.started) return;
 
     const positions = [
@@ -631,9 +687,7 @@
   function shortBallName(name) {
     const words = name.trim().split(/\s+/).filter(Boolean);
     if (words.length === 1) return words[0].slice(0, 8).toUpperCase();
-
-    const initials = words.map((word) => word[0]).join("").slice(0, 4);
-    return initials.toUpperCase();
+    return words.map((word) => word[0]).join("").slice(0, 4).toUpperCase();
   }
 
   function ordinal(value) {
@@ -646,6 +700,11 @@
       case 3: return `${value}rd`;
       default: return `${value}th`;
     }
+  }
+
+  function range(start, end) {
+    if (start > end) return [];
+    return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   }
 
   function escapeHtml(value) {

@@ -35,12 +35,16 @@
 
       <div class="rule-box">
         <strong>Lottery rule:</strong>
-        The champion receives pick 12, the runner-up receives pick 11, and no lottery team
-        may fall more than
+        The champion receives pick 12 and the runner-up receives pick 11. Each lottery team may move
+        up no more than
         <label class="inline-field">
-          <input id="maxDropInput" type="number" min="0" max="9" value="3" aria-label="Maximum spots a team can move down" />
+          <input id="maxRiseInput" type="number" min="0" max="9" value="5" inputmode="numeric" aria-label="Maximum spots a team can move up" />
         </label>
-        draft positions.
+        spots or fall more than
+        <label class="inline-field">
+          <input id="maxDropInput" type="number" min="0" max="9" value="3" inputmode="numeric" aria-label="Maximum spots a team can move down" />
+        </label>
+        spots from its reverse-standings base pick.
       </div>
 
       <div class="table-wrap">
@@ -154,7 +158,7 @@
   </main>
 
   <footer class="footer">
-    <p>Weighted random selection with a maximum-drop safeguard checked before every reveal.</p>
+    <p>Weighted random selection with maximum five-up and three-down safeguards checked before every reveal.</p>
   </footer>
 
   <script src="app.js"></script>
