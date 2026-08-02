@@ -57,13 +57,14 @@ const PRODUCTS = [
     id: 'black-cap',
     name: 'Black Ball Cap',
     price: 25,
-    image: './images/forgane_black_hat.png',
+    image: './images/forgan_black_hat.png',
     tags: ['Ball Cap', 'One Size', '$25'],
     sizeGroups: [
       { title: 'Cap Size', sizes: ['One Size Fits Most'] }
     ]
   },
-  {
+ /*
+   {
     id: 'black-dickies-shirt',
     name: 'Black Dickies Shirt',
     price: 75,
@@ -93,6 +94,7 @@ const PRODUCTS = [
       { title: 'Adult Sizes', sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'] }
     ]
   }
+  */
 ];
 
 const state = {
