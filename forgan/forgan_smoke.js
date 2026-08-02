@@ -47,7 +47,7 @@ const PRODUCTS = [
     id: 'black-tee',
     name: 'Black Tee Shirt',
     price: 25,
-    image: './images/black-tee.svg',
+    image: '../images/forgan_black_tee.png',
     tags: ['T-Shirt', 'Black', '$25'],
     sizeGroups: [
       { title: 'Adult Sizes', sizes: ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'] }
@@ -57,7 +57,7 @@ const PRODUCTS = [
     id: 'black-cap',
     name: 'Black Ball Cap',
     price: 25,
-    image: './images/black-cap.svg',
+    image: './images/forgane_black_hat.png',
     tags: ['Ball Cap', 'One Size', '$25'],
     sizeGroups: [
       { title: 'Cap Size', sizes: ['One Size Fits Most'] }
