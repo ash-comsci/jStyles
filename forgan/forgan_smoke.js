@@ -57,7 +57,7 @@ const PRODUCTS = [
     id: 'black-cap',
     name: 'Black Ball Cap',
     price: 25,
-    image: './images/forgan_black_hat.png',
+    image: '../images/forgan_black_hat.png',
     tags: ['Ball Cap', 'One Size', '$25'],
     sizeGroups: [
       { title: 'Cap Size', sizes: ['One Size Fits Most'] }
