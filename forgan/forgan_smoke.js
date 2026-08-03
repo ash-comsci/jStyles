@@ -28,7 +28,7 @@ const EMAILJS_SDK_URL = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/em
 /* Paste the deployed Google Apps Script Web App URL here later.
    Leave blank until the Google Sheet has been created. */
 const GOOGLE_SHEETS_CONFIG = {
-  webAppUrl: 'https://script.google.com/macros/s/AKfycbxjPcNTV9DzkpPw4H7OKAOAMmZmbgSrmg3AeBELPar0-O0EOSsfqUkl2UXWeDSSoCct/exec'
+  webAppUrl: 'https://script.google.com/macros/s/AKfycbwg4VSxvLibJNeoiLmjzfT1l8W0mURxc4_3sxes40D3CInp2xdteQIrD0L1vqjgFSll/exec'
 };
 
 /* TEMPORARY PRICES: update these values once final prices are confirmed. */
