@@ -710,9 +710,9 @@ async function submitOrder() {
     const sheetSync = await trackOrderInGoogleSheets(sheetsPayload);
 
     if (sheetSync.tracked) {
-      showToast('✓ Order sent. Confirmation email delivered and Google Sheet updated.');
+      showToast('💭 Order Sent and confirmation emails sent');
     } else if (sheetSync.reason === 'not-configured') {
-      showToast('✓ Order and confirmation emails sent. Google Sheets can be connected later.');
+      showToast('💭 Order Sent and confirmation emails sent.');
     } else {
       showToast('✓ Emails sent, but the Google Sheet could not be updated.', true);
     }
