@@ -156,23 +156,11 @@ const PRODUCTS = [
   }
 ];
 
-// ════════════════════════════════════════════════════
-// EMAILJS CONFIG
-// These are kept from your original uploaded file.
-// ════════════════════════════════════════════════════
-const EMAILJS_PUBLIC_KEY = 't0ZhDWn8N6TciIGFA';
-const EMAILJS_SERVICE_ID = 'service_qpb17yf';
-const EMAILJS_TEMPLATE_ID = 'template_m8v30a6';
-const ADMIN_EMAIL = 'jstyles.pro@gmail.com';
-
-// ════════════════════════════════════════════════════
-// GOOGLE SHEETS ORDER LOGGER
-// After you deploy the Apps Script web app, paste its /exec URL below.
-// Example: https://script.google.com/macros/s/AKfycb.../exec
-// ════════════════════════════════════════════════════
-const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz0dugfZiPeoInzkRXSKz8SECvcGN46ls5zVZaBVTcLrO8LVB2_ecJd54lxZYxoHMea9Q/exec';
+// Deploy WOS/apps-script/Code.gs, then paste the NEW web app /exec URL here.
+const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzssVyVDCedXDyL98T6uvFid74r2ZpNV7_MJQRG5TY8NRVpMEXwd-QxQt0krgPpNZ-C/exec';
 const ORDER_PAGE_NAME = 'WOS Merch Order';
-
+let submittingOrder = false;
+let pendingOrder = null;
 const counts = {};
 
 const customerInfo = {
@@ -572,132 +560,6 @@ function collectOrderRows() {
   return { orderRows, grandTotal, grandTotalCost };
 }
 
-function buildEmailHTML(fname, lname, email, notes, orderRows, grandTotal, grandTotalCost) {
-  const now = new Date().toLocaleString('en-CA', { dateStyle: 'long', timeStyle: 'short' });
-
-  const productSections = orderRows.map(({ name, priceLabel, items, subtotal, sectionTotal }) => {
-    const rows = items.map(({ size, qty }) => `
-      <tr>
-        <td style="padding:10px 16px;border-bottom:1px solid #ddd;color:#111;font-size:14px;">${escapeHTML(size)}</td>
-        <td style="padding:10px 16px;border-bottom:1px solid #ddd;color:#d72323;text-align:right;font-weight:bold;">×${qty}</td>
-      </tr>
-    `).join('');
-
-    return `
-      <div style="margin-bottom:20px;border-radius:8px;overflow:hidden;border:1px solid #ddd;">
-        <div style="background:#ffffff;padding:12px 16px;border-bottom:2px solid #d72323;">
-          <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td style="font-size:14px;font-weight:700;color:#111;text-transform:uppercase;">${escapeHTML(name)}</td>
-              <td style="font-size:12px;font-weight:700;color:#d72323;text-align:right;">${subtotal} ITEMS • ${priceLabel} EACH • ${money(sectionTotal)}</td>
-            </tr>
-          </table>
-        </div>
-        <table width="100%" cellspacing="0" cellpadding="0">${rows}</table>
-      </div>
-    `;
-  }).join('');
-
-  const notesRow = notes ? `
-    <tr>
-      <td style="padding:8px 0;color:#666;width:150px;">Name / Notes</td>
-      <td style="padding:8px 0;color:#111;">${escapeHTML(notes)}</td>
-    </tr>
-  ` : '';
-
-  return `
-    <!DOCTYPE html>
-    <html>
-    <body style="margin:0;background:#f4f4f4;font-family:Arial,sans-serif;">
-      <table width="100%" style="padding:30px;">
-        <tr>
-          <td align="center">
-            <table width="620" style="border:1px solid #ddd;background:#fff;border-collapse:collapse;">
-              <tr>
-                <td style="border-top:5px solid #d72323;padding:30px;text-align:center;">
-                  <div style="color:#d72323;font-size:12px;letter-spacing:3px;font-weight:bold;">JSTYLES TOURNAMENT MERCH</div>
-                  <div style="font-size:30px;font-weight:700;color:#111;line-height:1.05;">NEW ORDER<br><span style="color:#d72323;">RECEIVED</span></div>
-                </td>
-              </tr>
-
-              <tr>
-                <td style="padding:24px;">
-                  <table width="100%" cellspacing="0" cellpadding="0">
-                    <tr><td style="padding:8px 0;color:#666;width:150px;">Name</td><td style="padding:8px 0;color:#111;">${escapeHTML(fname)} ${escapeHTML(lname)}</td></tr>
-                    <tr><td style="padding:8px 0;color:#666;">Email</td><td style="padding:8px 0;"><a href="mailto:${escapeHTML(email)}" style="color:#d72323;">${escapeHTML(email)}</a></td></tr>
-                    <tr><td style="padding:8px 0;color:#666;">Date</td><td style="padding:8px 0;color:#111;">${escapeHTML(now)}</td></tr>
-                    ${notesRow}
-                  </table>
-                </td>
-              </tr>
-
-              <tr>
-                <td style="padding:0 24px 24px;">${productSections}</td>
-              </tr>
-
-              <tr>
-                <td style="padding:24px;background:#fafafa;border-top:1px solid #ddd;">
-                  <table width="100%" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td style="color:#666;">TOTAL ITEMS</td>
-                      <td style="text-align:right;font-weight:700;color:#111;">${grandTotal}</td>
-                    </tr>
-                    <tr>
-                      <td style="color:#666;padding-top:8px;">TOTAL COST</td>
-                      <td style="text-align:right;padding-top:8px;"><span style="background:#d72323;color:#fff;font-size:20px;font-weight:700;padding:8px 18px;border-radius:999px;">${money(grandTotalCost)}</span></td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-              <tr>
-                <td style="text-align:center;padding:18px;color:#777;font-size:12px;">Submitted via jStyles tournament merch order form</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>
-  `;
-}
-
-function buildCustomerEmail(fname, orderRows, grandTotal, grandTotalCost) {
-  const itemsHTML = orderRows.map(({ name, priceLabel, items, sectionTotal }) => {
-    const rows = items.map(({ size, qty }) => `
-      <tr>
-        <td style="padding:6px 0;color:#111;">${escapeHTML(size)}</td>
-        <td style="padding:6px 0;text-align:right;color:#d72323;font-weight:bold;">×${qty}</td>
-      </tr>
-    `).join('');
-
-    return `
-      <div style="margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #ddd;">
-        <strong style="color:#111;text-transform:uppercase;">${escapeHTML(name)}</strong>
-        <div style="font-size:12px;color:#777;margin:3px 0 8px;">${priceLabel} each</div>
-        <table width="100%" cellspacing="0" cellpadding="0">${rows}</table>
-        <div style="text-align:right;font-weight:bold;color:#d72323;">${money(sectionTotal)}</div>
-      </div>
-    `;
-  }).join('');
-
-  return `
-    <html>
-    <body style="font-family:Arial,sans-serif;padding:20px;background:#f4f4f4;color:#111;">
-      <div style="max-width:620px;margin:auto;background:#fff;border-top:5px solid #d72323;padding:26px;border-radius:8px;">
-        <h2 style="color:#d72323;margin:0 0 12px;">Order Confirmation</h2>
-        <p>Hi ${escapeHTML(fname)},</p>
-        <p>Thanks for your tournament merch order! Here’s your summary:</p>
-        ${itemsHTML}
-        <p><strong>Total Items:</strong> ${grandTotal}</p>
-        <p><strong>Total Cost:</strong> <span style="color:#d72323;font-size:20px;">${money(grandTotalCost)}</span></p>
-        <p style="margin-top:20px;">Orders will be started once e-transfer has been accepted to <strong>${ADMIN_EMAIL}</strong>.</p>
-      </div>
-    </body>
-    </html>
-  `;
-}
-
 function createOrderId() {
   const timestamp = new Date().toISOString().replace(/\D/g, '').slice(0, 14);
   const randomPart = typeof crypto !== 'undefined' && crypto.randomUUID
@@ -707,12 +569,7 @@ function createOrderId() {
   return `WOS-${timestamp}-${randomPart}`;
 }
 
-function isGoogleSheetLoggingEnabled() {
-  return GOOGLE_SHEETS_WEB_APP_URL &&
-    !GOOGLE_SHEETS_WEB_APP_URL.includes('https://script.google.com/macros/s/AKfycbzssVyVDCedXDyL98T6uvFid74r2ZpNV7_MJQRG5TY8NRVpMEXwd-QxQt0krgPpNZ-C/exec');
-}
-
-function buildGoogleSheetPayload(orderId, fname, lname, email, notes, orderRows, grandTotal, grandTotalCost) {
+function buildOrderPayload(orderId, fname, lname, email, notes, orderRows, grandTotal, grandTotalCost) {
   const items = orderRows.flatMap(row => row.items.map(item => ({
     productName: row.name,
     size: item.size,
@@ -740,24 +597,20 @@ function buildGoogleSheetPayload(orderId, fname, lname, email, notes, orderRows,
   };
 }
 
-async function saveOrderToGoogleSheet(payload) {
-  if (!isGoogleSheetLoggingEnabled()) {
-    console.warn('Google Sheet logging is not enabled yet. Paste the deployed Apps Script /exec URL into GOOGLE_SHEETS_WEB_APP_URL.');
-    return { skipped: true };
-  }
-
-  // Apps Script web apps do not return a CORS-readable response to GitHub Pages.
-  // "no-cors" still sends the order safely as a plain-text JSON POST.
-  await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
+async function sendOrder(payload) {
+  const response = await fetch(APPS_SCRIPT_WEB_APP_URL, {
     method: 'POST',
-    mode: 'no-cors',
-    headers: {
-      'Content-Type': 'text/plain;charset=utf-8'
-    },
-    body: JSON.stringify(payload)
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload),
+    redirect: 'follow',
+    signal: AbortSignal.timeout(60000)
   });
-
-  return { queued: true };
+  if (!response.ok) throw new Error('Order service unavailable.');
+  const result = await response.json();
+  if (!result.ok || result.orderId !== payload.orderId) {
+    throw new Error(result.message || 'Order could not be confirmed.');
+  }
+  return result;
 }
 
 function clearOrderSelections() {
@@ -809,6 +662,7 @@ function submitOrder() {
 }
 
 async function submitConfirmedOrder() {
+  if (submittingOrder) return;
   const { orderRows, grandTotal, grandTotalCost } = collectOrderRows();
 
   if (grandTotal === 0) {
@@ -826,17 +680,12 @@ async function submitConfirmedOrder() {
   const email = customerInfo.email;
   const notes = customerInfo.notes;
 
-  if (typeof emailjs === 'undefined') {
-    showToast('EmailJS did not load. Check your internet connection or script link.', true);
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/.test(APPS_SCRIPT_WEB_APP_URL)) {
+    showToast('Online ordering is being set up. Please contact jstyles.pro@gmail.com.', true);
     return;
   }
 
-  if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-    showToast('Add your EmailJS keys to enable sending.', true);
-    console.log('Order data:', { fname, lname, email, notes, orderRows, grandTotal, grandTotalCost });
-    return;
-  }
-
+  submittingOrder = true;
   const buttons = [
     document.getElementById('submitBtn'),
     document.getElementById('sidebarSubmitBtn'),
@@ -849,65 +698,24 @@ async function submitConfirmedOrder() {
   });
 
   try {
-    const orderId = createOrderId();
-    const adminHTML = buildEmailHTML(fname, lname, email, notes, orderRows, grandTotal, grandTotalCost);
-    const customerHTML = buildCustomerEmail(fname, orderRows, grandTotal, grandTotalCost);
-
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      subject: `New jStyles Tournament Merch Order — ${fname} ${lname}`,
-      html_body: adminHTML,
-      to_email: ADMIN_EMAIL,
-      from_name: `${fname} ${lname}`,
-      reply_to: email
-    });
-
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      subject: 'Your jStyles Tournament Merch Order Confirmation',
-      html_body: customerHTML,
-      to_email: email,
-      from_name: 'jStyles',
-      reply_to: ADMIN_EMAIL
-    });
-
-    const sheetPayload = buildGoogleSheetPayload(
-      orderId,
-      fname,
-      lname,
-      email,
-      notes,
-      orderRows,
-      grandTotal,
-      grandTotalCost
-    );
-
-    let sheetLoggingFailed = false;
-    let sheetLoggingNotConfigured = false;
-
-    try {
-      const sheetResult = await saveOrderToGoogleSheet(sheetPayload);
-      sheetLoggingNotConfigured = Boolean(sheetResult && sheetResult.skipped);
-    } catch (sheetError) {
-      sheetLoggingFailed = true;
-      console.error('Google Sheet logging error:', sheetError);
+    const payload = buildOrderPayload('', fname, lname, email, notes, orderRows, grandTotal, grandTotalCost);
+    const fingerprint = JSON.stringify({ customer: payload.customer, items: payload.items });
+    // Keep the same reference when retrying an unchanged order after a network failure.
+    if (!pendingOrder || pendingOrder.fingerprint !== fingerprint) {
+      pendingOrder = { fingerprint, orderId: createOrderId() };
     }
-
-    showToast(
-      sheetLoggingFailed
-        ? '✓ Order email sent, but Google Sheet logging failed. Please check the web-app URL.'
-        : sheetLoggingNotConfigured
-          ? '✓ Order email sent. Add the Apps Script /exec URL to enable Sheet logging.'
-          : '✓ Order sent and saved to Google Sheet!'
-    );
-
+    payload.orderId = pendingOrder.orderId;
+    await sendOrder(payload);
+    showToast('✓ Order ' + payload.orderId + ' confirmed! Check your email.');
+    pendingOrder = null;
     closeCustomerModal();
     clearOrderSelections();
     clearCustomerInfo();
   } catch (err) {
-    console.error('EmailJS error:', err);
-    showToast('Send failed — check your EmailJS template, service, and allowed fields.', true);
+    console.error('Order submission error:', err);
+    showToast('Confirmation unavailable. Your selections are kept. Retry unchanged, or contact jstyles.pro@gmail.com with reference ' + (pendingOrder?.orderId || '') + '.', true);
   } finally {
+    submittingOrder = false;
     const submitBtn = document.getElementById('submitBtn');
     const sidebarBtn = document.getElementById('sidebarSubmitBtn');
     const confirmBtn = document.getElementById('customerInfoSubmit');
@@ -941,12 +749,6 @@ function showToast(message, isErr = false) {
   }, 4200);
 }
 
-function initEmailJS() {
-  if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  }
-}
-
 function initSubmitButtons() {
   [document.getElementById('submitBtn'), document.getElementById('sidebarSubmitBtn')]
     .filter(Boolean)
@@ -958,7 +760,6 @@ function initOrderForm() {
   renderProducts();
   initCustomerModal();
   initSubmitButtons();
-  initEmailJS();
   refreshTotals();
 
   window.addEventListener('resize', updateCardHeights);
