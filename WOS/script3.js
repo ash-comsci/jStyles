@@ -606,7 +606,12 @@ async function sendOrder(payload) {
     signal: AbortSignal.timeout(60000)
   });
   if (!response.ok) throw new Error('Order service unavailable.');
-  const result = await response.json();
+  let result;
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error('The order service did not return a valid response. Check the Apps Script deployment and access settings.');
+  }
   if (!result.ok || result.orderId !== payload.orderId) {
     throw new Error(result.message || 'Order could not be confirmed.');
   }
@@ -663,6 +668,15 @@ function submitOrder() {
 
 async function submitConfirmedOrder() {
   if (submittingOrder) return;
+  let status = document.getElementById('orderSubmissionStatus');
+  if (!status) {
+    status = document.createElement('p');
+    status.id = 'orderSubmissionStatus';
+    status.setAttribute('role', 'alert');
+    status.style.cssText = 'margin:16px 0;padding:14px;border:1px solid #e11919;background:#251010;color:#fff;line-height:1.5;overflow-wrap:anywhere;';
+    document.getElementById('customerModalForm').appendChild(status);
+  }
+  status.hidden = true;
   const { orderRows, grandTotal, grandTotalCost } = collectOrderRows();
 
   if (grandTotal === 0) {
@@ -713,7 +727,15 @@ async function submitConfirmedOrder() {
     clearCustomerInfo();
   } catch (err) {
     console.error('Order submission error:', err);
-    showToast('Confirmation unavailable. Your selections are kept. Retry unchanged, or contact jstyles.pro@gmail.com with reference ' + (pendingOrder?.orderId || '') + '.', true);
+    const reason = err.name === 'TimeoutError' || err.name === 'AbortError'
+      ? 'The request timed out. Delivery could not be confirmed.'
+      : err instanceof TypeError
+        ? 'The browser could not read the order service response. Check your connection and the web app access settings.'
+        : err.message;
+    status.textContent = reason + ' Your selections are kept. Reference: ' + (pendingOrder?.orderId || 'not assigned') + '. Contact jstyles.pro@gmail.com if needed.';
+    status.hidden = false;
+    status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showToast(reason, true);
   } finally {
     submittingOrder = false;
     const submitBtn = document.getElementById('submitBtn');
