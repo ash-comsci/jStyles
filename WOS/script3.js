@@ -709,7 +709,7 @@ function createOrderId() {
 
 function isGoogleSheetLoggingEnabled() {
   return GOOGLE_SHEETS_WEB_APP_URL &&
-    !GOOGLE_SHEETS_WEB_APP_URL.includes('PASTE_YOUR_GOOGLE_APPS_SCRIPT');
+    !GOOGLE_SHEETS_WEB_APP_URL.includes('https://script.google.com/macros/s/AKfycbzssVyVDCedXDyL98T6uvFid74r2ZpNV7_MJQRG5TY8NRVpMEXwd-QxQt0krgPpNZ-C/exec');
 }
 
 function buildGoogleSheetPayload(orderId, fname, lname, email, notes, orderRows, grandTotal, grandTotalCost) {
