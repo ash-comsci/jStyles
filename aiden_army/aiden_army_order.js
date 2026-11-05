@@ -36,7 +36,7 @@ const EMAILJS_CONFIG = {
   3. Paste the deployment URL ending in /exec below.
 */
 const GOOGLE_SHEETS_CONFIG = {
-  webAppUrl: "https://script.google.com/macros/s/AKfycbwGJRpOa7fwzIJeks8AGMATMGTYb0oUQDfjovyRaSGK5KG3__bZbfqgv-PmSYdRdZHJYg/exec"
+  webAppUrl: "https://script.google.com/macros/s/AKfycbw2o5BuGjkyxX0p5hmMTUd0Rt3p12xjMfAIOIyyEMUpg0OWyT_4orBQm-koYjZLP1e8/exec"
 };
 
 const PRODUCTS = [
@@ -749,8 +749,7 @@ function hasGoogleSheetsWebhook() {
 
 async function addOrderToGoogleSheet(customer, items, totals, orderId) {
   if (!hasGoogleSheetsWebhook()) {
-    console.warn("Google Sheets log is not active yet. Add the Apps Script /exec URL in GOOGLE_SHEETS_CONFIG.webAppUrl.");
-    return false;
+    throw new Error("Online ordering is being set up. Please contact " + TOURNAMENT.emailTo + ".");
   }
 
   const payload = {
@@ -780,19 +779,24 @@ async function addOrderToGoogleSheet(customer, items, totals, orderId) {
     }
   };
 
-  /*
-    Apps Script web apps do not reliably return CORS-readable responses.
-    A no-cors request keeps the customer order flow fast and lets the
-    web app add the row without exposing your sheet credentials.
-  */
-  await fetch(GOOGLE_SHEETS_CONFIG.webAppUrl, {
+  // The Apps Script sends the confirmation emails, adds the calendar event,
+  // and replies with { ok, orderId } so the page knows the order arrived.
+  const response = await fetch(GOOGLE_SHEETS_CONFIG.webAppUrl, {
     method: "POST",
-    mode: "no-cors",
     headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(payload),
-    keepalive: true
+    redirect: "follow"
   });
 
+  let result;
+  try {
+    result = await response.json();
+  } catch {
+    throw new Error("The order service did not respond correctly. Please try again or contact " + TOURNAMENT.emailTo + ".");
+  }
+  if (!result.ok || result.orderId !== orderId) {
+    throw new Error(result.message || "Your order could not be confirmed. Please try again.");
+  }
   return true;
 }
 
@@ -831,71 +835,14 @@ async function submitOrder() {
   }
 
   try {
-    setupEmailJS();
-
-    const adminHTML = buildAdminEmailHTML(customer, items, totals);
-    const customerHTML = buildCustomerEmailHTML(customer, items, totals);
-
-    const common = {
-      tournament_name: TOURNAMENT.name,
-      customer_name: customerName,
-      customer_first_name: customer.firstName,
-      customer_last_name: customer.lastName,
-      customer_email: customer.email,
-      phone: customer.phone,
-      fulfillment: customer.fulfillment,
-      customer_note: customer.note,
-      order_lines: orderLines,
-      total_items: totals.count,
-      total_cost: formatMoney(totals.total),
-      payment_note: TOURNAMENT.paymentNote,
-      order_id: orderId
-    };
-
-    await window.emailjs.send(
-      EMAILJS_CONFIG.serviceId,
-      EMAILJS_CONFIG.templateId,
-      {
-        ...common,
-        subject: `${TOURNAMENT.name} Order — ${customerName}`,
-        order_subject: `${TOURNAMENT.name} Order — ${customerName}`,
-        html_body: adminHTML,
-        to_email: TOURNAMENT.emailTo,
-        owner_email: TOURNAMENT.emailTo,
-        from_name: customerName,
-        reply_to: customer.email
-      }
-    );
-
-    await window.emailjs.send(
-      EMAILJS_CONFIG.serviceId,
-      EMAILJS_CONFIG.templateId,
-      {
-        ...common,
-        subject: `Your Aiden’s Army Order Confirmation`,
-        order_subject: `Your Aiden’s Army Order Confirmation`,
-        html_body: customerHTML,
-        to_email: customer.email,
-        to_customer_email: customer.email,
-        from_name: "Aiden’s Army Fundraiser",
-        reply_to: TOURNAMENT.emailTo
-      }
-    );
-
-    // The email order is already safely sent. If Sheets is temporarily unavailable,
-    // do not prevent the customer confirmation from completing.
-    try {
-      await addOrderToGoogleSheet(customer, items, totals, orderId);
-    } catch (sheetError) {
-      console.error("Google Sheets order log failed:", sheetError);
-    }
+    await addOrderToGoogleSheet(customer, items, totals, orderId);
 
     closeReviewModal();
     showToast("✓ Your order was sent. A confirmation email is on its way.");
     clearOrderAfterSend();
   } catch (error) {
     console.error("Order submission failed:", error);
-    showToast(error?.message || "The order could not be sent. Please check your EmailJS settings.", true);
+    showToast(error?.message || "The order could not be sent. Please try again or contact " + TOURNAMENT.emailTo + ".", true);
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
