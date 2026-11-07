@@ -34,10 +34,12 @@ const EMAILJS_CONFIG = {
   1. Put the Apps Script code from Code.gs into the Google Sheet.
   2. Deploy it as a Web app.
   3. Paste the deployment URL ending in /exec below.
+  https://script.google.com/macros/s/AKfycbw2o5BuGjkyxX0p5hmMTUd0Rt3p12xjMfAIOIyyEMUpg0OWyT_4orBQm-koYjZLP1e8/exec
 */
 const GOOGLE_SHEETS_CONFIG = {
-  webAppUrl: "https://script.google.com/macros/s/AKfycbw2o5BuGjkyxX0p5hmMTUd0Rt3p12xjMfAIOIyyEMUpg0OWyT_4orBQm-koYjZLP1e8/exec"
+  webAppUrl: "https://script.google.com/macros/s/AKfycby9t6GjtsLp9IiMrDqtqJLOdwcXbgIEWhKLZXFzKX7mVyZb_Qrk5pszIthi3y_Ra2vE/exec"
 };
+
 
 const PRODUCTS = [
   {
