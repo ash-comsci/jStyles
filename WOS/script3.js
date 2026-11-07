@@ -157,7 +157,8 @@ const PRODUCTS = [
 ];
 
 // Deploy WOS/apps-script/Code.gs, then paste the NEW web app /exec URL here.
-const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw2o5BuGjkyxX0p5hmMTUd0Rt3p12xjMfAIOIyyEMUpg0OWyT_4orBQm-koYjZLP1e8/exec';
+const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby9t6GjtsLp9IiMrDqtqJLOdwcXbgIEWhKLZXFzKX7mVyZb_Qrk5pszIthi3y_Ra2vE/exec';
+
 const ORDER_PAGE_NAME = 'WOS Merch Order';
 let submittingOrder = false;
 let pendingOrder = null;
