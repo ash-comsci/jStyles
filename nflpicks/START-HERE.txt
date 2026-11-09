@@ -1,0 +1,21 @@
+j-NFLPicks SEASON HQ
+
+Upload the CONTENTS of this folder into your existing picks website folder.
+
+index.html is the new landing page. It contains its own styles and scripts so it won't clash with weekly pick pages.
+week6.html contains your uploaded Week 6 pick sheet, including the existing email-service URL. It also contains its own styles and scripts and a link back to Season HQ. Corrected the Rams team label to Los Angeles rather than San Francisco.
+week1.html through week18.html are linked from the landing page. Except for Week 6, they are friendly coming-soon pages, not completed pick sheets.
+
+ADDING A WEEK
+Replace week7.html (for example) with your finished Week 7 HTML. The landing page link already works; no link change is needed. If your weekly page uses separate assets, give them week-specific names (week7.css and week7.js), or inline them, to avoid changing earlier weeks when updating the shared script.
+
+Update the landing page's matching card text from Pick sheet coming soon to Make your picks when you post a sheet. To feature a new week, update the two hero links, the hero week number/text, and the featured/current card and data-status values in index.html. The featured week is an editorial setting; it doesn't advance automatically by date.
+
+Earlier weeks are shown as earlier weeks, not as submitted picks, completed weeks or available archives. Filters sort by week relative to featured Week 6, not by whether a pick sheet has been uploaded.
+
+Keep your existing Google Apps Script deployment; no Apps Script change is needed for this landing page. Email delivery is handled only on each weekly picks page. Future schedules and server-side week validation must still be updated for each new week.
+
+INTERACTIONS
+Filter all weeks, the featured week, earlier weeks, or upcoming weeks. Rotate family-friendly pep talks. Cards respond to hover and keyboard focus. Layout adapts to mobile and respects reduced-motion preferences.
+
+Deployment: this package is for your existing website. No hosting account or live website has been changed.
