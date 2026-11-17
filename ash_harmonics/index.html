@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Saints Harmonics Hoodie</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="progress"></div>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><span class="clef">𝄞</span> ASH Harmonics</a>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+    <ul class="links" id="links">
+      <li><a href="#details">The Hoodie</a></li>
+      <li><a href="#sizing">Sizing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a class="cta" href="https://www.schoolcashonline.com/" target="_blank" rel="noopener">Order on School Cash<br> Coming Soon...↗</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="staff"></div>
+  <div id="notes"></div>
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow"><span class="dot"></span>Orders Open Soon...</span>
+      <h1>The Official<br> <span class="shine">All Saints Harmonics</span> Hoodie</h1>
+      <p class="lead">Wrap yourself in a bold red pullover featuring a gleaming chrome-and-gold ASH crest. Built for intense rehearsals, concert halls, to the Kanata Central Holiday Tree Lighting Ceremony, and everywhere your music takes you.</p>
+      <div class="chips">
+        <div class="chip">Price: <b data-cfg="price"></b></div>
+        <div class="chip">Sizes: <b>Youth XS – Adult 4XL</b></div>
+        <div class="chip">Pay via: <b>School Cash Online</b></div>
+      </div>
+      <div class="btns">
+        <a class="btn btn-gold" href="https://www.schoolcashonline.com/" target="_blank" rel="noopener">Order on School Cash Online <span class="arr">↗</span></a>
+        <a class="btn btn-ghost" href="#sizing">Find My Size <span class="arr">→</span></a>
+      </div>
+    </div>
+    <div class="stage reveal d2">
+      <div class="product" id="product">
+        <div class="badge"><div><span data-cfg="price"></span>each</div></div>
+        <div class="imgbox" id="imgbox">
+          <img src="hoodie.jpg" alt="Red pullover hoodie with the ASH All Saints Harmonics logo in chrome and gold with music notes" id="heroImg">
+          <div class="lens" id="lens"></div>
+          <div class="zoom-hint">🔍 Hover to zoom in on the print</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none"><path fill="#f7f1e8" d="M0,40 C240,90 480,0 720,30 C960,60 1200,10 1440,40 L1440,80 L0,80 Z"/></svg>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track" id="track"></div>
+</div>
+
+<!-- KEY INFO -->
+<div class="wrap" style="padding-top:90px">
+  <div class="info">
+    <div class="card reveal"><div class="lbl">Price</div><div class="val" data-cfg="price"></div></div>
+    <div class="card reveal d1"><div class="lbl">Order Deadline</div><div class="val" data-cfg="deadlineText"></div></div>
+    <div class="card reveal d2"><div class="lbl">Time Left to Order</div><div class="cd" id="countdown"></div></div>
+    <div class="card reveal d3"><div class="lbl">Pickup</div><div class="val" style="font-size:1.1rem" data-cfg="pickup"></div></div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Why you'll love it</div>
+      <h2>Made to Be Worn Loud</h2>
+      <p>Hover over (or tap) each card to flip it over.</p>
+      <div class="bar"></div>
+    </div>
+    <div class="features">
+      <div class="flip reveal" tabindex="0"><div class="flip-in">
+        <div class="face front"><div class="ic">♫</div><h3>Show-Stopping Print</h3><small>Chrome & gold ASH crest</small></div>
+        <div class="face back"><h3>Built to Stand Out</h3><p>The full-colour front print features a treble clef, flowing staff lines and a banner reading “All Saints Harmonics.”</p></div>
+      </div></div>
+      <div class="flip reveal d1" tabindex="0"><div class="flip-in">
+        <div class="face front"><div class="ic">☁</div><h3>Soft Fleece Comfort</h3><small>Warm for winter rehearsals</small></div>
+        <div class="face back"><h3>Cozy Inside</h3><p>A brushed fleece interior keeps you warm on early mornings and cold concert nights.</p></div>
+      </div></div>
+      <div class="flip reveal d2" tabindex="0"><div class="flip-in">
+        <div class="face front"><div class="ic">✋</div><h3>Kangaroo Pocket</h3><small>Plus a drawstring hood</small></div>
+        <div class="face back"><h3>Practical Too</h3><p>A front pouch pocket for your phone, pencil and reeds, and an adjustable lined hood with metal grommets.</p></div>
+      </div></div>
+      <div class="flip reveal d3" tabindex="0"><div class="flip-in">
+        <div class="face front"><div class="ic">★</div><h3>Youth & Adult Sizes</h3><small>For students, family & fans</small></div>
+        <div class="face back"><h3>Everyone Can Join</h3><p>Available in youth and adult sizes, so parents, siblings and grandparents can show their support.</p></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section class="details" id="details">
+  <div class="wrap detail-grid">
+    <div class="spot reveal" id="spot"><img src="logo.jpg" alt="Close-up of the ASH All Saints Harmonics logo"></div>
+    <div class="reveal d1">
+      <div class="kicker">The Details</div>
+      <h2>A Crest Worth Singing About</h2>
+      <p style="color:var(--muted)">Our class hoodie celebrates everyone who makes music at All Saints. It's perfect for concert days, field trips and showing your ASH pride all year long.</p>
+      <ul class="spec">
+        <li>🎨 <span><b>Colour:</b> Classic red with a chrome-silver, gold and black front print</span></li>
+        <li>🧵 <span><b>Style:</b> Pullover hoodie with lined hood, drawstrings and ribbed cuffs and waistband</span></li>
+        <li>👕 <span><b>Fit:</b> Unisex, relaxed. If you're between sizes, size up for a roomier fit</span></li>
+        <li>🧺 <span><b>Care:</b> Machine wash cold, inside out. Tumble dry low and do not iron the print</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SIZING -->
+<section class="sizing" id="sizing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Get the perfect fit</div>
+      <h2>Sizing Charts</h2>
+      <p>Choose a chart below to see full measurements, or use the size finder.</p>
+      <div class="bar"></div>
+    </div>
+    <div class="size-cards">
+      <button class="size-card reveal" data-open="youth">
+        <span class="big">YOUTH</span>
+        <div class="kicker" style="color:var(--gold-lt)">Ages 4 – 20</div>
+        <h3>Youth Sizing Chart</h3>
+        <p>Hoodie and body measurements for youth sizes, with an age guide to help you choose.</p>
+        <div class="pills"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span></div>
+        <span class="go">View youth chart <span>→</span></span>
+      </button>
+      <button class="size-card adult reveal d1" data-open="adult">
+        <span class="big">ADULT</span>
+        <div class="kicker" style="color:var(--gold-lt)">Unisex fit</div>
+        <h3>Adult Sizing Chart</h3>
+        <p>Chest, body length, sleeve and body-fit measurements for adult unisex sizes XS to 4XL.</p>
+        <div class="pills"><span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span><span>2XL</span><span>3XL</span><span>4XL</span></div>
+        <span class="go">View adult chart <span>→</span></span>
+      </button>
+    </div>
+
+    <div class="finder reveal">
+      <div>
+        <h3>🎯 Quick Size Finder</h3>
+        <p>Measure around the fullest part of the chest, under the arms, with a soft tape. Enter it here and we'll suggest a size.</p>
+      </div>
+      <div>
+        <div class="frow">
+          <div class="seg" id="fGroup"><button class="on" data-v="youth">Youth</button><button data-v="adult">Adult</button></div>
+          <div class="seg" id="fUnit"><button class="on" data-v="in">in</button><button data-v="cm">cm</button></div>
+          <input id="fChest" type="number" min="0" step="0.5" placeholder="Chest" aria-label="Chest measurement">
+        </div>
+        <div class="result" id="fResult">Enter a chest measurement to see your size.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">Questions?</div>
+      <h2>Frequently Asked Questions</h2>
+      <div class="bar"></div>
+    </div>
+    <div class="acc" id="acc">
+      <div class="qa reveal"><button>Who can order a hoodie?<span class="pm">+</span></button><div class="ans"><p>The hoodie is designed for All Saints Harmonics students, but families and friends are welcome to order too. Just add extra hoodies when you check out on School Cash Online.</p></div></div>
+      <div class="qa reveal"><button>Can I pay with cash or cheque?<span class="pm">+</span></button><div class="ans"><p>We ask that all orders go through School Cash Online so sizes and payments are tracked together. If you can't use School Cash Online, contact the All Saints Music Department to make other arrangements.</p></div></div>
+      <div class="qa reveal"><button>How do I know which size to choose?<span class="pm">+</span></button><div class="ans"><p>Open the youth or adult sizing chart above, or use the Quick Size Finder. The best way to check is to measure a hoodie that already fits well, laid flat, and compare it to the chart.</p></div></div>
+      <div class="qa reveal"><button>Can I exchange for a different size?<span class="pm">+</span></button><div class="ans"><p>Hoodies are custom-printed in one order, so exchanges may not be possible once they arrive. Please check the sizing carefully before you check out.</p></div></div>
+      <div class="qa reveal"><button>When and where do I pick it up?<span class="pm">+</span></button><div class="ans"><p data-cfg="pickupLong"></p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top"><span class="clef">𝄞</span> All Saints Harmonics</a>
+        <p style="margin-top:10px">All Saints Catholic High School · Ottawa Catholic School Board</p>
+      </div>
+      <div>
+        <p>Order online: <a class="fl" href="https://www.schoolcashonline.com/" target="_blank" rel="noopener">schoolcashonline.com ↗</a></p>
+        <p>Questions? Contact the All Saints 7/8 Music Department.</p>
+      </div>
+    </div>
+    <div class="copy">♪ Sing it. Play it. Wear it. ♪</div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<!-- SIZE CHART MODALS -->
+<div class="modal" id="modal-youth" role="dialog" aria-modal="true" aria-labelledby="yt">
+  <div class="sheet">
+    <div class="sheet-head"><div><small>All Saints Harmonics Hoodie</small><h3 id="yt">Youth Sizing Chart</h3></div><button class="x" data-close>✕</button></div>
+    <div class="sheet-body">
+      <div class="unit"><span style="color:var(--muted);font-size:.9rem">Hover a size to highlight it</span><div class="seg" data-unit-for="youth"><button class="on" data-v="in">Inches</button><button data-v="cm">Centimetres</button></div></div>
+      <div id="tbl-youth"></div>
+      <div class="how">
+        <div><b>Hoodie measurements</b>Chest, body length (shoulder to back hem) and sleeve (centre back of neck, over the shoulder, to cuff) of the hoodie itself.</div>
+        <div><b>Fits chest / waist</b>The body measurements each size is made for. Measure your child, then match these columns.</div>
+        <div><b>Between sizes?</b>Size up. Kids grow, and a roomier hoodie layers better.</div>
+      </div>
+      <p class="note-s">Manufacturer measurements for the Vault L0550Y youth pullover hooded sweatshirt. Youth XL fits about the same chest as an adult XS.</p>
+    </div>
+  </div>
+</div>
+<div class="modal" id="modal-adult" role="dialog" aria-modal="true" aria-labelledby="at">
+  <div class="sheet">
+    <div class="sheet-head"><div><small>All Saints Harmonics Hoodie</small><h3 id="at">Adult Sizing Chart</h3></div><button class="x" data-close>✕</button></div>
+    <div class="sheet-body">
+      <div class="unit"><span style="color:var(--muted);font-size:.9rem">Hover a size to highlight it · Unisex fit</span><div class="seg" data-unit-for="adult"><button class="on" data-v="in">Inches</button><button data-v="cm">Centimetres</button></div></div>
+      <div id="tbl-adult"></div>
+      <div class="how">
+        <div><b>Hoodie measurements</b>Chest, body length (shoulder to back hem) and sleeve (centre back of neck, over the shoulder, to cuff) of the hoodie itself.</div>
+        <div><b>Fits chest / waist</b>The body measurements each size is made for. Measure yourself, then match these columns.</div>
+        <div><b>Between sizes?</b>Size up for a looser fit, or if you plan to layer underneath.</div>
+      </div>
+      <p class="note-s">Manufacturer measurements for the Vault L00550 adult pullover hooded sweatshirt, unisex fit.</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
