@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tournament Merch | jStyles</title>
+  <meta name="description" content="Order Tournament Merch apparel from jStyles: hoodies, tees and hats." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <meta property="og:title" content="Tournament Merch | jStyles" />
+  <meta property="og:image" content="images/web/jstyles_logo.webp" />
+  <link rel="icon" type="image/png" href="images/web/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body data-page="collection" data-collection="tournament">
+  <a class="skip-link" href="#shop">Skip to products</a>
+  <div class="tape" aria-hidden="true">
+    <div class="tape-track">
+      <span>Youth → 3XL</span><b>✕</b><span>Pay by e-transfer</span><b>✕</b><span>Local pickup</span><b>✕</b><span>Made in Ottawa</span><b>✕</b>
+      <span>Youth → 3XL</span><b>✕</b><span>Pay by e-transfer</span><b>✕</b><span>Local pickup</span><b>✕</b><span>Made in Ottawa</span><b>✕</b>
+    </div>
+  </div>
+  <header class="site-header" id="siteHeader">
+    <div class="wrap header-top">
+      <a class="brand" href="index.html" aria-label="jStyles home">
+        <img src="images/web/jstyles_logo.webp" alt="jStyles" width="120" height="40" />
+      </a>
+      <button class="bag-btn" id="cartOpenBtn" type="button" aria-label="Open bag, 0 items" aria-controls="cartDrawer" aria-expanded="false">
+        Bag <span class="cart-count" id="cartCount" aria-hidden="true">0</span>
+      </button>
+    </div>
+    <nav class="tabs" id="mainNav" aria-label="Main">
+      <div class="wrap tabs-inner">
+        <a href="index.html">Home</a>
+        <a href="wos.html">WOS Fan Gear</a>
+        <a href="tournament.html" aria-current="page">Tournament Merch</a>
+        <a href="aiden-army.html">Aiden's Army</a>
+        <a href="index.html#custom">Custom</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="store-head" id="pageBanner" aria-labelledby="pageTitle">
+      <div class="wrap store-head-inner">
+        <div class="store-head-copy">
+          <p class="mono label">Store 02 / <span id="bannerEyebrow">Collection</span></p>
+          <h1 id="pageTitle">Tournament Merch</h1>
+          <p class="store-blurb" id="bannerBlurb"></p>
+        </div>
+        <img class="store-logo" id="bannerLogo" alt="" width="88" height="88" />
+      </div>
+      <div class="wrap"><p class="page-note" id="bannerNote" hidden></p></div>
+      <div class="wrap">
+        <ol class="order-steps" aria-label="How to order">
+          <li><b>1</b> Pick a size</li>
+          <li><b>2</b> Open bag</li>
+          <li><b>3</b> Check out</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="shop" id="shop" aria-label="Products">
+      <div class="wrap">
+        <div class="filters" role="group" aria-label="Filter products">
+          <div class="chip-row" id="typeChips" role="toolbar" aria-label="Product type"></div>
+          <p class="result-count mono" id="resultCount" aria-live="polite"></p>
+        </div>
+        <div class="product-grid" id="productGrid" aria-live="polite"></div>
+        <p class="empty-state" id="emptyState" hidden>Nothing in this filter yet. <button class="link-btn" type="button" data-reset-filters>Show everything</button></p>
+      </div>
+    </section>
+
+    <section class="fixtures more" aria-labelledby="otherTitle">
+      <div class="wrap">
+        <div class="list-head mono"><span id="otherTitle">// Other stores</span></div>
+        <div class="collection-grid" id="otherCollections"></div>
+      </div>
+    </section>
+  </main>
+
+  <button class="mobile-cart-bar" id="mobileCartBar" type="button" hidden>
+    <span>Bag (<strong id="mobileCartCount">0</strong>)</span>
+    <span class="mono"><strong id="mobileCartTotal">$0</strong> · Checkout →</span>
+  </button>
+
+  <dialog class="sheet product-sheet" id="productDialog" aria-labelledby="pdName">
+    <form method="dialog" class="sheet-close-form"><button class="close-btn" aria-label="Close">Close ✕</button></form>
+    <div class="pd-layout">
+      <div class="pd-media">
+        <img id="pdImage" alt="" />
+        <span class="tag mono" id="pdCollection"></span>
+      </div>
+      <div class="pd-info">
+        <h2 id="pdName"></h2>
+        <p class="pd-price mono" id="pdPrice"></p>
+        <p class="pd-desc" id="pdDesc"></p>
+
+        <div class="opt-block" id="pdColorBlock">
+          <p class="opt-label mono">Colour: <strong id="pdColorName"></strong></p>
+          <div class="swatches" id="pdColors" role="radiogroup" aria-label="Colour"></div>
+        </div>
+
+        <div class="opt-block" id="pdOptionBlock">
+          <p class="opt-label mono" id="pdOptionLabel"></p>
+          <div class="size-grid" id="pdOptions" role="radiogroup"></div>
+        </div>
+
+        <div class="opt-block">
+          <div class="opt-label-row">
+            <p class="opt-label mono">Size</p>
+            <button class="link-btn" type="button" id="pdSizeChartBtn">Size chart</button>
+          </div>
+          <div id="pdSizes"></div>
+          <p class="opt-error" id="pdSizeError" hidden>Pick a size to continue.</p>
+        </div>
+
+        <div class="pd-buy">
+          <div class="stepper" aria-label="Quantity">
+            <button type="button" id="pdQtyMinus" aria-label="Decrease quantity">−</button>
+            <output id="pdQty">1</output>
+            <button type="button" id="pdQtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <button class="btn btn-ink pd-add" type="button" id="pdAddBtn">Add to bag</button>
+        </div>
+        <p class="pd-stock" id="pdStock" hidden></p>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="sheet chart-sheet" id="chartDialog" aria-label="Size chart">
+    <form method="dialog" class="sheet-close-form"><button class="close-btn" aria-label="Close">Close ✕</button></form>
+    <img id="chartImage" alt="Size chart" />
+  </dialog>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="drawer" id="cartDrawer" aria-labelledby="cartTitle" aria-hidden="true" inert>
+    <header class="drawer-head">
+      <h2 id="cartTitle">Your bag</h2>
+      <button class="close-btn" type="button" id="cartCloseBtn" aria-label="Close bag">Close ✕</button>
+    </header>
+
+    <div class="drawer-view" id="viewBag">
+      <ul class="cart-list" id="cartList"></ul>
+      <div class="cart-empty" id="cartEmpty">
+        <p>Your bag is empty.</p>
+        <button class="btn btn-ink" type="button" data-close-cart>Keep shopping</button>
+      </div>
+      <footer class="drawer-foot" id="bagFoot">
+        <div class="total-row"><span class="mono">Subtotal</span><strong id="cartSubtotal">$0</strong></div>
+        <button class="btn btn-accent btn-block" type="button" id="toCheckoutBtn">Checkout →</button>
+        <p class="fine-print">Pay by e-transfer after you order.</p>
+      </footer>
+    </div>
+
+    <form class="drawer-view" id="viewCheckout" hidden novalidate>
+      <div class="drawer-scroll">
+        <button class="link-btn back-btn" type="button" id="backToBagBtn">← Back to bag</button>
+        <div class="field-row">
+          <label class="field"><span>First name *</span><input name="firstName" autocomplete="given-name" required /></label>
+          <label class="field"><span>Last name *</span><input name="lastName" autocomplete="family-name" required /></label>
+        </div>
+        <label class="field"><span>Email *</span><input name="email" type="email" autocomplete="email" inputmode="email" required /></label>
+        <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" /></label>
+        <fieldset class="field">
+          <legend>Fulfillment *</legend>
+          <div class="toggle-grid two">
+            <label class="toggle"><input type="radio" name="fulfillment" value="Pickup" checked /><span>Pickup</span></label>
+            <label class="toggle"><input type="radio" name="fulfillment" value="Delivery" /><span>Local delivery</span></label>
+          </div>
+        </fieldset>
+        <label class="field"><span>Player / team name or notes</span><textarea name="notes" rows="3" placeholder="e.g. U13 Girls, pickup at practice"></textarea></label>
+        <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+
+        <div class="summary-box">
+          <div class="total-row"><span class="mono" id="checkoutCountLabel">Items</span><strong id="checkoutTotal">$0</strong></div>
+          <p class="fine-print" id="paymentNote"></p>
+        </div>
+        <p class="form-status" id="checkoutStatus" role="alert" hidden></p>
+      </div>
+      <footer class="drawer-foot">
+        <button class="btn btn-accent btn-block" type="submit" id="placeOrderBtn">Place order</button>
+      </footer>
+    </form>
+
+    <div class="drawer-view success-view" id="viewSuccess" hidden>
+      <p class="mono label">Order confirmed</p>
+      <h3>You're locked in.</h3>
+      <p>Your order number</p>
+      <p class="order-id mono" id="successOrderId"></p>
+      <p id="successMessage"></p>
+      <button class="btn btn-ink btn-block" type="button" data-close-cart>Keep shopping</button>
+    </div>
+  </aside>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img src="images/web/jstyles_logo.webp" alt="jStyles" width="120" height="40" loading="lazy" />
+        <p class="mono small">Apparel &amp; gear · Est. 2024 · Ottawa, ON</p>
+      </div>
+      <nav class="footer-col" aria-label="Stores">
+        <p class="mono label">Stores</p>
+        <a href="wos.html">WOS Fan Gear</a><a href="tournament.html">Tournament Merch</a><a href="aiden-army.html">Aiden's Army</a><a href="index.html#custom">Custom merch</a>
+      </nav>
+      <div class="footer-col">
+        <p class="mono label">Contact</p>
+        <a data-contact="email" href="#">Email us</a><a data-contact="sms" href="#">Text us</a>
+      </div>
+    </div>
+    <div class="wrap footer-base mono small">© <span id="year"></span> jStyles · Payment by Interac e-transfer</div>
+  </footer>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

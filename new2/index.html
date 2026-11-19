@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>jStyles | Matchday Streetwear & Team Gear</title>
+  <meta name="description" content="jStyles: soccer-inspired hoodies, tees and hats. Order WOS fan gear, tournament merch, Aiden’s Army apparel, or custom team gear." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <meta property="og:title" content="jStyles | Matchday Streetwear & Team Gear" />
+  <meta property="og:image" content="images/web/jstyles_logo.webp" />
+  <link rel="icon" type="image/png" href="images/web/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#collections">Skip to stores</a>
+  <div class="tape" aria-hidden="true">
+    <div class="tape-track">
+      <span>Youth → 3XL</span><b>✕</b><span>Pay by e-transfer</span><b>✕</b><span>Local pickup</span><b>✕</b><span>Made in Ottawa</span><b>✕</b>
+      <span>Youth → 3XL</span><b>✕</b><span>Pay by e-transfer</span><b>✕</b><span>Local pickup</span><b>✕</b><span>Made in Ottawa</span><b>✕</b>
+    </div>
+  </div>
+  <header class="site-header" id="siteHeader">
+    <div class="wrap header-top">
+      <a class="brand" href="index.html" aria-label="jStyles home">
+        <img src="images/web/jstyles_logo.webp" alt="jStyles" width="120" height="40" />
+      </a>
+      <a class="bag-btn ghost" href="index.html#custom">Custom order</a>
+    </div>
+    <nav class="tabs" id="mainNav" aria-label="Main">
+      <div class="wrap tabs-inner">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="wos.html">WOS Fan Gear</a>
+        <a href="tournament.html">Tournament Merch</a>
+        <a href="aiden-army.html">Aiden's Army</a>
+        <a href="index.html#custom">Custom</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="intro" aria-labelledby="heroTitle">
+      <div class="wrap intro-grid">
+        <div>
+          <p class="tag-line">est. 2024 · ottawa</p>
+          <h1 id="heroTitle" data-text="Rep your squad.">Rep your squad.</h1>
+        </div>
+        <p class="intro-copy">Soccer-inspired street gear for clubs, tournaments and causes. Pick a store. Pick a size. Done.</p>
+      </div>
+    </section>
+
+    <section class="fixtures" id="collections" aria-labelledby="collectionsTitle">
+      <div class="wrap">
+        <div class="list-head mono"><span id="collectionsTitle">// Choose your store</span></div>
+        <!-- Filled by script.js from COLLECTIONS -->
+        <div class="collection-grid" id="collectionGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="how" aria-labelledby="howTitle">
+      <div class="wrap">
+        <h2 class="section-title" id="howTitle">3 steps. That's it.</h2>
+        <ol class="steps">
+          <li><span class="mono step-num">01</span><div><h3>Pick your gear</h3><p>Choose a store, tap an item, pick a size.</p></div></li>
+          <li><span class="mono step-num">02</span><div><h3>Check out</h3><p>Just your name and email. Confirmation hits your inbox.</p></div></li>
+          <li><span class="mono step-num">03</span><div><h3>E-transfer</h3><p>Send payment with your order number. We'll tell you when it's ready.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="custom-panel" id="custom" aria-labelledby="customTitle">
+      <div class="wrap custom-grid">
+        <div class="custom-copy">
+          <p class="mono label">Custom orders</p>
+          <h2 id="customTitle">Your team.<br />Your kit.</h2>
+          <p>Teams, schools, tournaments, fundraisers. Tell us the idea and we'll design it, price it and make it.</p>
+          <ul class="tick-list">
+            <li>Free mock-up before you commit</li>
+            <li>Hoodies, tees, long sleeves, tanks, sweats, caps</li>
+            <li>Youth &amp; adult sizes, any run size</li>
+            <li>Your own online order page</li>
+          </ul>
+        </div>
+
+        <form class="form-card" id="customForm" novalidate>
+          <div class="field-row">
+            <label class="field"><span>Name *</span><input name="name" autocomplete="name" required /></label>
+            <label class="field"><span>Email *</span><input name="email" type="email" autocomplete="email" inputmode="email" required /></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span>Phone</span><input name="phone" type="tel" autocomplete="tel" inputmode="tel" /></label>
+            <label class="field"><span>Team / school / group</span><input name="group" autocomplete="organization" /></label>
+          </div>
+          <fieldset class="field">
+            <legend>What do you need?</legend>
+            <div class="toggle-grid">
+              <label class="toggle"><input type="checkbox" name="items" value="Hoodies" /><span>Hoodies</span></label>
+              <label class="toggle"><input type="checkbox" name="items" value="T-shirts" /><span>Tees</span></label>
+              <label class="toggle"><input type="checkbox" name="items" value="Hats" /><span>Hats</span></label>
+              <label class="toggle"><input type="checkbox" name="items" value="Long sleeves" /><span>Long sleeves</span></label>
+              <label class="toggle"><input type="checkbox" name="items" value="Sweats" /><span>Sweats</span></label>
+              <label class="toggle"><input type="checkbox" name="items" value="Other" /><span>Other</span></label>
+            </div>
+          </fieldset>
+          <div class="field-row">
+            <label class="field"><span>Approx. quantity</span><input name="quantity" type="number" min="1" inputmode="numeric" /></label>
+            <label class="field"><span>Needed by</span><input name="deadline" type="date" /></label>
+          </div>
+          <label class="field"><span>Your idea *</span><textarea name="details" rows="4" required placeholder="Colours, logo, text, where you'll wear it…"></textarea></label>
+          <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          <p class="form-status" id="customStatus" role="status" hidden></p>
+          <button class="btn btn-accent btn-block" type="submit">Send request →</button>
+          <p class="fine-print">We usually reply within 1–2 days.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <div>
+        <img src="images/web/jstyles_logo.webp" alt="jStyles" width="120" height="40" loading="lazy" />
+        <p class="mono small">Apparel &amp; gear · Est. 2024 · Ottawa, ON</p>
+      </div>
+      <nav class="footer-col" aria-label="Stores">
+        <p class="mono label">Stores</p>
+        <a href="wos.html">WOS Fan Gear</a><a href="tournament.html">Tournament Merch</a><a href="aiden-army.html">Aiden's Army</a><a href="index.html#custom">Custom merch</a>
+      </nav>
+      <div class="footer-col">
+        <p class="mono label">Contact</p>
+        <a data-contact="email" href="#">Email us</a><a data-contact="sms" href="#">Text us</a>
+      </div>
+    </div>
+    <div class="wrap footer-base mono small">© <span id="year"></span> jStyles · Payment by Interac e-transfer</div>
+  </footer>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
