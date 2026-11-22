@@ -1,12 +1,4 @@
-/* ===== EDIT THESE DETAILS ===== */
-const CONFIG = {
-  price: "$40",
-  deadline: "2026-11-20T23:59:00",          // order deadline (local time)
-  deadlineText: "Fri, November 20th",
-  pickup: "ASH Drama Guild Room",
-  pickupLong: "Hoodies will be handed out to students in the ASH Drama Guild Room once they arrive. We'll announce the pickup date in class and on the morning announcements."
-};
-/* ============================== */
+/* Order details (price, deadline, pickup) now live in config.js */
 
 document.querySelectorAll("[data-cfg]").forEach(el => el.textContent = CONFIG[el.dataset.cfg]);
 

@@ -72,7 +72,8 @@ const SEED_PRODUCTS = [
   ['grind-hoodie', 'The Grind Hoodie', 'Tournament Merch', 60, '', true],
   ['613-hoodie', '613 Showdown Hoodie', 'Tournament Merch', 60, '', true],
   ['wc-hoodie', 'Warrior Classic Hoodie', 'Tournament Merch', 60, '', false],
-  ['wc-tee', 'Warrior Classic Tee', 'Tournament Merch', 25, '', false]
+  ['wc-tee', 'Warrior Classic Tee', 'Tournament Merch', 25, '', false],
+  ['ash-hoodie', 'All Saints Harmonics Hoodie', 'All Saints Harmonics', 40, '', true]
 ];
 
 /* ════════════════════════════════════════════════════════════
@@ -187,7 +188,8 @@ function handleOrder_(p) {
     decrementStock_(items);
     SpreadsheetApp.flush();
 
-    const order = { orderId: orderId, customer: c, items: items, total: total, count: count, date: now };
+    const order = { orderId: orderId, customer: c, items: items, total: total, count: count, date: now,
+      paymentNote: clean_(p.paymentNote, 400) };  // optional: replaces the e-transfer instructions (e.g. School Cash)
     // Side effects shouldn't fail the order once it is safely logged.
     safely_(function () { if (CONFIG.SEND_CUSTOMER_EMAIL) sendCustomerEmail_(order); }, 'customer email');
     safely_(function () { if (CONFIG.SEND_OWNER_EMAIL) sendOwnerEmail_(order); }, 'owner email');
@@ -330,7 +332,9 @@ function sendCustomerEmail_(order) {
     '<p style="font-size:13px;color:#9a9aa2;margin:0 0 16px;">Order <strong style="color:#8fd3ff;">' + esc_(order.orderId) + '</strong></p>' +
     itemsTable_(order) +
     '<div style="margin:24px 0 0;padding:16px;border-radius:10px;background:#1d1d21;border-left:4px solid #ff5a1f;">' +
-    '<strong>Next step — payment</strong><br>Please send <strong>' + money_(order.total) + '</strong> by Interac e-transfer to <strong>' + esc_(CONFIG.PAYMENT_EMAIL) + '</strong> and put <strong>' + esc_(order.orderId) + '</strong> in the message.</div>' +
+    '<strong>Next step — payment</strong><br>' + (order.paymentNote
+      ? 'Total: <strong>' + money_(order.total) + '</strong>. ' + esc_(order.paymentNote)
+      : 'Please send <strong>' + money_(order.total) + '</strong> by Interac e-transfer to <strong>' + esc_(CONFIG.PAYMENT_EMAIL) + '</strong> and put <strong>' + esc_(order.orderId) + '</strong> in the message.') + '</div>' +
     '<p style="margin-top:20px;">Fulfillment: <strong>' + esc_(c.fulfillment) + '</strong>. We\'ll be in touch when your gear is ready.</p>';
   MailApp.sendEmail({
     to: c.email,

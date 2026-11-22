@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Order the official All Saints Harmonics hoodie in youth or adult sizes.">
+<title>Order · All Saints Harmonics Hoodie</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="order.css">
+</head>
+<body class="order-page">
+<div id="progress"></div>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="index.html"><span class="clef">𝄞</span> ASH Harmonics</a>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+    <ul class="links" id="links">
+      <li><a href="index.html#details">The Hoodie</a></li>
+      <li><a href="index.html#sizing">Sizing</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+      <li><a class="cta" href="#shop">Order Form ↓</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero order-hero">
+  <div class="staff"></div>
+  <div id="notes"></div>
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span><span id="orderStatus">Order form</span></span>
+    <h1>Order Your <span class="shine">Harmonics</span> Hoodie</h1>
+    <p class="lead">Pick youth or adult sizing, choose how many of each size, and tell us who the order is for. Your order goes straight to the order list, and a confirmation is emailed to you.</p>
+    <div class="chips">
+      <div class="chip">Price: <b data-cfg="price"></b> each</div>
+      <div class="chip">Order by: <b data-cfg="deadlineText"></b></div>
+      <div class="chip">Pickup: <b data-cfg="pickup"></b></div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1440 80" preserveAspectRatio="none"><path fill="#f7f1e8" d="M0,40 C240,90 480,0 720,30 C960,60 1200,10 1440,40 L1440,80 L0,80 Z"/></svg>
+</header>
+
+<div class="closed-banner" id="closedBanner" hidden>
+  <div class="wrap"><b>Orders are closed.</b> The order deadline has passed. Contact the All Saints 7/8 Music Department if you still need a hoodie.</div>
+</div>
+
+<main>
+  <!-- STEP 1: SIZES -->
+  <section class="o-sec" id="shop">
+    <div class="wrap o-grid">
+      <div class="o-product">
+        <div class="o-imgcard">
+          <div class="badge"><div><span data-cfg="price"></span>each</div></div>
+          <img src="hoodie.jpg" alt="Red All Saints Harmonics pullover hoodie with the chrome and gold ASH crest">
+        </div>
+        <ul class="o-facts">
+          <li>🎨 Red pullover, chrome &amp; gold ASH crest</li>
+          <li>👕 Unisex relaxed fit. Between sizes? Size up.</li>
+          <li>📏 Not sure? <a href="index.html#youth-sizes">Youth chart</a> · <a href="index.html#adult-sizes">Adult chart</a></li>
+        </ul>
+      </div>
+
+      <div class="o-panel">
+        <div class="step-tag">Step 1 of 2</div>
+        <h2>Choose sizes</h2>
+        <p class="o-sub">Switch between youth and adult sizing. You can mix both in one order, for example a youth hoodie for a student and an adult one for a parent.</p>
+
+        <div class="group-tabs" id="groupTabs" role="tablist" aria-label="Size group"></div>
+        <div class="group-note" id="groupNote"></div>
+        <div class="size-grid" id="sizeGrid"></div>
+
+        <div class="o-summary" aria-live="polite">
+          <div class="o-summary-head"><span>Your order</span><strong id="sumTotal">$0</strong></div>
+          <div id="sumList" class="o-sumlist"><span class="o-empty">No hoodies added yet.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2: DETAILS -->
+  <section class="o-sec o-details">
+    <div class="wrap o-grid o-grid-rev">
+      <div>
+        <div class="step-tag">Step 2 of 2</div>
+        <h2>Who is it for?</h2>
+        <p class="o-sub">We use the student's name and class to hand out hoodies at pickup. The confirmation email goes to the address you enter.</p>
+        <ol class="o-flow">
+          <li><span><b>Submit this form.</b> Your order is added to the order list.</span></li>
+          <li><span><b>Check your email</b> for a copy of your order.</span></li>
+          <li><span><b>Pay on School Cash Online</b> before the deadline.</span></li>
+          <li><span><b>Pick up</b> in the <span data-cfg="pickup"></span> when hoodies arrive.</span></li>
+        </ol>
+      </div>
+
+      <form class="o-form" id="orderForm" novalidate>
+        <div class="f-grid">
+          <div><label for="fname">Student first name</label><input id="fname" name="fname" autocomplete="off" required></div>
+          <div><label for="lname">Student last name</label><input id="lname" name="lname" autocomplete="off" required></div>
+          <div class="full"><label for="homeroom">Homeroom / music teacher</label><input id="homeroom" name="homeroom" placeholder="e.g. 7B, Mr. Smith" required></div>
+          <div><label for="parent">Parent / guardian name <span class="opt">Optional</span></label><input id="parent" name="parent" autocomplete="name"></div>
+          <div><label for="phone">Phone <span class="opt">Optional</span></label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="full"><label for="email">Email for confirmation</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+          <div class="full"><label for="notes">Notes <span class="opt">Optional</span></label><textarea id="notes" name="notes" rows="3" placeholder="Who the extra hoodies are for, sizing questions, etc."></textarea></div>
+          <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+        </div>
+        <div class="f-status" id="formStatus" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<div class="o-bar">
+  <div class="wrap o-bar-in">
+    <div class="o-bar-count"><small>Order total</small><div><b id="barCount">0</b> hoodies · <b class="gold" id="barTotal">$0</b></div></div>
+    <button class="btn btn-gold" id="submitBtn" type="button">Place Order <span class="arr">→</span></button>
+  </div>
+</div>
+
+<!-- success -->
+<div class="modal" id="successModal" role="dialog" aria-modal="true" aria-labelledby="okTitle">
+  <div class="sheet">
+    <div class="sheet-head"><div><small>All Saints Harmonics Hoodie</small><h3 id="okTitle">Order received 🎶</h3></div><button class="x" data-close aria-label="Close">✕</button></div>
+    <div class="sheet-body">
+      <p class="ok-id">Order number <b id="okId"></b></p>
+      <div id="okMsg"></div>
+      <div class="ok-actions">
+        <a class="btn btn-gold" href="https://www.schoolcashonline.com/" target="_blank" rel="noopener">Pay on School Cash Online <span class="arr">↗</span></a>
+        <button class="btn btn-ghost-dark" type="button" data-close>Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="index.html"><span class="clef">𝄞</span> All Saints Harmonics</a>
+        <p style="margin-top:10px">All Saints Catholic High School · Ottawa Catholic School Board</p>
+      </div>
+      <div>
+        <p>Pay online: <a class="fl" href="https://www.schoolcashonline.com/" target="_blank" rel="noopener">schoolcashonline.com ↗</a></p>
+        <p>Questions? Contact the All Saints 7/8 Music Department.</p>
+      </div>
+    </div>
+    <div class="copy">♪ Sing it. Play it. Wear it. ♪ · Powered by jStyles</div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="order.js"></script>
+</body>
+</html>
