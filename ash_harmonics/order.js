@@ -140,7 +140,7 @@ function buildPayload() {
   const notes = [
     'Homeroom / teacher: ' + val('homeroom'),
     val('parent') && 'Parent / guardian: ' + val('parent'),
-    val('notes') && 'Notes: ' + val('notes'),
+    val('orderNotes') && 'Notes: ' + val('orderNotes'),
     'Payment: School Cash Online'
   ].filter(Boolean).join(' | ');
 
