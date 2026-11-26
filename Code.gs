@@ -59,6 +59,7 @@ const PRODUCT_HEADERS = ['Product ID', 'Name', 'Collection', 'Price', 'Stock', '
 // Stock blank = unlimited. Active FALSE = hidden / closed.
 const SEED_PRODUCTS = [
   ['wos-hoodie', 'Elite Sideline Hoodie', 'WOS Fan Gear', 60, '', true],
+  ['wos-quarter-zip', 'Sideline Quarter Zip', 'WOS Fan Gear', 55, '', true],
   ['wos-tee', 'Sideline Tee', 'WOS Fan Gear', 30, '', true],
   ['wos-long-sleeve', 'Long Sleeve', 'WOS Fan Gear', 25, '', true],
   ['wos-womens-tank', "Women's Tank Top", 'WOS Fan Gear', 25, '', true],
